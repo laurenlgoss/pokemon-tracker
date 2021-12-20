@@ -1,10 +1,18 @@
 body {
-    background-color: #eeeeee;
-    overflow-x: hidden;
-    /* Padding on bottom so footer won't cover content */
-    padding-bottom: 30px;
+  background-color: #eeeeee;
+  overflow-x: hidden;
+  /* Padding on bottom so footer won't cover content */
+  padding-bottom: 30px;
 }
 
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
+}
+
+.table td {
+  border-top: 0.5em #eeeeee solid;
+}
+
+.table thead th {
+  border: none;
 }

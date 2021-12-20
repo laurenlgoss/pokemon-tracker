@@ -26,7 +26,7 @@ const styles = {
 function Header() {
   return (
     <header>
-      <div style={styles.header} className="row px-2 align-content-center">
+      <div style={styles.header} className="row px-3 align-content-center">
         <div className="col-6 my-auto">
           <a style={styles.headerBrand} href="/">
             Pok<span style={styles.ev}>ÉV</span> Tracker

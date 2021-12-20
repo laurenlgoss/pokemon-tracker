@@ -14,6 +14,9 @@ const styles = {
   tableBody: {
     fontFamily: 'Staatliches',
   },
+  tableRow: {
+    backgroundColor: 'white',
+  },
 };
 
 function PokemonTable({ pokemonArray }) {
@@ -36,13 +39,27 @@ function PokemonTable({ pokemonArray }) {
       <table class="table">
         <thead style={styles.tableHead} class="thead">
           <tr>
-            <th scope="col">Pokémon</th>
-            <th scope="col">HP</th>
-            <th scope="col">ATK</th>
-            <th scope="col">DEF</th>
-            <th scope="col">SPATK</th>
-            <th scope="col">SPDEF</th>
-            <th scope="col">SPD</th>
+            <th scope="col" width="20%">
+              Pokémon
+            </th>
+            <th scope="col" width="10%">
+              HP
+            </th>
+            <th scope="col" width="10%">
+              ATK
+            </th>
+            <th scope="col" width="10%">
+              DEF
+            </th>
+            <th scope="col" width="10%">
+              SPATK
+            </th>
+            <th scope="col" width="10%">
+              SPDEF
+            </th>
+            <th scope="col" width="10%">
+              SPD
+            </th>
             <th scope="col" width="10%">
               REMAINING EVs
             </th>
@@ -51,7 +68,7 @@ function PokemonTable({ pokemonArray }) {
         <tbody style={styles.tableBody}>
           {pokemonArray.map((pokemon) => {
             return (
-              <tr>
+              <tr style={styles.tableRow}>
                 {pokemon.nickname ? (
                   <td>{pokemon.nickname}</td>
                 ) : (
