@@ -12,12 +12,15 @@ const styles = {
     fontSize: '50px',
     fontFamily: 'Staatliches',
   },
+  ev: {
+    color: 'rgb(255 219 219)',
+  },
   button: {
     fontFamily: 'Staatliches',
   },
   pokeball: {
-      maxHeight: '20px',
-  }
+    maxHeight: '20px',
+  },
 };
 
 function Header() {
@@ -26,9 +29,9 @@ function Header() {
       <div style={styles.header} className="row px-2 align-content-center">
         <div className="col-6 my-auto">
           <a style={styles.headerBrand} href="/">
-            PokÉV Tracker
+            Pok<span style={styles.ev}>ÉV</span> Tracker
           </a>
-          <img style={styles.pokeball} src={pokeball} />
+          <img style={styles.pokeball} src={pokeball} alt="Pokeball" />
         </div>
         <div className="col-6 text-right my-auto">
           <button
