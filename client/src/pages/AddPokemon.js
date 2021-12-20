@@ -7,11 +7,17 @@ const styles = {
     fontSize: '30px',
     fontFamily: 'Staatliches',
   },
+  topRow: {
+    minHeight: '150px',
+  },
+  sprite: {
+    height: '100%',
+  },
 };
 
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
-  const [selectedPokemon, setSelectedPokemon] = useState({});
+  const [selectedPokemon, setSelectedPokemon] = useState();
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
@@ -23,30 +29,49 @@ function AddPokemon() {
       });
   }, []);
 
+  // When user selects Pokémon, fetch that Pokémon's data from PokéAPI
+  function handleSelect(event) {
+    const { value } = event.target;
+    console.log(value);
+
+    fetch(value)
+      .then((results) => results.json())
+      .then((pokemonData) => {
+        console.log(pokemonData);
+        setSelectedPokemon(pokemonData);
+      });
+  }
+
   return (
     <>
-      <div className="row mb-3">
-        <div style={styles.pageTitle} className="col-6 my-auto">
-          Add New Pokémon
+      <div style={styles.topRow} className="row">
+        <div className="col-6">
+          <div className="row text-right">
+            <div style={styles.pageTitle} className="col-12">
+              Add New Pokémon
+            </div>
+            <div className="col-12">
+              <select className="form-select" onChange={handleSelect}>
+                <option></option>
+                {pokemonArray.map((pokemonData) => {
+                  return (
+                    <option key={pokemonData.name} value={pokemonData.url}>
+                      {capitalizeFirstLetter(pokemonData.name)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
         </div>
-        {/* <div className="col-6 text-right my-auto">
-          <a type="button" className="btn btn-success ml-auto" href="/addPokemon">
-            Add New Pokémon +
-          </a>
-        </div> */}
-      </div>
-      <div className="row">
-        <div className="col">
-          <select className="form-select">
-            <option></option>
-            {pokemonArray.map((pokemonData) => {
-              return (
-                <option key={pokemonData.name} value={pokemonData.name}>
-                  {capitalizeFirstLetter(pokemonData.name)}
-                </option>
-              );
-            })}
-          </select>
+        <div className="col-6">
+          {selectedPokemon ? (
+            <img
+              style={styles.sprite}
+              alt={capitalizeFirstLetter(selectedPokemon.name) + ' sprite'}
+              src={selectedPokemon.sprites.front_default}
+            />
+          ) : null}
         </div>
       </div>
     </>
