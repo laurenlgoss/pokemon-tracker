@@ -29,25 +29,33 @@ function PokemonTable({ pokemonArray }) {
     return 510 - usedEVs;
   }
 
+  function getEVClassColor(ev) {
+    if (ev > 0 && ev < 252) {
+      return 'text-primary';
+    } else if (ev >= 252) {
+      return 'text-success';
+    }
+  }
+
   return (
     <>
-      <div class="row mb-3">
-        <div style={styles.tableTitle} class="col-6 my-auto">
+      <div className="row mb-3">
+        <div style={styles.tableTitle} className="col-6 my-auto">
           Your Pokémon
         </div>
-        <div class="col-6 text-right my-auto">
+        <div className="col-6 text-right my-auto">
           <a
             style={styles.button}
             type="button"
-            class="btn btn-success ml-auto"
+            className="btn btn-success ml-auto"
             href="/addPokemon"
           >
             Add New Pokémon +
           </a>
         </div>
       </div>
-      <table class="table">
-        <thead style={styles.tableHead} class="thead">
+      <table className="table">
+        <thead style={styles.tableHead} className="thead">
           <tr>
             <th scope="col" width="20%">
               Pokémon
@@ -83,19 +91,23 @@ function PokemonTable({ pokemonArray }) {
                   {pokemon.sprite ? (
                     <img
                       style={styles.sprite}
-                      class="mr-1"
+                      className="mr-1"
                       src={pokemon.sprite}
                       alt={pokemon.name + ' sprite'}
                     />
                   ) : null}
                   {pokemon.nickname ? pokemon.nickname : pokemon.name}
                 </td>
-                <td>{pokemon.hp}</td>
-                <td>{pokemon.atk}</td>
-                <td>{pokemon.def}</td>
-                <td>{pokemon.spatk}</td>
-                <td>{pokemon.spdef}</td>
-                <td>{pokemon.spd}</td>
+                <td className={`${getEVClassColor(pokemon.hp)}`}>{pokemon.hp}</td>
+                <td className={`${getEVClassColor(pokemon.atk)}`}>{pokemon.atk}</td>
+                <td className={`${getEVClassColor(pokemon.def)}`}>{pokemon.def}</td>
+                <td className={`${getEVClassColor(pokemon.spatk)}`}>
+                  {pokemon.spatk}
+                </td>
+                <td className={`${getEVClassColor(pokemon.spdef)}`}>
+                  {pokemon.spdef}
+                </td>
+                <td className={`${getEVClassColor(pokemon.spd)}`}>{pokemon.spd}</td>
                 <td>{calculateRemainingEVs(pokemon)}</td>
               </tr>
             );

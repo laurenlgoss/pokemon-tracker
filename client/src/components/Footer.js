@@ -12,7 +12,7 @@ const styles = {
 
 function Footer() {
   return (
-    <footer style={styles.footer} class="fixed-bottom">
+    <footer style={styles.footer} className="fixed-bottom">
       <div className="row">
         <div className="col text-center">
           <p style={styles.footerText}>© Lauren Goss {new Date().getFullYear()}</p>
