@@ -12,6 +12,7 @@ import './global.css';
 
 import Header from './components/Header';
 import Home from './pages/Home';
+import AddPokemon from './pages/AddPokemon';
 import Footer from './components/Footer';
 
 // Construct our main GraphQL API endpoint
@@ -43,14 +44,21 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Header />
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/login"></Route>
-        <Route exact path="/signup"></Route>
-        <Route exact path="/me"></Route>
-        <Route exact path="/profiles/:username"></Route>
-        <Route exact path="/thoughts/:thoughtId"></Route>
+        <div class="row my-5">
+          <div class="col-11 mx-auto">
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/addPokemon">
+              <AddPokemon />
+            </Route>
+            <Route exact path="/login"></Route>
+            <Route exact path="/signup"></Route>
+            <Route exact path="/me"></Route>
+            <Route exact path="/profiles/:username"></Route>
+            <Route exact path="/thoughts/:thoughtId"></Route>
+          </div>
+        </div>
         <Footer />
       </Router>
     </ApolloProvider>
