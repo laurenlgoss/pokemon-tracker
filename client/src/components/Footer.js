@@ -6,6 +6,7 @@ const styles = {
   },
   footerText: {
     color: '#ababab',
+    fontFamily: 'Staatliches',
   }
 }
 
