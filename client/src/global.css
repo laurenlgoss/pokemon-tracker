@@ -3,6 +3,7 @@ body {
   overflow-x: hidden;
   /* Padding on bottom so footer won't cover content */
   padding-bottom: 30px;
+  font-family: 'Staatliches',
 }
 
 a:hover {

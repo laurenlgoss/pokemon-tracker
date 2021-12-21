@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { capitalizeFirstLetter } from '../utils/utils';
+import { capitalizeFirstLetter, calculateRemainingEVs } from '../utils/utils';
 
 const styles = {
   pageTitle: {
@@ -17,9 +17,6 @@ const styles = {
     borderRadius: '0px',
     border: 'none',
   },
-  select: {
-    fontFamily: 'Staatliches',
-  },
   input: {
     fontFamily: 'Staatliches',
   },
@@ -27,11 +24,32 @@ const styles = {
     width: '100%',
     fontFamily: 'Staatliches',
   },
+  td: {
+    padding: '0',
+    fontFamily: 'Staatliches',
+  },
+  tableTitle: {
+    fontSize: '25px',
+    padding: '0em 0em 0.5em 0em',
+    fontFamily: 'Staatliches',
+  },
 };
 
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
+  const [natureArray, setNatureArray] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState();
+  const [formData, setFormData] = useState({
+    species: '',
+    nature: '',
+    nickname: '',
+    hp: 0,
+    atk: 0,
+    def: 0,
+    spatk: 0,
+    spdef: 0,
+    spd: 0,
+  });
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
@@ -40,6 +58,14 @@ function AddPokemon() {
         const pokemon = pokemonData.results;
         console.log(pokemon);
         setPokemonArray(pokemon);
+      });
+
+    fetch('https://pokeapi.co/api/v2/nature?limit=50')
+      .then((results) => results.json())
+      .then((natureData) => {
+        const nature = natureData.results;
+        console.log(nature);
+        setNatureArray(nature);
       });
   }, []);
 
@@ -56,6 +82,12 @@ function AddPokemon() {
       });
   }
 
+  function handleFormChange(event) {
+    let { name, value } = event.target;
+
+    setFormData({ ...formData, [name]: value });
+  }
+
   return (
     <>
       <div className="row">
@@ -65,8 +97,10 @@ function AddPokemon() {
               <div style={styles.pageTitle} className="mt-2">
                 Add New Pokémon
               </div>
+
+              {/* Species */}
               <select
-                style={styles.select}
+                style={styles.input}
                 className="form-control mt-2"
                 onChange={handleSelect}
               >
@@ -79,6 +113,20 @@ function AddPokemon() {
                   );
                 })}
               </select>
+
+              {/* Nature */}
+              <select style={styles.input} className="form-control mt-2">
+                <option value="" selected></option>
+                {natureArray.map((natureData) => {
+                  return (
+                    <option key={natureData.name} value={natureData.url}>
+                      {capitalizeFirstLetter(natureData.name)}
+                    </option>
+                  );
+                })}
+              </select>
+
+              {/* Nickname */}
               <input
                 style={styles.input}
                 className="form-control mt-2"
@@ -99,79 +147,103 @@ function AddPokemon() {
       </div>
       <div className="row mt-3">
         <div className="col-6 mx-auto">
-          <div style={styles.card} className="card p-2">
+          <div style={styles.card} className="card p-3">
             <table className="table">
               <thead className="thead">
-                <th style={styles.input} scope="col" width="10%">
+                <th style={styles.tableTitle} scope="col" width="20%">
                   EVs
                 </th>
                 <th scope="col"></th>
               </thead>
               <tbody>
+                {/* HP */}
                 <tr>
-                  <td style={styles.input}>HP:</td>
-                  <td>
+                  <td style={styles.td}>HP:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="hp"
+                      onChange={handleFormChange}
+                      value={formData.hp}
                     />
                   </td>
                 </tr>
+
+                {/* ATK */}
                 <tr>
-                  <td style={styles.input}>ATK:</td>
-                  <td>
+                  <td style={styles.td}>ATK:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="atk"
+                      onChange={handleFormChange}
+                      value={formData.atk}
                     />
                   </td>
                 </tr>
+
+                {/* DEF */}
                 <tr>
-                  <td style={styles.input}>DEF:</td>
-                  <td>
+                  <td style={styles.td}>DEF:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="def"
+                      onChange={handleFormChange}
+                      value={formData.def}
                     />
                   </td>
                 </tr>
+
+                {/* SPATK */}
                 <tr>
-                  <td style={styles.input}>SPATK:</td>
-                  <td>
+                  <td style={styles.td}>SPATK:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="spatk"
+                      onChange={handleFormChange}
+                      value={formData.spatk}
                     />
                   </td>
                 </tr>
+
+                {/* SPDEF */}
                 <tr>
-                  <td style={styles.input}>SPDEF:</td>
-                  <td>
+                  <td style={styles.td}>SPDEF:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="spdef"
+                      onChange={handleFormChange}
+                      value={formData.spdef}
                     />
                   </td>
                 </tr>
+
+                {/* SPD */}
                 <tr>
-                  <td style={styles.input}>SPD:</td>
-                  <td>
+                  <td style={styles.td}>SPD:</td>
+                  <td style={styles.td}>
                     <input
-                      style={styles.input}
                       className="form-control mb-2"
                       type="number"
-                      value={0}
+                      name="spd"
+                      onChange={handleFormChange}
+                      value={formData.spd}
                     />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style={styles.td}>Remaining EVs:</td>
+                  <td style={styles.td}>
+                    <div>{calculateRemainingEVs(formData)}</div>
                   </td>
                 </tr>
               </tbody>
