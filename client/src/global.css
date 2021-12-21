@@ -10,7 +10,7 @@ a:hover {
 }
 
 .table td {
-  border-top: 0.5em #eeeeee solid;
+  border: none;
 }
 
 .table thead th {

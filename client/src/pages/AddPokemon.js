@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
 
-import capitalizeFirstLetter from '../utils/utils';
+import { capitalizeFirstLetter } from '../utils/utils';
 
 const styles = {
   pageTitle: {
     fontSize: '30px',
     fontFamily: 'Staatliches',
   },
-  topRow: {
-    minHeight: '150px',
-  },
   sprite: {
     height: '100%',
+    // background: 'white',
+    // borderRadius: '50%',
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: '0px',
+    border: 'none',
+  },
+  select: {
+    fontFamily: 'Staatliches',
+  },
+  input: {
+    fontFamily: 'Staatliches',
+  },
+  submitButton: {
+    width: '100%',
+    fontFamily: 'Staatliches',
   },
 };
 
@@ -44,15 +58,19 @@ function AddPokemon() {
 
   return (
     <>
-      <div style={styles.topRow} className="row">
-        <div className="col-6">
+      <div className="row">
+        <div className="col-3 ml-auto">
           <div className="row text-right">
-            <div style={styles.pageTitle} className="col-12">
-              Add New Pokémon
-            </div>
             <div className="col-12">
-              <select className="form-select" onChange={handleSelect}>
-                <option></option>
+              <div style={styles.pageTitle} className="mt-2">
+                Add New Pokémon
+              </div>
+              <select
+                style={styles.select}
+                className="form-control mt-2"
+                onChange={handleSelect}
+              >
+                <option value="" selected></option>
                 {pokemonArray.map((pokemonData) => {
                   return (
                     <option key={pokemonData.name} value={pokemonData.url}>
@@ -61,10 +79,15 @@ function AddPokemon() {
                   );
                 })}
               </select>
+              <input
+                style={styles.input}
+                className="form-control mt-2"
+                placeholder="Nickname"
+              />
             </div>
           </div>
         </div>
-        <div className="col-6">
+        <div className="col-3 mr-auto">
           {selectedPokemon ? (
             <img
               style={styles.sprite}
@@ -72,6 +95,91 @@ function AddPokemon() {
               src={selectedPokemon.sprites.front_default}
             />
           ) : null}
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-6 mx-auto">
+          <div style={styles.card} className="card p-2">
+            <table className="table">
+              <thead className="thead">
+                <th style={styles.input} scope="col" width="10%">
+                  EVs
+                </th>
+                <th scope="col"></th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={styles.input}>HP:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={styles.input}>ATK:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={styles.input}>DEF:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={styles.input}>SPATK:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={styles.input}>SPDEF:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={styles.input}>SPD:</td>
+                  <td>
+                    <input
+                      style={styles.input}
+                      className="form-control mb-2"
+                      type="number"
+                      value={0}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button style={styles.submitButton} className="btn btn-success">
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </>
