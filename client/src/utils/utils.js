@@ -10,7 +10,7 @@ function capitalizeFirstLetter(string) {
   return stringArray.join(' ');
 }
 
-function calculateRemainingEVs({ hp, atk, def, spatk, spdef, spd }) {
+function calculateRemainingEVs(hp, atk, def, spatk, spdef, spd) {
   if (!hp) {
     hp = 0;
   }

@@ -38,18 +38,42 @@ const styles = {
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
-  
+
   const [formData, setFormData] = useState({
     species: '',
     nature: '',
     nickname: '',
     sprite: '',
-    hp: 0,
-    atk: 0,
-    def: 0,
-    spatk: 0,
-    spdef: 0,
-    spd: 0,
+    hp: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
+    atk: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
+    def: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
+    spatk: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
+    spdef: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
+    spd: {
+      ev: '0',
+      bestIv: false,
+      nature: null,
+    },
   });
 
   async function fetchData(url) {
@@ -81,17 +105,36 @@ function AddPokemon() {
   async function handleFormChange(event) {
     let { name, value } = event.target;
 
+    // Nature
     if (name === 'nature') {
       const natureData = await fetchData(value);
       console.log(natureData);
 
       setFormData({ ...formData, [name]: natureData.name });
-    } else if (name === 'species') {
+    }
+    // Species/Sprite
+    else if (name === 'species') {
       const pokemonData = await fetchData(value);
       console.log(pokemonData);
 
       // Update sprite/species formData state
-      setFormData({ ...formData, sprite: pokemonData.sprites.front_default, [name]: pokemonData.species.name });
+      setFormData({
+        ...formData,
+        sprite: pokemonData.sprites.front_default,
+        [name]: pokemonData.species.name,
+      });
+      console.log(formData);
+    }
+    // EVs
+    else if (
+      name === 'hp' ||
+      name === 'atk' ||
+      name === 'def' ||
+      name === 'spatk' ||
+      name === 'spdef' ||
+      name === 'spd'
+    ) {
+      setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
       console.log(formData);
     } else {
       setFormData({ ...formData, [name]: value });
@@ -163,7 +206,7 @@ function AddPokemon() {
           {formData.sprite ? (
             <img
               style={styles.sprite}
-              alt={formData.species + ' sprite'}
+              alt={capitalizeFirstLetter(formData.species) + ' sprite'}
               src={formData.sprite}
             />
           ) : null}
@@ -189,7 +232,7 @@ function AddPokemon() {
                       type="number"
                       name="hp"
                       onChange={handleFormChange}
-                      value={formData.hp}
+                      value={formData.hp.ev}
                     />
                   </td>
                 </tr>
@@ -203,7 +246,7 @@ function AddPokemon() {
                       type="number"
                       name="atk"
                       onChange={handleFormChange}
-                      value={formData.atk}
+                      value={formData.atk.ev}
                     />
                   </td>
                 </tr>
@@ -217,7 +260,7 @@ function AddPokemon() {
                       type="number"
                       name="def"
                       onChange={handleFormChange}
-                      value={formData.def}
+                      value={formData.def.ev}
                     />
                   </td>
                 </tr>
@@ -231,7 +274,7 @@ function AddPokemon() {
                       type="number"
                       name="spatk"
                       onChange={handleFormChange}
-                      value={formData.spatk}
+                      value={formData.spatk.ev}
                     />
                   </td>
                 </tr>
@@ -245,7 +288,7 @@ function AddPokemon() {
                       type="number"
                       name="spdef"
                       onChange={handleFormChange}
-                      value={formData.spdef}
+                      value={formData.spdef.ev}
                     />
                   </td>
                 </tr>
@@ -259,7 +302,7 @@ function AddPokemon() {
                       type="number"
                       name="spd"
                       onChange={handleFormChange}
-                      value={formData.spd}
+                      value={formData.spd.ev}
                     />
                   </td>
                 </tr>
@@ -267,7 +310,16 @@ function AddPokemon() {
                 <tr>
                   <td style={styles.td}>Remaining EVs:</td>
                   <td style={styles.td}>
-                    <div>{calculateRemainingEVs(formData)}</div>
+                    <div>
+                      {calculateRemainingEVs(
+                        formData.hp.ev,
+                        formData.atk.ev,
+                        formData.def.ev,
+                        formData.spatk.ev,
+                        formData.spdef.ev,
+                        formData.spd.ev
+                      )}
+                    </div>
                   </td>
                 </tr>
               </tbody>

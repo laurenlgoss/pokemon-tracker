@@ -11,23 +11,73 @@ function Home() {
     name: 'Charizard',
     nickname: '',
     sprite: charizardImg,
-    hp: 0,
-    atk: 0,
-    def: 4,
-    spatk: 252,
-    spdef: 0,
-    spd: 252,
+    nature: '',
+    hp: {
+      ev: '0',
+      bestIv: true,
+      nature: null,
+    },
+    atk: {
+      ev: '0',
+      bestIv: false,
+      nature: false,
+    },
+    def: {
+      ev: '4',
+      bestIv: true,
+      nature: null,
+    },
+    spatk: {
+      ev: '252',
+      bestIv: true,
+      nature: null,
+    },
+    spdef: {
+      ev: '0',
+      bestIv: true,
+      nature: null,
+    },
+    spd: {
+      ev: '252',
+      bestIv: true,
+      nature: true,
+    },
   };
   const mienshao = {
     name: 'Mienshao',
     nickname: '',
     sprite: mienshaoImg,
-    hp: 4,
-    atk: 252,
-    def: 0,
-    spatk: 0,
-    spdef: 0,
-    spd: 252,
+    nature: '',
+    hp: {
+      ev: '4',
+      bestIv: true,
+      nature: null,
+    },
+    atk: {
+      ev: '252',
+      bestIv: true,
+      nature: null,
+    },
+    def: {
+      ev: '0',
+      bestIv: true,
+      nature: null,
+    },
+    spatk: {
+      ev: '0',
+      bestIv: false,
+      nature: false,
+    },
+    spdef: {
+      ev: '0',
+      bestIv: true,
+      nature: null,
+    },
+    spd: {
+      ev: '252',
+      bestIv: true,
+      nature: true,
+    },
   };
   const pokemonArray = [charizard, mienshao];
 
