@@ -38,11 +38,12 @@ const styles = {
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
-  const [selectedPokemon, setSelectedPokemon] = useState();
+  
   const [formData, setFormData] = useState({
     species: '',
     nature: '',
     nickname: '',
+    sprite: '',
     hp: 0,
     atk: 0,
     def: 0,
@@ -51,7 +52,14 @@ function AddPokemon() {
     spd: 0,
   });
 
+  async function fetchData(url) {
+    const results = await fetch(url);
+    const data = results.json();
+    return data;
+  }
+
   useEffect(() => {
+    // Fetch Pokémon species data
     fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
       .then((results) => results.json())
       .then((pokemonData) => {
@@ -60,6 +68,7 @@ function AddPokemon() {
         setPokemonArray(pokemon);
       });
 
+    // Fetch nature data
     fetch('https://pokeapi.co/api/v2/nature?limit=50')
       .then((results) => results.json())
       .then((natureData) => {
@@ -69,23 +78,25 @@ function AddPokemon() {
       });
   }, []);
 
-  // When user selects Pokémon, fetch that Pokémon's data from PokéAPI
-  function handleSelect(event) {
-    const { value } = event.target;
-    console.log(value);
-
-    fetch(value)
-      .then((results) => results.json())
-      .then((pokemonData) => {
-        console.log(pokemonData);
-        setSelectedPokemon(pokemonData);
-      });
-  }
-
-  function handleFormChange(event) {
+  async function handleFormChange(event) {
     let { name, value } = event.target;
 
-    setFormData({ ...formData, [name]: value });
+    if (name === 'nature') {
+      const natureData = await fetchData(value);
+      console.log(natureData);
+
+      setFormData({ ...formData, [name]: natureData.name });
+    } else if (name === 'species') {
+      const pokemonData = await fetchData(value);
+      console.log(pokemonData);
+
+      // Update sprite/species formData state
+      setFormData({ ...formData, sprite: pokemonData.sprites.front_default, [name]: pokemonData.species.name });
+      console.log(formData);
+    } else {
+      setFormData({ ...formData, [name]: value });
+      console.log(formData);
+    }
   }
 
   return (
@@ -102,9 +113,12 @@ function AddPokemon() {
               <select
                 style={styles.input}
                 className="form-control mt-2"
-                onChange={handleSelect}
+                name="species"
+                onChange={handleFormChange}
               >
-                <option value="" selected></option>
+                <option value="" selected>
+                  Species
+                </option>
                 {pokemonArray.map((pokemonData) => {
                   return (
                     <option key={pokemonData.name} value={pokemonData.url}>
@@ -115,8 +129,15 @@ function AddPokemon() {
               </select>
 
               {/* Nature */}
-              <select style={styles.input} className="form-control mt-2">
-                <option value="" selected></option>
+              <select
+                style={styles.input}
+                className="form-control mt-2"
+                name="nature"
+                onChange={handleFormChange}
+              >
+                <option value="" selected>
+                  Nature
+                </option>
                 {natureArray.map((natureData) => {
                   return (
                     <option key={natureData.name} value={natureData.url}>
@@ -131,16 +152,19 @@ function AddPokemon() {
                 style={styles.input}
                 className="form-control mt-2"
                 placeholder="Nickname"
+                name="nickname"
               />
             </div>
           </div>
         </div>
+
+        {/* Sprite */}
         <div className="col-3 mr-auto">
-          {selectedPokemon ? (
+          {formData.sprite ? (
             <img
               style={styles.sprite}
-              alt={capitalizeFirstLetter(selectedPokemon.name) + ' sprite'}
-              src={selectedPokemon.sprites.front_default}
+              alt={formData.species + ' sprite'}
+              src={formData.sprite}
             />
           ) : null}
         </div>
