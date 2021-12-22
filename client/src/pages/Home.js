@@ -15,7 +15,6 @@ function Home() {
     hp: {
       ev: '0',
       bestIv: true,
-      nature: null,
     },
     atk: {
       ev: '0',
@@ -51,7 +50,6 @@ function Home() {
     hp: {
       ev: '4',
       bestIv: true,
-      nature: null,
     },
     atk: {
       ev: '252',

@@ -47,7 +47,6 @@ function AddPokemon() {
     hp: {
       ev: '0',
       bestIv: false,
-      nature: null,
     },
     atk: {
       ev: '0',
@@ -102,29 +101,88 @@ function AddPokemon() {
       });
   }, []);
 
+  // Needed because the API stat name is different than my variables
+  function translateStatName(stat) {
+    let newStatName;
+
+    switch (stat) {
+      case 'attack':
+        newStatName = 'atk';
+        break;
+      case 'defense':
+        newStatName = 'def';
+        break;
+      case 'special-attack':
+        newStatName = 'spatk';
+        break;
+      case 'special-defense':
+        newStatName = 'spdef';
+        break;
+      case 'speed':
+        newStatName = 'spd';
+        break;
+      default:
+        newStatName = null;
+    }
+    return newStatName;
+  }
+
   async function handleFormChange(event) {
     let { name, value } = event.target;
 
     // Nature
     if (name === 'nature') {
-      const natureData = await fetchData(value);
-      console.log(natureData);
+      // Empty out nature value if user chooses 'Nature'
+      if (!value) {
+        setFormData({ ...formData, [name]: '' });
+        console.log(formData);
+      } else {
+        const natureData = await fetchData(value);
+        console.log(natureData);
+  
+        // Need this check because some natures don't affect stats
+        if (!natureData.increased_stat || !natureData.decreased_stat) {
+          setFormData({ ...formData, [name]: natureData.name });
+          console.log(formData);
+        } else {
+          let decreasedStat = translateStatName(natureData.decreased_stat.name);
+          let increasedStat = translateStatName(natureData.increased_stat.name);
+  
+          // TODO: Figure out how to reset unaffected natures to null on change
+          setFormData({
+            ...formData,
+            [name]: natureData.name,
+            [decreasedStat]: { ...formData[decreasedStat], nature: false },
+            [increasedStat]: { ...formData[increasedStat], nature: true },
+          });
+          console.log(formData);
+        }
+      }
 
-      setFormData({ ...formData, [name]: natureData.name });
+      //   setFormData({ ...formData, [name]: natureData.name });
+      //   console.log(formData);
     }
+
     // Species/Sprite
     else if (name === 'species') {
-      const pokemonData = await fetchData(value);
-      console.log(pokemonData);
-
-      // Update sprite/species formData state
-      setFormData({
-        ...formData,
-        sprite: pokemonData.sprites.front_default,
-        [name]: pokemonData.species.name,
-      });
-      console.log(formData);
+      // Empty out species value if user chooses 'Species'
+      if (!value) {
+        setFormData({ ...formData, [name]: '' });
+        console.log(formData);
+      } else {
+        const pokemonData = await fetchData(value);
+        console.log(pokemonData);
+  
+        // Update sprite/species formData state
+        setFormData({
+          ...formData,
+          sprite: pokemonData.sprites.front_default,
+          [name]: pokemonData.species.name,
+        });
+        console.log(formData);
+      }
     }
+
     // EVs
     else if (
       name === 'hp' ||
@@ -136,7 +194,9 @@ function AddPokemon() {
     ) {
       setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
       console.log(formData);
-    } else {
+    }
+    
+    else {
       setFormData({ ...formData, [name]: value });
       console.log(formData);
     }
@@ -196,6 +256,7 @@ function AddPokemon() {
                 className="form-control mt-2"
                 placeholder="Nickname"
                 name="nickname"
+                onChange={handleFormChange}
               />
             </div>
           </div>
@@ -239,7 +300,14 @@ function AddPokemon() {
 
                 {/* ATK */}
                 <tr>
-                  <td style={styles.td}>ATK:</td>
+                  <td
+                    className={`${
+                      formData.atk.nature ? 'text-success' : 'text-danger'
+                    }`}
+                    style={styles.td}
+                  >
+                    ATK:
+                  </td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
