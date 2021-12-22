@@ -101,6 +101,16 @@ function AddPokemon() {
       });
   }, []);
 
+  function getNatureClassName(nature) {
+    if (nature) {
+      return 'text-success';
+    } else if (nature === false) {
+      return 'text-danger';
+    } else {
+      return null;
+    }
+  }
+
   // Needed because the API stat name is different than my variables
   function translateStatName(stat) {
     let newStatName;
@@ -134,33 +144,50 @@ function AddPokemon() {
     if (name === 'nature') {
       // Empty out nature value if user chooses 'Nature'
       if (!value) {
-        setFormData({ ...formData, [name]: '' });
+        setFormData({
+          ...formData,
+          [name]: '',
+          atk: { ...formData.atk, nature: null },
+          def: { ...formData.def, nature: null },
+          spatk: { ...formData.spatk, nature: null },
+          spdef: { ...formData.spdef, nature: null },
+          spd: { ...formData.spd, nature: null },
+        });
         console.log(formData);
       } else {
         const natureData = await fetchData(value);
         console.log(natureData);
-  
+
         // Need this check because some natures don't affect stats
         if (!natureData.increased_stat || !natureData.decreased_stat) {
-          setFormData({ ...formData, [name]: natureData.name });
+          setFormData({
+            ...formData,
+            [name]: natureData.name,
+            atk: { ...formData.atk, nature: null },
+            def: { ...formData.def, nature: null },
+            spatk: { ...formData.spatk, nature: null },
+            spdef: { ...formData.spdef, nature: null },
+            spd: { ...formData.spd, nature: null },
+          });
           console.log(formData);
         } else {
           let decreasedStat = translateStatName(natureData.decreased_stat.name);
           let increasedStat = translateStatName(natureData.increased_stat.name);
-  
-          // TODO: Figure out how to reset unaffected natures to null on change
+
           setFormData({
             ...formData,
             [name]: natureData.name,
+            atk: { ...formData.atk, nature: null },
+            def: { ...formData.def, nature: null },
+            spatk: { ...formData.spatk, nature: null },
+            spdef: { ...formData.spdef, nature: null },
+            spd: { ...formData.spd, nature: null },
             [decreasedStat]: { ...formData[decreasedStat], nature: false },
             [increasedStat]: { ...formData[increasedStat], nature: true },
           });
           console.log(formData);
         }
       }
-
-      //   setFormData({ ...formData, [name]: natureData.name });
-      //   console.log(formData);
     }
 
     // Species/Sprite
@@ -172,7 +199,7 @@ function AddPokemon() {
       } else {
         const pokemonData = await fetchData(value);
         console.log(pokemonData);
-  
+
         // Update sprite/species formData state
         setFormData({
           ...formData,
@@ -194,9 +221,7 @@ function AddPokemon() {
     ) {
       setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
       console.log(formData);
-    }
-    
-    else {
+    } else {
       setFormData({ ...formData, [name]: value });
       console.log(formData);
     }
@@ -301,10 +326,8 @@ function AddPokemon() {
                 {/* ATK */}
                 <tr>
                   <td
-                    className={`${
-                      formData.atk.nature ? 'text-success' : 'text-danger'
-                    }`}
                     style={styles.td}
+                    className={`${getNatureClassName(formData.atk.nature)}`}
                   >
                     ATK:
                   </td>
@@ -321,7 +344,12 @@ function AddPokemon() {
 
                 {/* DEF */}
                 <tr>
-                  <td style={styles.td}>DEF:</td>
+                  <td
+                    style={styles.td}
+                    className={`${getNatureClassName(formData.def.nature)}`}
+                  >
+                    DEF:
+                  </td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -335,7 +363,12 @@ function AddPokemon() {
 
                 {/* SPATK */}
                 <tr>
-                  <td style={styles.td}>SPATK:</td>
+                  <td
+                    style={styles.td}
+                    className={`${getNatureClassName(formData.spatk.nature)}`}
+                  >
+                    SPATK:
+                  </td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -349,7 +382,12 @@ function AddPokemon() {
 
                 {/* SPDEF */}
                 <tr>
-                  <td style={styles.td}>SPDEF:</td>
+                  <td
+                    style={styles.td}
+                    className={`${getNatureClassName(formData.spdef.nature)}`}
+                  >
+                    SPDEF:
+                  </td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -363,7 +401,12 @@ function AddPokemon() {
 
                 {/* SPD */}
                 <tr>
-                  <td style={styles.td}>SPD:</td>
+                  <td
+                    style={styles.td}
+                    className={`${getNatureClassName(formData.spd.nature)}`}
+                  >
+                    SPD:
+                  </td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
