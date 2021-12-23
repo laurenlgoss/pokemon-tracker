@@ -33,6 +33,10 @@ const styles = {
     padding: '0em 0em 0.5em 0em',
     fontFamily: 'Staatliches',
   },
+  checkbox: {
+    // webkitTransform: 'scale(2)',
+    margin: '0',
+  },
 };
 
 function AddPokemon() {
@@ -221,7 +225,20 @@ function AddPokemon() {
     ) {
       setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
       console.log(formData);
-    } else {
+    }
+
+    // IVs
+    else if (name.split(' ')[1] === 'bestIv') {
+      name = name.split(' ')[0];
+      setFormData({
+        ...formData,
+        [name]: { ...formData[name], bestIv: Boolean(value) },
+      });
+      console.log(formData);
+    }
+
+    // Any other inputs
+    else {
       setFormData({ ...formData, [name]: value });
       console.log(formData);
     }
@@ -303,10 +320,13 @@ function AddPokemon() {
           <div style={styles.card} className="card p-3">
             <table className="table">
               <thead className="thead">
-                <th style={styles.tableTitle} scope="col" width="20%">
+                <th scope="col" width="20%"></th>
+                <th style={styles.tableTitle} scope="col">
                   EVs
                 </th>
-                <th scope="col"></th>
+                <th style={styles.tableTitle} width="15%">
+                  Best IV?
+                </th>
               </thead>
               <tbody>
                 {/* HP */}
@@ -319,6 +339,16 @@ function AddPokemon() {
                       name="hp"
                       onChange={handleFormChange}
                       value={formData.hp.ev}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="hp bestIv"
+                      onChange={handleFormChange}
+                      value={true}
                     />
                   </td>
                 </tr>
@@ -340,6 +370,16 @@ function AddPokemon() {
                       value={formData.atk.ev}
                     />
                   </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="atk bestIv"
+                      onChange={handleFormChange}
+                      value={true}
+                    />
+                  </td>
                 </tr>
 
                 {/* DEF */}
@@ -357,6 +397,16 @@ function AddPokemon() {
                       name="def"
                       onChange={handleFormChange}
                       value={formData.def.ev}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="def bestIv"
+                      onChange={handleFormChange}
+                      value={true}
                     />
                   </td>
                 </tr>
@@ -378,6 +428,16 @@ function AddPokemon() {
                       value={formData.spatk.ev}
                     />
                   </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="spatk bestIv"
+                      onChange={handleFormChange}
+                      value={true}
+                    />
+                  </td>
                 </tr>
 
                 {/* SPDEF */}
@@ -397,6 +457,16 @@ function AddPokemon() {
                       value={formData.spdef.ev}
                     />
                   </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="spdef bestIv"
+                      onChange={handleFormChange}
+                      value={true}
+                    />
+                  </td>
                 </tr>
 
                 {/* SPD */}
@@ -414,6 +484,16 @@ function AddPokemon() {
                       name="spd"
                       onChange={handleFormChange}
                       value={formData.spd.ev}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style={styles.checkbox}
+                      className="form-check-input"
+                      type="checkbox"
+                      name="spd bestIv"
+                      onChange={handleFormChange}
+                      value={true}
                     />
                   </td>
                 </tr>
