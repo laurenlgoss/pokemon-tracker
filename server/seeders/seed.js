@@ -16,7 +16,7 @@ db.once('open', async () => {
         { username: associatedUser },
         {
           $addToSet: {
-            thoughts: _id,
+            pokemon: _id,
           },
         }
       );

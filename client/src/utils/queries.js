@@ -1,59 +1,82 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
-      _id
-      username
-      email
-      thoughts {
-        _id
-        thoughtText
-        createdAt
+export const QUERY_POKEMON = gql`
+  query pokemon($pokemonId: ID!) {
+    pokemon(_id: $pokemonId!) {
+      _id: ID
+      species: String
+      nature: String
+      nickname: String
+      sprite: String
+      hp: {
+        ev: String
+        bestIv: Boolean
+      }
+      atk: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      def: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spatk: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spdef: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spd: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
       }
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-    }
-  }
-`;
-
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        commentAuthor
-        createdAt
+export const QUERY_POKEMONS = gql`
+  query pokemons {
+    pokemons {
+      _id: ID
+      species: String
+      nature: String
+      nickname: String
+      sprite: String
+      hp: {
+        ev: String
+        bestIv: Boolean
       }
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      thoughts {
-        _id
-        thoughtText
-        thoughtAuthor
-        createdAt
+      atk: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      def: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spatk: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spdef: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
+      }
+      spd: {
+        ev: String
+        bestIv: Boolean
+        nature: Boolean
       }
     }
   }
