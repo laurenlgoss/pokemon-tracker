@@ -30,9 +30,19 @@ const styles = {
 function PokemonTable({ pokemonArray }) {
   function getEVClassColor(ev) {
     if (ev > 0 && ev < 252) {
-      return 'text-primary';
+      return 'text-warning';
     } else if (ev >= 252) {
       return 'text-success';
+    }
+  }
+
+  function renderNatureIcon(nature) {
+    if (nature) {
+      return '+';
+    } else if (nature === false) {
+      return '-';
+    } else {
+      return null;
     }
   }
 
@@ -108,30 +118,35 @@ function PokemonTable({ pokemonArray }) {
                   className={`${getEVClassColor(pokemon.atk.ev)}`}
                 >
                   {pokemon.atk.ev}
+                  {renderNatureIcon(pokemon.atk.nature)}
                 </td>
                 <td
                   style={styles.td}
                   className={`${getEVClassColor(pokemon.def.ev)}`}
                 >
                   {pokemon.def.ev}
+                  {renderNatureIcon(pokemon.def.nature)}
                 </td>
                 <td
                   style={styles.td}
                   className={`${getEVClassColor(pokemon.spatk.ev)}`}
                 >
                   {pokemon.spatk.ev}
+                  {renderNatureIcon(pokemon.spatk.nature)}
                 </td>
                 <td
                   style={styles.td}
                   className={`${getEVClassColor(pokemon.spdef.ev)}`}
                 >
                   {pokemon.spdef.ev}
+                  {renderNatureIcon(pokemon.spdef.nature)}
                 </td>
                 <td
                   style={styles.td}
                   className={`${getEVClassColor(pokemon.spd.ev)}`}
                 >
                   {pokemon.spd.ev}
+                  {renderNatureIcon(pokemon.spd.nature)}
                 </td>
                 <td style={styles.td}>
                   {calculateRemainingEVs(

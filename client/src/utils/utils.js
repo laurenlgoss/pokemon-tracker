@@ -41,4 +41,14 @@ function calculateRemainingEVs(hp, atk, def, spatk, spdef, spd) {
   return 510 - usedEVs;
 }
 
-export { capitalizeFirstLetter, calculateRemainingEVs };
+function getNatureClassName(nature) {
+  if (nature) {
+    return 'text-success';
+  } else if (nature === false) {
+    return 'text-danger';
+  } else {
+    return null;
+  }
+}
+
+export { capitalizeFirstLetter, calculateRemainingEVs, getNatureClassName };

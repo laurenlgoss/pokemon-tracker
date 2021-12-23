@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { capitalizeFirstLetter, calculateRemainingEVs } from '../utils/utils';
+import { capitalizeFirstLetter, calculateRemainingEVs, getNatureClassName } from '../utils/utils';
 
 const styles = {
   pageTitle: {
@@ -104,16 +104,6 @@ function AddPokemon() {
         setNatureArray(nature);
       });
   }, []);
-
-  function getNatureClassName(nature) {
-    if (nature) {
-      return 'text-success';
-    } else if (nature === false) {
-      return 'text-danger';
-    } else {
-      return null;
-    }
-  }
 
   // Needed because the API stat name is different than my variables
   function translateStatName(stat) {
@@ -320,7 +310,9 @@ function AddPokemon() {
           <div style={styles.card} className="card p-3">
             <table className="table">
               <thead className="thead">
-                <th scope="col" width="20%"></th>
+                <th style={styles.tableTitle} scope="col" width="20%">
+                  Stat
+                </th>
                 <th style={styles.tableTitle} scope="col">
                   EVs
                 </th>
@@ -331,7 +323,7 @@ function AddPokemon() {
               <tbody>
                 {/* HP */}
                 <tr>
-                  <td style={styles.td}>HP:</td>
+                  <td style={styles.td}>HP</td>
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -359,7 +351,7 @@ function AddPokemon() {
                     style={styles.td}
                     className={`${getNatureClassName(formData.atk.nature)}`}
                   >
-                    ATK:
+                    ATK
                   </td>
                   <td style={styles.td}>
                     <input
@@ -388,7 +380,7 @@ function AddPokemon() {
                     style={styles.td}
                     className={`${getNatureClassName(formData.def.nature)}`}
                   >
-                    DEF:
+                    DEF
                   </td>
                   <td style={styles.td}>
                     <input
@@ -417,7 +409,7 @@ function AddPokemon() {
                     style={styles.td}
                     className={`${getNatureClassName(formData.spatk.nature)}`}
                   >
-                    SPATK:
+                    SPATK
                   </td>
                   <td style={styles.td}>
                     <input
@@ -446,7 +438,7 @@ function AddPokemon() {
                     style={styles.td}
                     className={`${getNatureClassName(formData.spdef.nature)}`}
                   >
-                    SPDEF:
+                    SPDEF
                   </td>
                   <td style={styles.td}>
                     <input
@@ -475,7 +467,7 @@ function AddPokemon() {
                     style={styles.td}
                     className={`${getNatureClassName(formData.spd.nature)}`}
                   >
-                    SPD:
+                    SPD
                   </td>
                   <td style={styles.td}>
                     <input
@@ -499,7 +491,7 @@ function AddPokemon() {
                 </tr>
 
                 <tr>
-                  <td style={styles.td}>Remaining EVs:</td>
+                  <td style={styles.td}>Remaining EVs</td>
                   <td style={styles.td}>
                     <div>
                       {calculateRemainingEVs(

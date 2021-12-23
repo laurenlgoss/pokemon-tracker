@@ -11,7 +11,7 @@ function Home() {
     name: 'Charizard',
     nickname: '',
     sprite: charizardImg,
-    nature: '',
+    nature: 'Impish',
     hp: {
       ev: '0',
       bestIv: true,
@@ -46,7 +46,7 @@ function Home() {
     name: 'Mienshao',
     nickname: '',
     sprite: mienshaoImg,
-    nature: '',
+    nature: 'Jolly',
     hp: {
       ev: '4',
       bestIv: true,
