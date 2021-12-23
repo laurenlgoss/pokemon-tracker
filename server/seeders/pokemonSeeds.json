@@ -1,0 +1,38 @@
+[
+  {
+    "species": "Charizard",
+    "nickname": "",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+    "nature": "Impish",
+    "associatedUser": "lgoss",
+    "hp": {
+      "ev": "0",
+      "bestIv": true
+    },
+    "atk": {
+      "ev": "0",
+      "bestIv": false,
+      "nature": false
+    },
+    "def": {
+      "ev": "4",
+      "bestIv": true,
+      "nature": null
+    },
+    "spatk": {
+      "ev": "252",
+      "bestIv": true,
+      "nature": null
+    },
+    "spdef": {
+      "ev": "0",
+      "bestIv": true,
+      "nature": null
+    },
+    "spd": {
+      "ev": "252",
+      "bestIv": true,
+      "nature": true
+    }
+  }
+]

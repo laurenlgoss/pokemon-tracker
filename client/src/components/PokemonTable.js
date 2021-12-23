@@ -102,10 +102,10 @@ function PokemonTable({ pokemonArray }) {
                       style={styles.sprite}
                       className="mr-1"
                       src={pokemon.sprite}
-                      alt={pokemon.name + ' sprite'}
+                      alt={pokemon.species + ' sprite'}
                     />
                   ) : null}
-                  {pokemon.nickname ? pokemon.nickname : pokemon.name}
+                  {pokemon.nickname ? pokemon.nickname : pokemon.species}
                 </td>
                 <td
                   style={styles.td}

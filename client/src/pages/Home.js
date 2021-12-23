@@ -8,7 +8,7 @@ import mienshaoImg from '../images/mienshao.png';
 function Home() {
   // Hardcoded pokémon for now
   const charizard = {
-    name: 'Charizard',
+    species: 'Charizard',
     nickname: '',
     sprite: charizardImg,
     nature: 'Impish',
@@ -43,7 +43,7 @@ function Home() {
     },
   };
   const mienshao = {
-    name: 'Mienshao',
+    species: 'Mienshao',
     nickname: '',
     sprite: mienshaoImg,
     nature: 'Jolly',

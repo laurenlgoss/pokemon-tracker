@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { capitalizeFirstLetter, calculateRemainingEVs, getNatureClassName } from '../utils/utils';
+import {
+  capitalizeFirstLetter,
+  calculateRemainingEVs,
+  getNatureClassName,
+} from '../utils/utils';
 
 const styles = {
   pageTitle: {
@@ -213,6 +217,17 @@ function AddPokemon() {
       name === 'spdef' ||
       name === 'spd'
     ) {
+      if (value > 255) {
+        value = 255;
+      }
+      if (value < 0) {
+        value = 0;
+      }
+      // Ensure no numbers start with a zero
+      if (value.split('')[0] === '0' && value.split('').length > 1) {
+        value = value.split('')[1];
+      }
+
       setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
       console.log(formData);
     }
@@ -232,6 +247,10 @@ function AddPokemon() {
       setFormData({ ...formData, [name]: value });
       console.log(formData);
     }
+  }
+
+  function handleFormSubmit(event) {
+    console.log('Submit');
   }
 
   return (
@@ -507,7 +526,11 @@ function AddPokemon() {
                 </tr>
               </tbody>
             </table>
-            <button style={styles.submitButton} className="btn btn-success">
+            <button
+              style={styles.submitButton}
+              className="btn btn-success"
+              onClick={handleFormSubmit}
+            >
               Submit
             </button>
           </div>
