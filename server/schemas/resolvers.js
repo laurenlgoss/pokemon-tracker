@@ -5,19 +5,14 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     pokemons: async (parent, args, context) => {
+      console.log(context);
       const username = context.user.username;
-      console.log(username);
+      console.log('username' + username);
       return Pokemon.find({ username }).sort({ createdAt: -1 });
     },
     pokemon: async (parent, { pokemonId }) => {
       return Pokemon.findOne({ _id: pokemonId });
     },
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return User.findOne({ _id: context.user._id }).populate('thoughts');
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
   },
 
   Mutation: {

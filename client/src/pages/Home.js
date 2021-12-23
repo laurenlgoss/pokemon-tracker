@@ -2,10 +2,16 @@ import React from 'react';
 
 import PokemonTable from '../components/PokemonTable';
 
+import { useQuery } from '@apollo/client';
+import { QUERY_POKEMONS } from '../utils/queries';
+
 import charizardImg from '../images/charizard.png';
 import mienshaoImg from '../images/mienshao.png';
 
 function Home() {
+  const { loading, data } = useQuery(QUERY_POKEMONS);
+  console.log(data);
+
   // Hardcoded pokémon for now
   const charizard = {
     species: 'Charizard',

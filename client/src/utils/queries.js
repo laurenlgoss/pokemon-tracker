@@ -2,40 +2,40 @@ import { gql } from '@apollo/client';
 
 export const QUERY_POKEMON = gql`
   query pokemon($pokemonId: ID!) {
-    pokemon(_id: $pokemonId!) {
-      _id: ID
-      species: String
-      nature: String
-      nickname: String
-      sprite: String
-      hp: {
-        ev: String
-        bestIv: Boolean
+    pokemon(_id: $pokemonId) {
+      _id
+      species
+      nature
+      nickname
+      sprite
+      hp {
+        ev
+        bestIv
       }
-      atk: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      atk {
+        ev
+        bestIv
+        nature
       }
-      def: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      def {
+        ev
+        bestIv
+        nature
       }
-      spatk: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spatk {
+        ev
+        bestIv
+        nature
       }
-      spdef: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spdef {
+        ev
+        bestIv
+        nature
       }
-      spd: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spd {
+        ev
+        bestIv
+        nature
       }
     }
   }
@@ -44,39 +44,39 @@ export const QUERY_POKEMON = gql`
 export const QUERY_POKEMONS = gql`
   query pokemons {
     pokemons {
-      _id: ID
-      species: String
-      nature: String
-      nickname: String
-      sprite: String
-      hp: {
-        ev: String
-        bestIv: Boolean
+      _id
+      species
+      nature
+      nickname
+      sprite
+      hp {
+        ev
+        bestIv
       }
-      atk: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      atk {
+        ev
+        bestIv
+        nature
       }
-      def: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      def {
+        ev
+        bestIv
+        nature
       }
-      spatk: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spatk {
+        ev
+        bestIv
+        nature
       }
-      spdef: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spdef {
+        ev
+        bestIv
+        nature
       }
-      spd: {
-        ev: String
-        bestIv: Boolean
-        nature: Boolean
+      spd {
+        ev
+        bestIv
+        nature
       }
     }
   }
