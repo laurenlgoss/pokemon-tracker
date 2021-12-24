@@ -49,9 +49,9 @@ const styles = {
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
-
+  
   // Hardcoded username for now because auth not working...
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     species: '',
     nature: '',
     nickname: '',
@@ -86,7 +86,9 @@ function AddPokemon() {
       bestIv: false,
       nature: null,
     },
-  });
+  }
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const [addPokemon, { loading, data }] = useMutation(ADD_POKEMON);
 
@@ -167,7 +169,7 @@ function AddPokemon() {
         if (!natureData.increased_stat || !natureData.decreased_stat) {
           setFormData({
             ...formData,
-            [name]: natureData.name,
+            [name]: capitalizeFirstLetter(natureData.name),
             atk: { ...formData.atk, nature: null },
             def: { ...formData.def, nature: null },
             spatk: { ...formData.spatk, nature: null },
@@ -181,7 +183,7 @@ function AddPokemon() {
 
           setFormData({
             ...formData,
-            [name]: natureData.name,
+            [name]: capitalizeFirstLetter(natureData.name),
             atk: { ...formData.atk, nature: null },
             def: { ...formData.def, nature: null },
             spatk: { ...formData.spatk, nature: null },
@@ -209,7 +211,7 @@ function AddPokemon() {
         setFormData({
           ...formData,
           sprite: pokemonData.sprites.front_default,
-          [name]: pokemonData.species.name,
+          [name]: capitalizeFirstLetter(pokemonData.species.name),
         });
         console.log(formData);
       }
@@ -262,42 +264,7 @@ function AddPokemon() {
         variables: { pokemon: formData },
       });
 
-      setFormData({
-        species: '',
-        nature: '',
-        nickname: '',
-        sprite: '',
-        associatedUser: 'lgoss',
-        hp: {
-          ev: '0',
-          bestIv: false,
-        },
-        atk: {
-          ev: '0',
-          bestIv: false,
-          nature: null,
-        },
-        def: {
-          ev: '0',
-          bestIv: false,
-          nature: null,
-        },
-        spatk: {
-          ev: '0',
-          bestIv: false,
-          nature: null,
-        },
-        spdef: {
-          ev: '0',
-          bestIv: false,
-          nature: null,
-        },
-        spd: {
-          ev: '0',
-          bestIv: false,
-          nature: null,
-        },
-      });
+      setFormData(initialFormState);
     } catch (err) {
       console.log(err);
     }

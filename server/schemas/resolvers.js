@@ -4,24 +4,33 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    // Get all pokemon from specific user
     pokemons: async (parent, { username }, context) => {
       // console.log(context);
       // const username = context.user.username;
       // console.log('username' + username);
 
-      return User.findOne({ username }).populate('pokemon');
+      return User.findOne({ username }).populate({
+        path: 'pokemon',
+        options: { sort: { createdAt: -1 } },
+      });
     },
+
+    // Get specific pokemon
     pokemon: async (parent, { pokemonId }) => {
       return Pokemon.findOne({ _id: pokemonId });
     },
   },
 
   Mutation: {
+    // Sign up
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
     },
+
+    // Login
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -39,6 +48,8 @@ const resolvers = {
 
       return { token, user };
     },
+
+    // Add pokemon
     addPokemon: async (parent, { pokemon }) => {
       const {
         species,
