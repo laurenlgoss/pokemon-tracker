@@ -26,6 +26,8 @@ const styles = {
 };
 
 function Header() {
+  console.log(Auth.loggedIn());
+
   return (
     <header>
       <div style={styles.header} className="row px-3 align-content-center">

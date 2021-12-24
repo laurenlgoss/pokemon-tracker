@@ -8,7 +8,8 @@ const resolvers = {
       // console.log(context);
       // const username = context.user.username;
       // console.log('username' + username);
-      return Pokemon.find({ username }).sort({ createdAt: -1 });
+
+      return User.findOne({ username }).populate('pokemon');
     },
     pokemon: async (parent, { pokemonId }) => {
       return Pokemon.findOne({ _id: pokemonId });

@@ -12,10 +12,12 @@ import mienshaoImg from '../images/mienshao.png';
 
 function Home() {
   // console.log(Auth.getProfile().data);
-  // const { loading, data } = useQuery(QUERY_POKEMONS, {
-  //   variables: { username: Auth.getProfile().data.username },
-  // });
-  // console.log(data);
+  // Hardcoded username for now because auth isn't working...
+  const { loading, data } = useQuery(QUERY_POKEMONS, {
+    variables: { username: 'lgoss' },
+  });
+  const pokemonArray = data?.pokemons.pokemon || [];
+  console.log(pokemonArray);
 
   // Hardcoded pokémon for now
   const charizard = {
@@ -88,9 +90,19 @@ function Home() {
       nature: true,
     },
   };
-  const pokemonArray = [charizard, mienshao];
+  // const pokemonArray = [charizard, mienshao];
 
-  return <PokemonTable pokemonArray={pokemonArray} />;
+  return (
+    <>
+      {/* {
+      Auth.loggedIn() ? ( */}
+        <PokemonTable pokemonArray={pokemonArray} />
+      {/* ) : (
+        <div>Welcome Page</div>
+      )
+      } */}
+    </>
+  );
 }
 
 export default Home;

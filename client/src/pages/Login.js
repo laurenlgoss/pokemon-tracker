@@ -128,7 +128,7 @@ const Login = () => {
                 className="btn btn-success"
                 type="submit"
               >
-                Sign Up
+                Log In
               </button>
             </div>
           </form>

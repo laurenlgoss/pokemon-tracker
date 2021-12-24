@@ -34,5 +34,41 @@
       "bestIv": true,
       "nature": true
     }
+  },
+  {
+    "species": "Mienshao",
+    "nickname": "",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/620.png",
+    "nature": "Jolly",
+    "associatedUser": "lgoss",
+    "hp": {
+      "ev": "4",
+      "bestIv": true
+    },
+    "atk": {
+      "ev": "252",
+      "bestIv": true,
+      "nature": null
+    },
+    "def": {
+      "ev": "0",
+      "bestIv": true,
+      "nature": null
+    },
+    "spatk": {
+      "ev": "0",
+      "bestIv": false,
+      "nature": false
+    },
+    "spdef": {
+      "ev": "0",
+      "bestIv": true,
+      "nature": null
+    },
+    "spd": {
+      "ev": "252",
+      "bestIv": true,
+      "nature": true
+    }
   }
 ]
