@@ -39,22 +39,42 @@ const resolvers = {
 
       return { token, user };
     },
-    // addThought: async (parent, { thoughtText }, context) => {
-    //   if (context.user) {
-    //     const Pokemon = await Pokemon.create({
-    //       thoughtText,
-    //       thoughtAuthor: context.user.username,
-    //     });
+    addPokemon: async (parent, { pokemon }) => {
+      const {
+        species,
+        nature,
+        nickname,
+        sprite,
+        associatedUser,
+        hp,
+        atk,
+        def,
+        spatk,
+        spdef,
+        spd,
+      } = pokemon;
 
-    //     await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $addToSet: { thoughts: Pokemon._id } }
-    //     );
+      const newPokemon = await Pokemon.create({
+        species,
+        nature,
+        nickname,
+        sprite,
+        associatedUser,
+        hp,
+        atk,
+        def,
+        spatk,
+        spdef,
+        spd,
+      });
 
-    //     return Pokemon;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      await User.findOneAndUpdate(
+        { username: associatedUser },
+        { $addToSet: { pokemon: newPokemon._id } }
+      );
+
+      return newPokemon;
+    },
     // addComment: async (parent, { thoughtId, commentText }, context) => {
     //   if (context.user) {
     //     return Pokemon.findOneAndUpdate(

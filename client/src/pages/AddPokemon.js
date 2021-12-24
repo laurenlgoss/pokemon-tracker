@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { useMutation } from '@apollo/client';
+import { ADD_POKEMON } from '../utils/mutations';
+
 import {
   capitalizeFirstLetter,
   calculateRemainingEVs,
@@ -47,11 +50,13 @@ function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
 
+  // Hardcoded username for now because auth not working...
   const [formData, setFormData] = useState({
     species: '',
     nature: '',
     nickname: '',
     sprite: '',
+    associatedUser: 'lgoss',
     hp: {
       ev: '0',
       bestIv: false,
@@ -82,6 +87,8 @@ function AddPokemon() {
       nature: null,
     },
   });
+
+  const [addPokemon, { loading, data }] = useMutation(ADD_POKEMON);
 
   async function fetchData(url) {
     const results = await fetch(url);
@@ -250,7 +257,50 @@ function AddPokemon() {
   }
 
   function handleFormSubmit(event) {
-    console.log('Submit');
+    try {
+      const { data } = addPokemon({
+        variables: { pokemon: formData },
+      });
+
+      setFormData({
+        species: '',
+        nature: '',
+        nickname: '',
+        sprite: '',
+        associatedUser: 'lgoss',
+        hp: {
+          ev: '0',
+          bestIv: false,
+        },
+        atk: {
+          ev: '0',
+          bestIv: false,
+          nature: null,
+        },
+        def: {
+          ev: '0',
+          bestIv: false,
+          nature: null,
+        },
+        spatk: {
+          ev: '0',
+          bestIv: false,
+          nature: null,
+        },
+        spdef: {
+          ev: '0',
+          bestIv: false,
+          nature: null,
+        },
+        spd: {
+          ev: '0',
+          bestIv: false,
+          nature: null,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

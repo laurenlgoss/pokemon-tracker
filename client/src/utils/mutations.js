@@ -24,17 +24,10 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
+export const ADD_POKEMON = gql`
+  mutation addPokemon($pokemon: PokemonData!) {
+    addPokemon(pokemon: $pokemon) {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-      }
     }
   }
 `;
