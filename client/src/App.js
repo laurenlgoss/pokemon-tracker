@@ -8,12 +8,14 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import './global.css';
-
 import Header from './components/Header';
 import Home from './pages/Home';
 import AddPokemon from './pages/AddPokemon';
 import Footer from './components/Footer';
+import SignUp from './pages/Signup';
+import Login from './pages/Login';
+
+import './global.css';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -52,11 +54,12 @@ function App() {
             <Route exact path="/addPokemon">
               <AddPokemon />
             </Route>
-            <Route exact path="/login"></Route>
-            <Route exact path="/signup"></Route>
-            <Route exact path="/me"></Route>
-            <Route exact path="/profiles/:username"></Route>
-            <Route exact path="/thoughts/:thoughtId"></Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signUp">
+              <SignUp />
+            </Route>
           </div>
         </div>
         <Footer />

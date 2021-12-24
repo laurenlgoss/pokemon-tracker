@@ -4,10 +4,10 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    pokemons: async (parent, args, context) => {
-      console.log(context);
-      const username = context.user.username;
-      console.log('username' + username);
+    pokemons: async (parent, { username }, context) => {
+      // console.log(context);
+      // const username = context.user.username;
+      // console.log('username' + username);
       return Pokemon.find({ username }).sort({ createdAt: -1 });
     },
     pokemon: async (parent, { pokemonId }) => {
@@ -25,7 +25,7 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No user found with this email address');
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);

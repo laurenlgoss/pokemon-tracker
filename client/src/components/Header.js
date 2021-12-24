@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Auth from '../utils/auth';
+
 import pokeball from '../images/pokeball.png';
 
 const styles = {
@@ -33,18 +35,38 @@ function Header() {
           </a>
           <img style={styles.pokeball} src={pokeball} alt="Pokeball" />
         </div>
-        <div className="col-6 text-right my-auto">
-          <button
-            style={styles.button}
-            className="btn btn-light mr-2"
-            type="button"
-          >
-            Sign Up
-          </button>
-          <button style={styles.button} className="btn btn-light" type="button">
-            Login
-          </button>
-        </div>
+        {Auth.loggedIn() ? (
+          <div className="col-6 text-right my-auto">
+            <div>Welcome {Auth.getProfile().data.username}</div>
+            <button
+              style={styles.button}
+              className="btn btn-light mr-2"
+              type="button"
+              onClick={Auth.logout()}
+            >
+              Log Out
+            </button>
+          </div>
+        ) : (
+          <div className="col-6 text-right my-auto">
+            <a
+              style={styles.button}
+              className="btn btn-light mr-2"
+              type="button"
+              href="/signUp"
+            >
+              Sign Up
+            </a>
+            <a
+              style={styles.button}
+              className="btn btn-light"
+              type="button"
+              href="/login"
+            >
+              Login
+            </a>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Auth from '../utils/auth';
+
 import PokemonTable from '../components/PokemonTable';
 
 import { useQuery } from '@apollo/client';
@@ -9,8 +11,11 @@ import charizardImg from '../images/charizard.png';
 import mienshaoImg from '../images/mienshao.png';
 
 function Home() {
-  const { loading, data } = useQuery(QUERY_POKEMONS);
-  console.log(data);
+  // console.log(Auth.getProfile().data);
+  // const { loading, data } = useQuery(QUERY_POKEMONS, {
+  //   variables: { username: Auth.getProfile().data.username },
+  // });
+  // console.log(data);
 
   // Hardcoded pokémon for now
   const charizard = {

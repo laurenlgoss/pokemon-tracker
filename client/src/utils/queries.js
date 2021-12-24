@@ -42,8 +42,8 @@ export const QUERY_POKEMON = gql`
 `;
 
 export const QUERY_POKEMONS = gql`
-  query pokemons {
-    pokemons {
+  query pokemons($username: String!) {
+    pokemons(username: $username) {
       _id
       species
       nature
