@@ -47,8 +47,8 @@ const styles = {
   },
 };
 
-function EditPokemon() {
-//   const [pokemonData, setpokemonData] = useState({});
+function Pokemon() {
+  //   const [pokemonData, setpokemonData] = useState({});
 
   // Query single Pokémon data using params passed through url
   const { pokemonId: userParam } = useParams();
@@ -58,24 +58,24 @@ function EditPokemon() {
   });
   const pokemonData = data?.pokemon || {};
   console.log(pokemonData);
-  
-//   if (!loading) {
-//     setpokemonData(pokemonData);
-//     console.log(pokemonData);
-//   }
 
-  const [natureArray, setNatureArray] = useState([]);
+  //   if (!loading) {
+  //     setpokemonData(pokemonData);
+  //     console.log(pokemonData);
+  //   }
 
-  useEffect(() => {
-    // Fetch nature data
-    fetch('https://pokeapi.co/api/v2/nature?limit=50')
-      .then((results) => results.json())
-      .then((natureData) => {
-        const nature = natureData.results;
-        console.log(nature);
-        setNatureArray(nature);
-      });
-  }, []);
+  // const [natureArray, setNatureArray] = useState([]);
+
+  // useEffect(() => {
+  //   // Fetch nature data
+  //   fetch('https://pokeapi.co/api/v2/nature?limit=50')
+  //     .then((results) => results.json())
+  //     .then((natureData) => {
+  //       const nature = natureData.results;
+  //       console.log(nature);
+  //       setNatureArray(nature);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -88,7 +88,12 @@ function EditPokemon() {
               <div className="row text-right">
                 <div className="col-12">
                   <div style={styles.pageTitle} className="mt-2">
-                    <strong>Edit</strong> Your Pokémon
+                    <strong>
+                      {pokemonData.nickname
+                        ? pokemonData.nickname
+                        : pokemonData.species}
+                    </strong>{' '}
+                    Details
                   </div>
 
                   {/* Species */}
@@ -101,13 +106,14 @@ function EditPokemon() {
                   />
 
                   {/* Nature */}
-                  <select
+                  {/* <select
                     style={styles.input}
                     className="form-control mt-2"
                     name="nature"
                     value={pokemonData.nature}
                     defaultValue={pokemonData.nature}
                     //   onChange={handleFormChange}
+                    disabled
                   >
                     <option value="">Nature</option>
                     {natureArray.map((natureData) => {
@@ -117,7 +123,14 @@ function EditPokemon() {
                         </option>
                       );
                     })}
-                  </select>
+                  </select> */}
+                  <input
+                    style={styles.input}
+                    className="form-control mt-2"
+                    name="nature"
+                    value={pokemonData.nature}
+                    disabled
+                  />
 
                   {/* Nickname */}
                   <input
@@ -125,7 +138,13 @@ function EditPokemon() {
                     className="form-control mt-2"
                     placeholder="Nickname"
                     name="nickname"
+                    value={
+                      pokemonData.nickname
+                        ? pokemonData.nickname
+                        : 'No Nickname'
+                    }
                     //   onChange={handleFormChange}
+                    disabled
                   />
                 </div>
               </div>
@@ -168,6 +187,7 @@ function EditPokemon() {
                           name="hp"
                           // onChange={handleFormChange}
                           value={pokemonData.hp.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -178,6 +198,7 @@ function EditPokemon() {
                           name="hp bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -186,7 +207,9 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(pokemonData.atk.nature)}`}
+                        className={`${getNatureClassName(
+                          pokemonData.atk.nature
+                        )}`}
                       >
                         ATK
                       </td>
@@ -197,6 +220,7 @@ function EditPokemon() {
                           name="atk"
                           // onChange={handleFormChange}
                           value={pokemonData.atk.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -207,6 +231,7 @@ function EditPokemon() {
                           name="atk bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -215,7 +240,9 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(pokemonData.def.nature)}`}
+                        className={`${getNatureClassName(
+                          pokemonData.def.nature
+                        )}`}
                       >
                         DEF
                       </td>
@@ -226,6 +253,7 @@ function EditPokemon() {
                           name="def"
                           // onChange={handleFormChange}
                           value={pokemonData.def.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -236,6 +264,7 @@ function EditPokemon() {
                           name="def bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -257,6 +286,7 @@ function EditPokemon() {
                           name="spatk"
                           // onChange={handleFormChange}
                           value={pokemonData.spatk.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -267,6 +297,7 @@ function EditPokemon() {
                           name="spatk bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -288,6 +319,7 @@ function EditPokemon() {
                           name="spdef"
                           // onChange={handleFormChange}
                           value={pokemonData.spdef.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -298,6 +330,7 @@ function EditPokemon() {
                           name="spdef bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -306,7 +339,9 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(pokemonData.spd.nature)}`}
+                        className={`${getNatureClassName(
+                          pokemonData.spd.nature
+                        )}`}
                       >
                         SPD
                       </td>
@@ -317,6 +352,7 @@ function EditPokemon() {
                           name="spd"
                           // onChange={handleFormChange}
                           value={pokemonData.spd.ev}
+                          disabled
                         />
                       </td>
                       <td>
@@ -327,6 +363,7 @@ function EditPokemon() {
                           name="spd bestIv"
                           // onChange={handleFormChange}
                           value={true}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -350,10 +387,10 @@ function EditPokemon() {
                 </table>
                 <button
                   style={styles.submitButton}
-                  className="btn btn-success"
+                  className="btn btn-warning"
                   // onClick={handleFormSubmit}
                 >
-                  Submit
+                  Edit
                 </button>
               </div>
             </div>
@@ -364,4 +401,4 @@ function EditPokemon() {
   );
 }
 
-export default EditPokemon;
+export default Pokemon;

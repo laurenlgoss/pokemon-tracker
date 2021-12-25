@@ -14,7 +14,7 @@ import AddPokemon from './pages/AddPokemon';
 import Footer from './components/Footer';
 import SignUp from './pages/Signup';
 import Login from './pages/Login';
-import EditPokemon from './pages/EditPokemon';
+import Pokemon from './pages/Pokemon';
 
 import './global.css';
 
@@ -61,8 +61,8 @@ function App() {
             <Route exact path="/addPokemon">
               <AddPokemon />
             </Route>
-            <Route exact path="/editPokemon/:pokemonId">
-              <EditPokemon />
+            <Route exact path="/pokemon/:pokemonId">
+              <Pokemon />
             </Route>
           </div>
         </div>

@@ -241,6 +241,7 @@ function AddPokemon() {
       console.log(formData);
     }
 
+    // TODO: Change IVs back to false after un-checking
     // IVs
     else if (name.split(' ')[1] === 'bestIv') {
       name = name.split(' ')[0];
@@ -258,6 +259,7 @@ function AddPokemon() {
     }
   }
 
+  // TODO: Add form input validation
   function handleFormSubmit(event) {
     try {
       const { data } = addPokemon({
