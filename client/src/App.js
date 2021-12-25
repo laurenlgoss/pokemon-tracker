@@ -14,6 +14,7 @@ import AddPokemon from './pages/AddPokemon';
 import Footer from './components/Footer';
 import SignUp from './pages/Signup';
 import Login from './pages/Login';
+import EditPokemon from './pages/EditPokemon';
 
 import './global.css';
 
@@ -51,14 +52,17 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/addPokemon">
-              <AddPokemon />
-            </Route>
             <Route exact path="/login">
               <Login />
             </Route>
             <Route exact path="/signUp">
               <SignUp />
+            </Route>
+            <Route exact path="/addPokemon">
+              <AddPokemon />
+            </Route>
+            <Route exact path="/editPokemon/:pokemonId">
+              <EditPokemon />
             </Route>
           </div>
         </div>
