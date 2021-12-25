@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const QUERY_POKEMON = gql`
   query pokemon($pokemonId: ID!) {
-    pokemon(_id: $pokemonId) {
+    pokemon(pokemonId: $pokemonId) {
       _id
       species
       nature

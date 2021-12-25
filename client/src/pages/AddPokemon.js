@@ -277,7 +277,7 @@ function AddPokemon() {
           <div className="row text-right">
             <div className="col-12">
               <div style={styles.pageTitle} className="mt-2">
-                Add New Pokémon
+                <strong>Add</strong> New Pokémon
               </div>
 
               {/* Species */}

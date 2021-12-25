@@ -25,6 +25,9 @@ const styles = {
   td: {
     borderTop: '0.5em #eeeeee solid',
   },
+  link: {
+    color: 'black',
+  },
 };
 
 function PokemonTable({ pokemonArray }) {
@@ -97,15 +100,17 @@ function PokemonTable({ pokemonArray }) {
             return (
               <tr style={styles.tableRow}>
                 <td style={styles.td}>
-                  {pokemon.sprite ? (
-                    <img
-                      style={styles.sprite}
-                      className="mr-1"
-                      src={pokemon.sprite}
-                      alt={pokemon.species + ' sprite'}
-                    />
-                  ) : null}
-                  {pokemon.nickname ? pokemon.nickname : pokemon.species}
+                  <a style={styles.link} href={`/editPokemon/${pokemon._id}`}>
+                    {pokemon.sprite ? (
+                      <img
+                        style={styles.sprite}
+                        className="mr-1"
+                        src={pokemon.sprite}
+                        alt={pokemon.species + ' sprite'}
+                      />
+                    ) : null}
+                    {pokemon.nickname ? pokemon.nickname : pokemon.species}
+                  </a>
                 </td>
                 <td
                   style={styles.td}
