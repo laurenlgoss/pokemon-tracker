@@ -48,6 +48,8 @@ const styles = {
 };
 
 function EditPokemon() {
+//   const [pokemonData, setpokemonData] = useState({});
+
   // Query single Pokémon data using params passed through url
   const { pokemonId: userParam } = useParams();
 
@@ -56,10 +58,13 @@ function EditPokemon() {
   });
   const pokemonData = data?.pokemon || {};
   console.log(pokemonData);
+  
+//   if (!loading) {
+//     setpokemonData(pokemonData);
+//     console.log(pokemonData);
+//   }
 
   const [natureArray, setNatureArray] = useState([]);
-
-  const [formData, setFormData] = useState(pokemonData);
 
   useEffect(() => {
     // Fetch nature data
@@ -91,7 +96,7 @@ function EditPokemon() {
                     style={styles.input}
                     className="form-control mt-2"
                     name="species"
-                    value={formData.species}
+                    value={pokemonData.species}
                     disabled
                   />
 
@@ -100,8 +105,8 @@ function EditPokemon() {
                     style={styles.input}
                     className="form-control mt-2"
                     name="nature"
-                    value={formData.nature}
-                    defaultValue={formData.nature}
+                    value={pokemonData.nature}
+                    defaultValue={pokemonData.nature}
                     //   onChange={handleFormChange}
                   >
                     <option value="">Nature</option>
@@ -128,11 +133,11 @@ function EditPokemon() {
 
             {/* Sprite */}
             <div className="col-3 mr-auto">
-              {formData.sprite ? (
+              {pokemonData.sprite ? (
                 <img
                   style={styles.sprite}
-                  alt={capitalizeFirstLetter(formData.species) + ' sprite'}
-                  src={formData.sprite}
+                  alt={capitalizeFirstLetter(pokemonData.species) + ' sprite'}
+                  src={pokemonData.sprite}
                 />
               ) : null}
             </div>
@@ -162,7 +167,7 @@ function EditPokemon() {
                           type="number"
                           name="hp"
                           // onChange={handleFormChange}
-                          value={formData.hp.ev}
+                          value={pokemonData.hp.ev}
                         />
                       </td>
                       <td>
@@ -181,7 +186,7 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(formData.atk.nature)}`}
+                        className={`${getNatureClassName(pokemonData.atk.nature)}`}
                       >
                         ATK
                       </td>
@@ -191,7 +196,7 @@ function EditPokemon() {
                           type="number"
                           name="atk"
                           // onChange={handleFormChange}
-                          value={formData.atk.ev}
+                          value={pokemonData.atk.ev}
                         />
                       </td>
                       <td>
@@ -210,7 +215,7 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(formData.def.nature)}`}
+                        className={`${getNatureClassName(pokemonData.def.nature)}`}
                       >
                         DEF
                       </td>
@@ -220,7 +225,7 @@ function EditPokemon() {
                           type="number"
                           name="def"
                           // onChange={handleFormChange}
-                          value={formData.def.ev}
+                          value={pokemonData.def.ev}
                         />
                       </td>
                       <td>
@@ -240,7 +245,7 @@ function EditPokemon() {
                       <td
                         style={styles.td}
                         className={`${getNatureClassName(
-                          formData.spatk.nature
+                          pokemonData.spatk.nature
                         )}`}
                       >
                         SPATK
@@ -251,7 +256,7 @@ function EditPokemon() {
                           type="number"
                           name="spatk"
                           // onChange={handleFormChange}
-                          value={formData.spatk.ev}
+                          value={pokemonData.spatk.ev}
                         />
                       </td>
                       <td>
@@ -271,7 +276,7 @@ function EditPokemon() {
                       <td
                         style={styles.td}
                         className={`${getNatureClassName(
-                          formData.spdef.nature
+                          pokemonData.spdef.nature
                         )}`}
                       >
                         SPDEF
@@ -282,7 +287,7 @@ function EditPokemon() {
                           type="number"
                           name="spdef"
                           // onChange={handleFormChange}
-                          value={formData.spdef.ev}
+                          value={pokemonData.spdef.ev}
                         />
                       </td>
                       <td>
@@ -301,7 +306,7 @@ function EditPokemon() {
                     <tr>
                       <td
                         style={styles.td}
-                        className={`${getNatureClassName(formData.spd.nature)}`}
+                        className={`${getNatureClassName(pokemonData.spd.nature)}`}
                       >
                         SPD
                       </td>
@@ -311,7 +316,7 @@ function EditPokemon() {
                           type="number"
                           name="spd"
                           // onChange={handleFormChange}
-                          value={formData.spd.ev}
+                          value={pokemonData.spd.ev}
                         />
                       </td>
                       <td>
@@ -331,12 +336,12 @@ function EditPokemon() {
                       <td style={styles.td}>
                         <div>
                           {calculateRemainingEVs(
-                            formData.hp.ev,
-                            formData.atk.ev,
-                            formData.def.ev,
-                            formData.spatk.ev,
-                            formData.spdef.ev,
-                            formData.spd.ev
+                            pokemonData.hp.ev,
+                            pokemonData.atk.ev,
+                            pokemonData.def.ev,
+                            pokemonData.spatk.ev,
+                            pokemonData.spdef.ev,
+                            pokemonData.spd.ev
                           )}
                         </div>
                       </td>
