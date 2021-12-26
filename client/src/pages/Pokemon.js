@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 import { useQuery } from '@apollo/client';
 import { QUERY_POKEMON } from '../utils/queries';
 
@@ -106,24 +109,6 @@ function Pokemon() {
                   />
 
                   {/* Nature */}
-                  {/* <select
-                    style={styles.input}
-                    className="form-control mt-2"
-                    name="nature"
-                    value={pokemonData.nature}
-                    defaultValue={pokemonData.nature}
-                    //   onChange={handleFormChange}
-                    disabled
-                  >
-                    <option value="">Nature</option>
-                    {natureArray.map((natureData) => {
-                      return (
-                        <option key={natureData.name} value={natureData.url}>
-                          {capitalizeFirstLetter(natureData.name)}
-                        </option>
-                      );
-                    })}
-                  </select> */}
                   <input
                     style={styles.input}
                     className="form-control mt-2"
@@ -191,15 +176,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="hp bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.hp.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                        {pokemonData.hp.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
@@ -224,15 +203,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="atk bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.atk.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                      {pokemonData.atk.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
@@ -257,15 +230,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="def bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.def.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                      {pokemonData.def.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
@@ -290,15 +257,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="spatk bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.spatk.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                      {pokemonData.spatk.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
@@ -323,15 +284,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="spdef bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.spdef.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                      {pokemonData.spdef.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
@@ -356,15 +311,9 @@ function Pokemon() {
                         />
                       </td>
                       <td>
-                        <input
-                          style={styles.checkbox}
-                          className="form-check-input"
-                          type="checkbox"
-                          name="spd bestIv"
-                          // onChange={handleFormChange}
-                          checked={pokemonData.spd.bestIv ? 'checked' : null}
-                          disabled
-                        />
+                      {pokemonData.spd.bestIv ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : null}
                       </td>
                     </tr>
 
