@@ -145,7 +145,7 @@ function AddPokemon() {
   }
 
   async function handleFormChange(event) {
-    let { name, value } = event.target;
+    let { name, value, checked } = event.target;
 
     // Nature
     if (name === 'nature') {
@@ -241,13 +241,12 @@ function AddPokemon() {
       console.log(formData);
     }
 
-    // TODO: Change IVs back to false after un-checking
     // IVs
     else if (name.split(' ')[1] === 'bestIv') {
       name = name.split(' ')[0];
       setFormData({
         ...formData,
-        [name]: { ...formData[name], bestIv: Boolean(value) },
+        [name]: { ...formData[name], bestIv: checked },
       });
       console.log(formData);
     }
@@ -273,7 +272,7 @@ function AddPokemon() {
   }
 
   return (
-    <>
+    <form onSubmit={handleFormSubmit}>
       <div className="row">
         <div className="col-3 ml-auto">
           <div className="row text-right">
@@ -378,7 +377,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="hp bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -407,7 +405,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="atk bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -436,7 +433,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="def bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -465,7 +461,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="spatk bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -494,7 +489,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="spdef bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -523,7 +517,6 @@ function AddPokemon() {
                       type="checkbox"
                       name="spd bestIv"
                       onChange={handleFormChange}
-                      value={true}
                     />
                   </td>
                 </tr>
@@ -548,14 +541,13 @@ function AddPokemon() {
             <button
               style={styles.submitButton}
               className="btn btn-success"
-              onClick={handleFormSubmit}
             >
               Submit
             </button>
           </div>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 

@@ -197,7 +197,7 @@ function Pokemon() {
                           type="checkbox"
                           name="hp bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.hp.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
@@ -230,7 +230,7 @@ function Pokemon() {
                           type="checkbox"
                           name="atk bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.atk.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
@@ -263,7 +263,7 @@ function Pokemon() {
                           type="checkbox"
                           name="def bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.def.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
@@ -296,7 +296,7 @@ function Pokemon() {
                           type="checkbox"
                           name="spatk bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.spatk.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
@@ -329,7 +329,7 @@ function Pokemon() {
                           type="checkbox"
                           name="spdef bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.spdef.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
@@ -362,7 +362,7 @@ function Pokemon() {
                           type="checkbox"
                           name="spd bestIv"
                           // onChange={handleFormChange}
-                          value={true}
+                          checked={pokemonData.spd.bestIv ? 'checked' : null}
                           disabled
                         />
                       </td>
