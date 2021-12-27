@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,8 +51,6 @@ const styles = {
 };
 
 function Pokemon() {
-  //   const [pokemonData, setpokemonData] = useState({});
-
   // Query single Pokémon data using params passed through url
   const { pokemonId: userParam } = useParams();
 
@@ -61,24 +59,6 @@ function Pokemon() {
   });
   const pokemonData = data?.pokemon || {};
   console.log(pokemonData);
-
-  //   if (!loading) {
-  //     setpokemonData(pokemonData);
-  //     console.log(pokemonData);
-  //   }
-
-  // const [natureArray, setNatureArray] = useState([]);
-
-  // useEffect(() => {
-  //   // Fetch nature data
-  //   fetch('https://pokeapi.co/api/v2/nature?limit=50')
-  //     .then((results) => results.json())
-  //     .then((natureData) => {
-  //       const nature = natureData.results;
-  //       console.log(nature);
-  //       setNatureArray(nature);
-  //     });
-  // }, []);
 
   return (
     <>
@@ -95,8 +75,7 @@ function Pokemon() {
                       {pokemonData.nickname
                         ? pokemonData.nickname
                         : pokemonData.species}
-                    </strong>{' '}
-                    Details
+                    </strong>
                   </div>
 
                   {/* Species */}

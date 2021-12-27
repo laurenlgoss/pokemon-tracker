@@ -72,12 +72,12 @@ function EditPokemonForm({ pokemonData, natureArray }) {
   const [updatePokemon, { loading, data }] = useMutation(UPDATE_POKEMON);
 
   let remainingEVs = calculateRemainingEVs(
-    pokemonData.hp.ev + addedEVs.hp.ev,
-    formData.atk.ev,
-    formData.def.ev,
-    formData.spatk.ev,
-    formData.spdef.ev,
-    formData.spd.ev
+    parseInt(pokemonData.hp.ev) + parseInt(addedEVs.hp.ev),
+    parseInt(pokemonData.atk.ev) + parseInt(addedEVs.atk.ev),
+    parseInt(pokemonData.def.ev) + parseInt(addedEVs.def.ev),
+    parseInt(pokemonData.spatk.ev) + parseInt(addedEVs.spatk.ev),
+    parseInt(pokemonData.spdef.ev) + parseInt(addedEVs.spdef.ev),
+    parseInt(pokemonData.spd.ev) + parseInt(addedEVs.spd.ev)
   );
 
   async function fetchData(url) {
@@ -184,7 +184,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
       if (value.split('')[0] === '0' && value.split('').length > 1) {
         value = value.split('')[1];
       }
-      
+
       const newEV = parseInt(pokemonData[name].ev) + parseInt(value);
       if (newEV > 255 || newEV < 0) {
         return;

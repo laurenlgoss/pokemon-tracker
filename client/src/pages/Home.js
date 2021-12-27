@@ -2,16 +2,38 @@ import React from 'react';
 
 import Auth from '../utils/auth';
 
-import PokemonTable from '../components/PokemonTable';
+import PokemonTableRow from '../components/PokemonTableRow';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_POKEMONS } from '../utils/queries';
 
-import charizardImg from '../images/charizard.png';
-import mienshaoImg from '../images/mienshao.png';
+const styles = {
+  tableHead: {
+    fontFamily: 'Staatliches',
+    position: 'sticky',
+    top: '0',
+    zIndex: '1',
+    backgroundColor: '#eeeeee',
+  },
+  button: {
+    fontFamily: 'Staatliches',
+  },
+  table: {
+    maxHeight: '65vh',
+    overflowY: 'scroll',
+  },
+  tableTitle: {
+    fontSize: '30px',
+    fontFamily: 'Staatliches',
+  },
+  tableBody: {
+    fontFamily: 'Staatliches',
+  },
+};
 
 function Home() {
   // console.log(Auth.getProfile().data);
+
   // Hardcoded username for now because auth isn't working...
   const { loading, data } = useQuery(QUERY_POKEMONS, {
     variables: { username: 'lgoss' },
@@ -19,84 +41,70 @@ function Home() {
   const pokemonArray = data?.pokemons.pokemon || [];
   console.log(pokemonArray);
 
-  // Hardcoded pokémon for now
-  // const charizard = {
-  //   species: 'Charizard',
-  //   nickname: '',
-  //   sprite: charizardImg,
-  //   nature: 'Impish',
-  //   hp: {
-  //     ev: '0',
-  //     bestIv: true,
-  //   },
-  //   atk: {
-  //     ev: '0',
-  //     bestIv: false,
-  //     nature: false,
-  //   },
-  //   def: {
-  //     ev: '4',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   spatk: {
-  //     ev: '252',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   spdef: {
-  //     ev: '0',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   spd: {
-  //     ev: '252',
-  //     bestIv: true,
-  //     nature: true,
-  //   },
-  // };
-  // const mienshao = {
-  //   species: 'Mienshao',
-  //   nickname: '',
-  //   sprite: mienshaoImg,
-  //   nature: 'Jolly',
-  //   hp: {
-  //     ev: '4',
-  //     bestIv: true,
-  //   },
-  //   atk: {
-  //     ev: '252',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   def: {
-  //     ev: '0',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   spatk: {
-  //     ev: '0',
-  //     bestIv: false,
-  //     nature: false,
-  //   },
-  //   spdef: {
-  //     ev: '0',
-  //     bestIv: true,
-  //     nature: null,
-  //   },
-  //   spd: {
-  //     ev: '252',
-  //     bestIv: true,
-  //     nature: true,
-  //   },
-  // };
-  // const pokemonArray = [charizard, mienshao];
-
   return (
     <>
       {/* {
       Auth.loggedIn() ? ( */}
-        <PokemonTable pokemonArray={pokemonArray} />
+
+      {loading ? (
+        <div className="text-center">Loading...</div>
+      ) : (
+        <>
+          <div className="row mb-3">
+            <div style={styles.tableTitle} className="col-6 my-auto">
+              Your Pokémon
+            </div>
+            <div className="col-6 text-right my-auto">
+              <a
+                style={styles.button}
+                type="button"
+                className="btn btn-success ml-auto"
+                href="/addPokemon"
+              >
+                Add New Pokémon +
+              </a>
+            </div>
+          </div>
+          <div style={styles.table}>
+            <table className="table">
+              <thead style={styles.tableHead} className="thead">
+                <tr>
+                  <th scope="col" width="20%">
+                    Pokémon
+                  </th>
+                  <th scope="col" width="10%">
+                    HP
+                  </th>
+                  <th scope="col" width="10%">
+                    ATK
+                  </th>
+                  <th scope="col" width="10%">
+                    DEF
+                  </th>
+                  <th scope="col" width="10%">
+                    SPATK
+                  </th>
+                  <th scope="col" width="10%">
+                    SPDEF
+                  </th>
+                  <th scope="col" width="10%">
+                    SPD
+                  </th>
+                  <th scope="col" width="10%">
+                    REMAINING EVs
+                  </th>
+                </tr>
+              </thead>
+              <tbody style={styles.tableBody}>
+                {pokemonArray.map((pokemon) => {
+                  return <PokemonTableRow pokemon={pokemon} />;
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+
       {/* ) : (
         <div>Welcome Page</div>
       )
