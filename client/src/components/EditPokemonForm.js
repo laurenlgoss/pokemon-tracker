@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import {
-    capitalizeFirstLetter,
-    calculateRemainingEVs,
-    getNatureClassName,
-  } from '../utils/utils';
+  capitalizeFirstLetter,
+  calculateRemainingEVs,
+  getNatureClassName,
+} from '../utils/utils';
 
 const styles = {
   pageTitle: {
@@ -44,8 +44,27 @@ const styles = {
 };
 
 function EditPokemonForm({ pokemonData, natureArray }) {
-  // Hardcoded username for now because auth not working...
   const [formData, setFormData] = useState(pokemonData);
+  const [addedEVs, setAddedEVs] = useState({
+    hp: {
+      ev: '0',
+    },
+    atk: {
+      ev: '0',
+    },
+    def: {
+      ev: '0',
+    },
+    spatk: {
+      ev: '0',
+    },
+    spdef: {
+      ev: '0',
+    },
+    spd: {
+      ev: '0',
+    },
+  });
 
   async function fetchData(url) {
     const results = await fetch(url);
@@ -144,8 +163,8 @@ function EditPokemonForm({ pokemonData, natureArray }) {
       if (value > 255) {
         value = 255;
       }
-      if (value < 0) {
-        value = 0;
+      if (value < -255) {
+        value = -255;
       }
       // Ensure no numbers start with a zero
       if (value.split('')[0] === '0' && value.split('').length > 1) {
@@ -217,7 +236,13 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 </option>
                 {natureArray.map((natureData) => {
                   return (
-                    <option key={natureData.name} value={natureData.url}>
+                    <option
+                      key={natureData.name}
+                      value={natureData.url}
+                      selected={
+                        natureData.name === formData.nature ? true : false
+                      }
+                    >
                       {capitalizeFirstLetter(natureData.name)}
                     </option>
                   );
@@ -276,10 +301,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(pokemonData.hp.nature)}`}
+                    className={`${getNatureClassName(formData.hp.nature)}`}
                   >
                     HP
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -290,16 +316,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="hp"
                       onChange={handleFormChange}
-                      value={formData.hp.ev}
+                      value={addedEVs.hp.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -315,6 +343,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="hp bestIv"
+                      checked={formData.hp.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
@@ -324,10 +353,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(pokemonData.atk.nature)}`}
+                    className={`${getNatureClassName(formData.atk.nature)}`}
                   >
                     ATK
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -338,16 +368,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="atk"
                       onChange={handleFormChange}
-                      value={formData.atk.ev}
+                      value={addedEVs.atk.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -363,6 +395,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="atk bestIv"
+                      checked={formData.atk.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
@@ -372,10 +405,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(pokemonData.def.nature)}`}
+                    className={`${getNatureClassName(formData.def.nature)}`}
                   >
                     DEF
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -386,16 +420,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="def"
                       onChange={handleFormChange}
-                      value={formData.def.ev}
+                      value={addedEVs.def.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -411,6 +447,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="def bestIv"
+                      checked={formData.def.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
@@ -420,12 +457,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(
-                      pokemonData.spatk.nature
-                    )}`}
+                    className={`${getNatureClassName(formData.spatk.nature)}`}
                   >
                     SPATK
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -436,16 +472,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="spatk"
                       onChange={handleFormChange}
-                      value={formData.spatk.ev}
+                      value={addedEVs.spatk.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -461,6 +499,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="spatk bestIv"
+                      checked={formData.spatk.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
@@ -470,12 +509,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(
-                      pokemonData.spdef.nature
-                    )}`}
+                    className={`${getNatureClassName(formData.spdef.nature)}`}
                   >
                     SPDEF
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -486,16 +524,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="spdef"
                       onChange={handleFormChange}
-                      value={formData.spdef.ev}
+                      value={addedEVs.spdef.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -511,6 +551,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="spdef bestIv"
+                      checked={formData.spdef.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
@@ -520,10 +561,11 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 <tr>
                   <td
                     style={styles.td}
-                    className={`${getNatureClassName(pokemonData.spd.nature)}`}
+                    className={`${getNatureClassName(formData.spd.nature)}`}
                   >
                     SPD
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -534,16 +576,18 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                     />
                   </td>
                   <td>+</td>
+                  {/* Added EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
                       name="spd"
                       onChange={handleFormChange}
-                      value={formData.spd.ev}
+                      value={addedEVs.spd.ev}
                     />
                   </td>
                   <td>=</td>
+                  {/* New EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
@@ -559,6 +603,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       className="form-check-input"
                       type="checkbox"
                       name="spd bestIv"
+                      checked={formData.spd.bestIv ? true : false}
                       onChange={handleFormChange}
                     />
                   </td>
