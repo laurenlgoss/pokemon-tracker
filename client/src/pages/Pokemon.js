@@ -83,7 +83,7 @@ function Pokemon() {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <div className="text-center">Loading...</div>
       ) : (
         <>
           <div className="row">
@@ -118,19 +118,20 @@ function Pokemon() {
                   />
 
                   {/* Nickname */}
-                  <input
-                    style={styles.input}
-                    className="form-control mt-2"
-                    placeholder="Nickname"
-                    name="nickname"
-                    value={
-                      pokemonData.nickname
-                        ? pokemonData.nickname
-                        : 'No Nickname'
-                    }
-                    //   onChange={handleFormChange}
-                    disabled
-                  />
+                  {pokemonData.nickname ? (
+                    <input
+                      style={styles.input}
+                      className="form-control mt-2"
+                      placeholder="Nickname"
+                      name="nickname"
+                      value={
+                        pokemonData.nickname
+                          ? pokemonData.nickname
+                          : 'No Nickname'
+                      }
+                      disabled
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -170,7 +171,6 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="hp"
-                          // onChange={handleFormChange}
                           value={pokemonData.hp.ev}
                           disabled
                         />
@@ -197,13 +197,12 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="atk"
-                          // onChange={handleFormChange}
                           value={pokemonData.atk.ev}
                           disabled
                         />
                       </td>
                       <td>
-                      {pokemonData.atk.bestIv ? (
+                        {pokemonData.atk.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
                         ) : null}
                       </td>
@@ -224,13 +223,12 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="def"
-                          // onChange={handleFormChange}
                           value={pokemonData.def.ev}
                           disabled
                         />
                       </td>
                       <td>
-                      {pokemonData.def.bestIv ? (
+                        {pokemonData.def.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
                         ) : null}
                       </td>
@@ -251,13 +249,12 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="spatk"
-                          // onChange={handleFormChange}
                           value={pokemonData.spatk.ev}
                           disabled
                         />
                       </td>
                       <td>
-                      {pokemonData.spatk.bestIv ? (
+                        {pokemonData.spatk.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
                         ) : null}
                       </td>
@@ -278,13 +275,12 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="spdef"
-                          // onChange={handleFormChange}
                           value={pokemonData.spdef.ev}
                           disabled
                         />
                       </td>
                       <td>
-                      {pokemonData.spdef.bestIv ? (
+                        {pokemonData.spdef.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
                         ) : null}
                       </td>
@@ -305,13 +301,12 @@ function Pokemon() {
                           className="form-control mb-2"
                           type="number"
                           name="spd"
-                          // onChange={handleFormChange}
                           value={pokemonData.spd.ev}
                           disabled
                         />
                       </td>
                       <td>
-                      {pokemonData.spd.bestIv ? (
+                        {pokemonData.spd.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
                         ) : null}
                       </td>
@@ -334,13 +329,14 @@ function Pokemon() {
                     </tr>
                   </tbody>
                 </table>
-                <button
+                <a
                   style={styles.submitButton}
                   className="btn btn-warning"
-                  // onClick={handleFormSubmit}
+                  type="button"
+                  href={`/editPokemon/${pokemonData._id}`}
                 >
                   Edit
-                </button>
+                </a>
               </div>
             </div>
           </div>
