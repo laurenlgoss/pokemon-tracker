@@ -87,8 +87,6 @@ const resolvers = {
       return newPokemon;
     },
     updatePokemon: async (parent, { pokemon }) => {
-      console.log({ pokemon });
-
       const {
         species,
         nature,

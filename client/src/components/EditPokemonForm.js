@@ -71,6 +71,15 @@ function EditPokemonForm({ pokemonData, natureArray }) {
 
   const [updatePokemon, { loading, data }] = useMutation(UPDATE_POKEMON);
 
+  let remainingEVs = calculateRemainingEVs(
+    pokemonData.hp.ev + addedEVs.hp.ev,
+    formData.atk.ev,
+    formData.def.ev,
+    formData.spatk.ev,
+    formData.spdef.ev,
+    formData.spd.ev
+  );
+
   async function fetchData(url) {
     const results = await fetch(url);
     const data = results.json();
@@ -175,14 +184,19 @@ function EditPokemonForm({ pokemonData, natureArray }) {
       if (value.split('')[0] === '0' && value.split('').length > 1) {
         value = value.split('')[1];
       }
+      
+      const newEV = parseInt(pokemonData[name].ev) + parseInt(value);
+      if (newEV > 255 || newEV < 0) {
+        return;
+      }
 
       setAddedEVs({ ...addedEVs, [name]: { ...addedEVs[name], ev: value } });
 
-      const newEV = parseInt(pokemonData[name].ev) + parseInt(value);
       setFormData({
         ...formData,
         [name]: { ...formData[name], ev: newEV.toString() },
       });
+
       console.log(formData);
     }
 
@@ -213,7 +227,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
         variables: { pokemon: formData },
       });
 
-    //   window.location.assign(`/pokemon/${data.updatePokemon._id}`);
+      window.location.assign(`/pokemon/${data.updatePokemon._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -284,11 +298,13 @@ function EditPokemonForm({ pokemonData, natureArray }) {
         {/* Sprite */}
         <div className="col-4 mr-auto">
           {formData.sprite ? (
-            <img
-              style={styles.sprite}
-              alt={capitalizeFirstLetter(formData.species) + ' sprite'}
-              src={formData.sprite}
-            />
+            <a href={`/pokemon/${pokemonData._id}`}>
+              <img
+                style={styles.sprite}
+                alt={capitalizeFirstLetter(formData.species) + ' sprite'}
+                src={formData.sprite}
+              />
+            </a>
           ) : null}
         </div>
       </div>
@@ -635,16 +651,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                   <td></td>
                   <td></td>
                   <td style={styles.td}>
-                    <div>
-                      {calculateRemainingEVs(
-                        formData.hp.ev,
-                        formData.atk.ev,
-                        formData.def.ev,
-                        formData.spatk.ev,
-                        formData.spdef.ev,
-                        formData.spd.ev
-                      )}
-                    </div>
+                    <div>{remainingEVs}</div>
                   </td>
                 </tr>
               </tbody>
