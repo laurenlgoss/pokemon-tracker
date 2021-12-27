@@ -268,6 +268,7 @@ function AddPokemon() {
       });
 
       setFormData(initialFormState);
+      window.location.assign('/');
     } catch (err) {
       console.log(err);
     }

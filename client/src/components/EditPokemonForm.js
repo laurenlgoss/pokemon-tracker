@@ -46,7 +46,12 @@ const styles = {
   },
 };
 
-function EditPokemonForm({ pokemonData, natureArray }) {
+function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
+  // Get different forms of selected Pokémon species (Gigantamax, Mega, etc.)
+  const differentPokemonForms = pokemonArray.filter((pokemon) => {
+    return pokemonData.species.toLowerCase() === pokemon.name.split('-')[0];
+  });
+
   const [formData, setFormData] = useState(pokemonData);
   const [addedEVs, setAddedEVs] = useState({
     hp: {
@@ -112,6 +117,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
     return newStatName;
   }
 
+  // TODO: Add form input validation
   async function handleFormChange(event) {
     let { name, value, checked } = event.target;
 
@@ -165,6 +171,26 @@ function EditPokemonForm({ pokemonData, natureArray }) {
       }
     }
 
+    // Species/Sprite
+    else if (name === 'species') {
+      // Empty out species value if user chooses 'Species'
+      if (!value) {
+        setFormData({ ...formData, [name]: '' });
+        console.log(formData);
+      } else {
+        const pokemonData = await fetchData(value);
+        console.log(pokemonData);
+
+        // Update sprite/species formData state
+        setFormData({
+          ...formData,
+          sprite: pokemonData.sprites.front_default,
+          [name]: capitalizeFirstLetter(pokemonData.species.name),
+        });
+        console.log(formData);
+      }
+    }
+
     // EVs
     else if (
       name === 'hp' ||
@@ -185,6 +211,7 @@ function EditPokemonForm({ pokemonData, natureArray }) {
         value = value.split('')[1];
       }
 
+      // TODO: Ensure user can't add over 510 EVs
       const newEV = parseInt(pokemonData[name].ev) + parseInt(value);
       if (newEV > 255 || newEV < 0) {
         return;
@@ -247,13 +274,38 @@ function EditPokemonForm({ pokemonData, natureArray }) {
               </div>
 
               {/* Species */}
-              <input
-                style={styles.input}
-                className="form-control mt-2"
-                name="species"
-                value={formData.species}
-                disabled
-              />
+              {differentPokemonForms.length > 1 ? (
+                <select
+                  style={styles.input}
+                  className="form-control mt-2"
+                  name="species"
+                  onChange={handleFormChange}
+                >
+                  {differentPokemonForms.map((pokemon) => {
+                    return (
+                      <option
+                        key={pokemon.name}
+                        value={pokemon.url}
+                        selected={
+                          formData.species.toLowerCase() === pokemon.name
+                            ? true
+                            : false
+                        }
+                      >
+                        {capitalizeFirstLetter(pokemon.name)}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : (
+                <input
+                  style={styles.input}
+                  className="form-control mt-2"
+                  name="species"
+                  value={formData.species}
+                  disabled
+                />
+              )}
 
               {/* Nature */}
               <select
@@ -262,9 +314,6 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                 name="nature"
                 onChange={handleFormChange}
               >
-                <option value="" selected>
-                  Nature
-                </option>
                 {natureArray.map((natureData) => {
                   return (
                     <option

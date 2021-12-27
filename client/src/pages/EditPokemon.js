@@ -7,6 +7,7 @@ import { QUERY_POKEMON } from '../utils/queries';
 import EditPokemonForm from '../components/EditPokemonForm';
 
 function EditPokemon() {
+  const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
 
   // Query single Pokémon data using params passed through url
@@ -19,6 +20,15 @@ function EditPokemon() {
   console.log(pokemonData);
 
   useEffect(() => {
+    // Fetch Pokémon species data
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=2000')
+      .then((results) => results.json())
+      .then((pokemonData) => {
+        const pokemon = pokemonData.results;
+        console.log(pokemon);
+        setPokemonArray(pokemon);
+      });
+
     // Fetch nature data
     fetch('https://pokeapi.co/api/v2/nature?limit=50')
       .then((results) => results.json())
@@ -31,10 +41,14 @@ function EditPokemon() {
 
   return (
     <>
-      {loading || natureArray === [] ? (
+      {loading || !natureArray || !pokemonArray ? (
         <div className="text-center">Loading...</div>
       ) : (
-        <EditPokemonForm pokemonData={pokemonData} natureArray={natureArray} />
+        <EditPokemonForm
+          pokemonData={pokemonData}
+          natureArray={natureArray}
+          pokemonArray={pokemonArray}
+        />
       )}
     </>
   );
