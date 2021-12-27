@@ -259,9 +259,11 @@ function AddPokemon() {
   }
 
   // TODO: Add form input validation
-  function handleFormSubmit(event) {
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    
     try {
-      const { data } = addPokemon({
+      const { data } = await addPokemon({
         variables: { pokemon: formData },
       });
 

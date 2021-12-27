@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { useMutation } from '@apollo/client';
+import { UPDATE_POKEMON } from '../utils/mutations';
+
 import {
   capitalizeFirstLetter,
   calculateRemainingEVs,
@@ -65,6 +68,8 @@ function EditPokemonForm({ pokemonData, natureArray }) {
       ev: '0',
     },
   });
+
+  const [updatePokemon, { loading, data }] = useMutation(UPDATE_POKEMON);
 
   async function fetchData(url) {
     const results = await fetch(url);
@@ -199,17 +204,19 @@ function EditPokemonForm({ pokemonData, natureArray }) {
   }
 
   // TODO: Add form input validation
-  function handleFormSubmit(event) {
+  async function handleFormSubmit(event) {
+    event.preventDefault();
     console.log(formData);
 
-    // try {
-      // const { data } = addPokemon({
-      //   variables: { pokemon: formData },
-      // });
-      //   setFormData(initialFormState);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const { data } = await updatePokemon({
+        variables: { pokemon: formData },
+      });
+
+    //   window.location.assign(`/pokemon/${data.updatePokemon._id}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -220,7 +227,9 @@ function EditPokemonForm({ pokemonData, natureArray }) {
             <div className="col-12">
               <div style={styles.pageTitle} className="mt-2">
                 <strong>Edit</strong>{' '}
-                {formData.nickname ? formData.nickname : formData.species}
+                {pokemonData.nickname
+                  ? pokemonData.nickname
+                  : pokemonData.species}
               </div>
 
               {/* Species */}
@@ -248,7 +257,9 @@ function EditPokemonForm({ pokemonData, natureArray }) {
                       key={natureData.name}
                       value={natureData.url}
                       selected={
-                        natureData.name === formData.nature ? true : false
+                        natureData.name === formData.nature.toLowerCase()
+                          ? true
+                          : false
                       }
                     >
                       {capitalizeFirstLetter(natureData.name)}

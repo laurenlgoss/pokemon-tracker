@@ -57,6 +57,21 @@ const typeDefs = gql`
     spd: statWithNatureData
   }
 
+  input UpdatePokemonData {
+    _id: ID
+    species: String
+    nature: String
+    nickname: String
+    sprite: String
+    associatedUser: String
+    hp: hpStatData
+    atk: statWithNatureData
+    def: statWithNatureData
+    spatk: statWithNatureData
+    spdef: statWithNatureData
+    spd: statWithNatureData
+  }
+
   input hpStatData {
     ev: String
     bestIv: Boolean
@@ -79,6 +94,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPokemon(pokemon: PokemonData!): Pokemon
+    updatePokemon(pokemon: UpdatePokemonData!): Pokemon
   }
 `;
 

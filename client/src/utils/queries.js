@@ -8,6 +8,7 @@ export const QUERY_POKEMON = gql`
       nature
       nickname
       sprite
+      associatedUser
       hp {
         ev
         bestIv

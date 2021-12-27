@@ -86,56 +86,42 @@ const resolvers = {
 
       return newPokemon;
     },
-    // addComment: async (parent, { thoughtId, commentText }, context) => {
-    //   if (context.user) {
-    //     return Pokemon.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $addToSet: {
-    //           comments: { commentText, commentAuthor: context.user.username },
-    //         },
-    //       },
-    //       {
-    //         new: true,
-    //         runValidators: true,
-    //       }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeThought: async (parent, { thoughtId }, context) => {
-    //   if (context.user) {
-    //     const Pokemon = await Pokemon.findOneAndDelete({
-    //       _id: thoughtId,
-    //       thoughtAuthor: context.user.username,
-    //     });
+    updatePokemon: async (parent, { pokemon }) => {
+      console.log({ pokemon });
 
-    //     await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { thoughts: Pokemon._id } }
-    //     );
+      const {
+        species,
+        nature,
+        nickname,
+        sprite,
+        associatedUser,
+        hp,
+        atk,
+        def,
+        spatk,
+        spdef,
+        spd,
+      } = pokemon;
 
-    //     return Pokemon;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeComment: async (parent, { thoughtId, commentId }, context) => {
-    //   if (context.user) {
-    //     return Pokemon.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $pull: {
-    //           comments: {
-    //             _id: commentId,
-    //             commentAuthor: context.user.username,
-    //           },
-    //         },
-    //       },
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      const updatedPokemon = await Pokemon.findByIdAndUpdate(
+        { _id: pokemon._id },
+        {
+          species,
+          nature,
+          nickname,
+          sprite,
+          associatedUser,
+          hp,
+          atk,
+          def,
+          spatk,
+          spdef,
+          spd,
+        }
+      );
+
+      return updatedPokemon;
+    },
   },
 };
 
