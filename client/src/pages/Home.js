@@ -32,9 +32,6 @@ const styles = {
 };
 
 function Home() {
-  // console.log(Auth.getProfile().data);
-
-  // Hardcoded username for now because auth isn't working...
   const { loading, data } = useQuery(QUERY_POKEMONS, {
     variables: { username: 'lgoss' },
   });

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import Auth from '../utils/auth';
+
 import { useMutation } from '@apollo/client';
 import { ADD_POKEMON } from '../utils/mutations';
 
@@ -49,14 +51,13 @@ const styles = {
 function AddPokemon() {
   const [pokemonArray, setPokemonArray] = useState([]);
   const [natureArray, setNatureArray] = useState([]);
-  
-  // Hardcoded username for now because auth not working...
+
   const initialFormState = {
     species: '',
     nature: '',
     nickname: '',
     sprite: '',
-    associatedUser: 'lgoss',
+    associatedUser: Auth.getProfile().data.username,
     hp: {
       ev: '0',
       bestIv: false,
@@ -86,7 +87,7 @@ function AddPokemon() {
       bestIv: false,
       nature: null,
     },
-  }
+  };
 
   const [formData, setFormData] = useState(initialFormState);
 
@@ -261,7 +262,7 @@ function AddPokemon() {
   // TODO: Add form input validation
   async function handleFormSubmit(event) {
     event.preventDefault();
-    
+
     try {
       const { data } = await addPokemon({
         variables: { pokemon: formData },
@@ -541,10 +542,7 @@ function AddPokemon() {
                 </tr>
               </tbody>
             </table>
-            <button
-              style={styles.submitButton}
-              className="btn btn-success"
-            >
+            <button style={styles.submitButton} className="btn btn-success">
               Submit
             </button>
           </div>

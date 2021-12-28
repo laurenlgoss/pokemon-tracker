@@ -26,8 +26,6 @@ const styles = {
 };
 
 function Header() {
-  console.log(Auth.loggedIn());
-
   return (
     <header>
       <div style={styles.header} className="row px-3 align-content-center">
@@ -44,7 +42,7 @@ function Header() {
               style={styles.button}
               className="btn btn-light mr-2"
               type="button"
-              onClick={Auth.logout()}
+              onClick={() => Auth.logout()}
             >
               Log Out
             </button>
