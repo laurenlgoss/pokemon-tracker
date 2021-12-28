@@ -23,6 +23,9 @@ const styles = {
   pokeball: {
     maxHeight: '20px',
   },
+  welcome: {
+    display: 'inline',
+  },
 };
 
 function Header() {
@@ -37,7 +40,9 @@ function Header() {
         </div>
         {Auth.loggedIn() ? (
           <div className="col-6 text-right my-auto">
-            <div>Welcome {Auth.getProfile().data.username}</div>
+            <h5 style={styles.welcome} className="text-white mr-3">
+              Welcome, {Auth.getProfile().data.username}
+            </h5>
             <button
               style={styles.button}
               className="btn btn-light mr-2"

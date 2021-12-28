@@ -41,7 +41,7 @@ function EditPokemon() {
 
   return (
     <>
-      {loading || !natureArray || !pokemonArray ? (
+      {loading || natureArray.length === 0 || pokemonArray.length === 0 ? (
         <div className="text-center">Loading...</div>
       ) : (
         <EditPokemonForm
