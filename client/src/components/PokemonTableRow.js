@@ -82,7 +82,10 @@ function PokemonTableRow({ pokemon, handleDelete }) {
         )}
       </td>
       <td style={styles.td}>
-        <button className="btn btn-danger" onClick={() => handleDelete(pokemon._id)}>
+        <button
+          className="btn btn-danger"
+          onClick={() => handleDelete(pokemon._id)}
+        >
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </td>

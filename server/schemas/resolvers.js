@@ -131,7 +131,10 @@ const resolvers = {
       const updatedUser = await User.findOneAndUpdate(
         { username: context.user.username },
         { $pull: { pokemon: pokemonId } }
-      );
+      ).populate({
+        path: 'pokemon',
+        options: { sort: { createdAt: -1 } },
+      });
 
       return updatedUser;
     },

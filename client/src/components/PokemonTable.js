@@ -47,7 +47,7 @@ function PokemonTable() {
         variables: { pokemonId },
       });
 
-      window.location.assign('/');
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -114,6 +114,7 @@ function PokemonTable() {
                       <PokemonTableRow
                         pokemon={pokemon}
                         handleDelete={handleDelete}
+                        key={pokemon._id}
                       />
                     );
                   })}
