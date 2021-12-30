@@ -125,11 +125,13 @@ const resolvers = {
 
     // Delete Pokémon
     deletePokemon: async (parent, { pokemonId }, context) => {
+      // First delete Pokemon, then delete pokemon from User
       await Pokemon.findByIdAndDelete({ _id: pokemonId });
 
-      const updatedUser = await User.findOne({
-        username: context.user.username,
-      });
+      const updatedUser = await User.findOneAndUpdate(
+        { username: context.user.username },
+        { $pull: { pokemon: pokemonId } }
+      );
 
       return updatedUser;
     },
