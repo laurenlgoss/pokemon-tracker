@@ -95,6 +95,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addPokemon(pokemon: PokemonData!): Pokemon
     updatePokemon(pokemon: UpdatePokemonData!): Pokemon
+    deletePokemon(pokemonId: ID!): User
   }
 `;
 

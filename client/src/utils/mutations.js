@@ -39,3 +39,15 @@ export const UPDATE_POKEMON = gql`
     }
   }
 `;
+
+export const DELETE_POKEMON = gql`
+  mutation deletePokemon($pokemonId: ID!) {
+    deletePokemon(pokemonId: $pokemonId) {
+      username
+      pokemon {
+        species
+        nickname
+      }
+    }
+  }
+`

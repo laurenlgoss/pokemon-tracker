@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { calculateRemainingEVs } from '../utils/utils';
 
@@ -17,7 +20,16 @@ const styles = {
   },
 };
 
-function PokemonTableRow({ pokemon }) {
+function PokemonTableRow({ pokemon, handleDelete }) {
+  const statArray = [
+    pokemon.hp,
+    pokemon.atk,
+    pokemon.def,
+    pokemon.spatk,
+    pokemon.spdef,
+    pokemon.spd,
+  ];
+
   function getEVClassColor(ev) {
     if (ev > 0 && ev < 252) {
       return 'text-warning';
@@ -51,29 +63,14 @@ function PokemonTableRow({ pokemon }) {
           {pokemon.nickname ? pokemon.nickname : pokemon.species}
         </a>
       </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.hp.ev)}`}>
-        {pokemon.hp.ev}
-      </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.atk.ev)}`}>
-        {pokemon.atk.ev}
-        {renderNatureIcon(pokemon.atk.nature)}
-      </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.def.ev)}`}>
-        {pokemon.def.ev}
-        {renderNatureIcon(pokemon.def.nature)}
-      </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.spatk.ev)}`}>
-        {pokemon.spatk.ev}
-        {renderNatureIcon(pokemon.spatk.nature)}
-      </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.spdef.ev)}`}>
-        {pokemon.spdef.ev}
-        {renderNatureIcon(pokemon.spdef.nature)}
-      </td>
-      <td style={styles.td} className={`${getEVClassColor(pokemon.spd.ev)}`}>
-        {pokemon.spd.ev}
-        {renderNatureIcon(pokemon.spd.nature)}
-      </td>
+      {statArray.map(({ ev, nature }) => {
+        return (
+          <td style={styles.td} className={`${getEVClassColor(ev)}`}>
+            {ev}
+            {renderNatureIcon(nature)}
+          </td>
+        );
+      })}
       <td style={styles.td}>
         {calculateRemainingEVs(
           pokemon.hp.ev,
@@ -83,6 +80,11 @@ function PokemonTableRow({ pokemon }) {
           pokemon.spdef.ev,
           pokemon.spd.ev
         )}
+      </td>
+      <td style={styles.td}>
+        <button className="btn btn-danger" onClick={() => handleDelete(pokemon._id)}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
       </td>
     </tr>
   );

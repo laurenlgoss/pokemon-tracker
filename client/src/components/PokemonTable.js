@@ -4,8 +4,9 @@ import Auth from '../utils/auth';
 
 import PokemonTableRow from '../components/PokemonTableRow';
 
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_POKEMONS } from '../utils/queries';
+import { DELETE_POKEMON } from '../utils/mutations';
 
 const styles = {
   tableHead: {
@@ -32,11 +33,25 @@ const styles = {
 };
 
 function PokemonTable() {
+  const [deletePokemon] = useMutation(DELETE_POKEMON);
+
   const { loading, data } = useQuery(QUERY_POKEMONS, {
     variables: { username: Auth.getProfile().data.username },
   });
   const pokemonArray = data?.pokemons.pokemon || [];
   console.log(pokemonArray);
+
+  async function handleDelete(pokemonId) {
+    console.log(pokemonId);
+
+    try {
+      const { data } = await deletePokemon({
+        variables: { pokemonId: pokemonId },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <>
@@ -90,11 +105,12 @@ function PokemonTable() {
                     <th scope="col" width="10%">
                       REMAINING EVs
                     </th>
+                    <th width="5%"></th>
                   </tr>
                 </thead>
                 <tbody style={styles.tableBody}>
                   {pokemonArray.map((pokemon) => {
-                    return <PokemonTableRow pokemon={pokemon} />;
+                    return <PokemonTableRow pokemon={pokemon} handleDelete={handleDelete} />;
                   })}
                 </tbody>
               </table>

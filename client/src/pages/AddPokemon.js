@@ -91,7 +91,7 @@ function AddPokemon() {
 
   const [formData, setFormData] = useState(initialFormState);
 
-  const [addPokemon, { loading, data }] = useMutation(ADD_POKEMON);
+  const [addPokemon] = useMutation(ADD_POKEMON);
 
   async function fetchData(url) {
     const results = await fetch(url);

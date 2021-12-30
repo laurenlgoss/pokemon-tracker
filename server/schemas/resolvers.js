@@ -49,7 +49,7 @@ const resolvers = {
       return { token, user };
     },
 
-    // Add pokemon
+    // Add Pokémon
     addPokemon: async (parent, { pokemon }) => {
       const {
         species,
@@ -86,6 +86,8 @@ const resolvers = {
 
       return newPokemon;
     },
+
+    // Update Pokémon
     updatePokemon: async (parent, { pokemon }) => {
       const {
         species,
@@ -120,6 +122,13 @@ const resolvers = {
 
       return updatedPokemon;
     },
+
+    // Delete Pokémon
+    deletePokemon: async (parent, { pokemonId }) => {
+      const updatedUser = await Pokemon.findByIdAndDelete({ _id: pokemonId });
+
+      return updatedUser;
+    }
   },
 };
 
