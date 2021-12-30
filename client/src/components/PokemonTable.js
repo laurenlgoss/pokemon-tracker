@@ -33,21 +33,21 @@ const styles = {
 };
 
 function PokemonTable() {
-  const [deletePokemon] = useMutation(DELETE_POKEMON);
-
+  // Get current user's Pokémon
   const { loading, data } = useQuery(QUERY_POKEMONS, {
     variables: { username: Auth.getProfile().data.username },
   });
   const pokemonArray = data?.pokemons.pokemon || [];
-  console.log(pokemonArray);
+
+  const [deletePokemon] = useMutation(DELETE_POKEMON);
 
   async function handleDelete(pokemonId) {
-    console.log(pokemonId);
-
     try {
-      const { data } = await deletePokemon({
-        variables: { pokemonId: pokemonId },
+      await deletePokemon({
+        variables: { pokemonId },
       });
+
+      window.location.assign('/');
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +81,7 @@ function PokemonTable() {
               <table className="table">
                 <thead style={styles.tableHead} className="thead">
                   <tr>
-                    <th scope="col" width="20%">
+                    <th scope="col" width="25%">
                       Pokémon
                     </th>
                     <th scope="col" width="10%">
@@ -110,7 +110,12 @@ function PokemonTable() {
                 </thead>
                 <tbody style={styles.tableBody}>
                   {pokemonArray.map((pokemon) => {
-                    return <PokemonTableRow pokemon={pokemon} handleDelete={handleDelete} />;
+                    return (
+                      <PokemonTableRow
+                        pokemon={pokemon}
+                        handleDelete={handleDelete}
+                      />
+                    );
                   })}
                 </tbody>
               </table>

@@ -124,11 +124,15 @@ const resolvers = {
     },
 
     // Delete Pokémon
-    deletePokemon: async (parent, { pokemonId }) => {
-      const updatedUser = await Pokemon.findByIdAndDelete({ _id: pokemonId });
+    deletePokemon: async (parent, { pokemonId }, context) => {
+      await Pokemon.findByIdAndDelete({ _id: pokemonId });
+
+      const updatedUser = await User.findOne({
+        username: context.user.username,
+      });
 
       return updatedUser;
-    }
+    },
   },
 };
 
