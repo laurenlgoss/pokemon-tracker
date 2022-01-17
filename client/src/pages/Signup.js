@@ -133,7 +133,7 @@ const Signup = () => {
               </table>
               <button
                 style={styles.submitButton}
-                className="btn btn-success"
+                className="btn btn-primary"
                 type="submit"
               >
                 Sign Up

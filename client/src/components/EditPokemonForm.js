@@ -705,8 +705,8 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                 </tr>
               </tbody>
             </table>
-            <button style={styles.submitButton} className="btn btn-success">
-              Submit
+            <button style={styles.submitButton} className="btn btn-primary">
+              Submit Changes
             </button>
           </div>
         </div>

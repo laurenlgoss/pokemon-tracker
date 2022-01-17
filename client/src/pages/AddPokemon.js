@@ -542,7 +542,7 @@ function AddPokemon() {
                 </tr>
               </tbody>
             </table>
-            <button style={styles.submitButton} className="btn btn-success">
+            <button style={styles.submitButton} className="btn btn-primary">
               Submit
             </button>
           </div>

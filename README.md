@@ -47,6 +47,10 @@ The deployed application can be found [here](https://pokev-tracker.herokuapp.com
 
 ## Screenshots
 
+### Welcome
+
+![Welcome](./client/src/images/welcome.png)
+
 ### Home
 
 ![Home](./client/src/images/home.png)

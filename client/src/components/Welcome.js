@@ -49,7 +49,7 @@ function Welcome() {
             </p>
             <ul className="text-left">
               <li>
-                Keep track of each Pokémon's nature, nickname, IVs, and of
+                Keep track of each Pokémon's species, nature, nickname, IVs, and of
                 course EVs.
               </li>
               <li>

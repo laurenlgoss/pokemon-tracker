@@ -126,7 +126,7 @@ const Login = () => {
               </table>
               <button
                 style={styles.submitButton}
-                className="btn btn-success"
+                className="btn btn-primary"
                 type="submit"
               >
                 Log In

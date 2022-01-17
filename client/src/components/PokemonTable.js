@@ -68,7 +68,7 @@ function PokemonTable() {
                 <a
                   style={styles.button}
                   type="button"
-                  className="btn btn-success ml-auto"
+                  className="btn btn-primary ml-auto"
                   href="/addPokemon"
                 >
                   Add New Pokémon +
