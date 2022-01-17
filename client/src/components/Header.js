@@ -8,6 +8,7 @@ const styles = {
   header: {
     height: '100px',
     backgroundColor: '#ff004f',
+    position: 'relative',
   },
   headerBrand: {
     color: 'white',
@@ -22,6 +23,8 @@ const styles = {
   },
   pokeball: {
     maxHeight: '20px',
+    position: 'absolute',
+    bottom: '19px',
   },
   welcome: {
     display: 'inline',

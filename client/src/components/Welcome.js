@@ -40,6 +40,7 @@ function Welcome() {
           <div style={styles.card} className="card p-5 m-1 col-md-11 mx-auto">
             <h1>Welcome to PokÉV Tracker!</h1>
           </div>
+
           {/* Why Use This Website? */}
           <div style={styles.card} className="card p-5 m-1 col-md-5 mx-auto">
             <h3 className="mb-4">Why use this website?</h3>
@@ -49,8 +50,8 @@ function Welcome() {
             </p>
             <ul className="text-left">
               <li>
-                Keep track of each Pokémon's species, nature, nickname, IVs, and of
-                course EVs.
+                Keep track of each Pokémon's species, nature, nickname, IVs, and
+                of course EVs.
               </li>
               <li>
                 View whether or not your Pokémons' EVs are maxed out and how
@@ -62,7 +63,14 @@ function Welcome() {
               </li>
             </ul>
             <p className="text-left">
-              <a style={styles.link} href="/signUp">Sign up</a> or <a style={styles.link} href="/login">log in</a> to begin using PokÉV Tracker!
+              <a style={styles.link} href="/signUp">
+                Sign up
+              </a>{' '}
+              or{' '}
+              <a style={styles.link} href="/login">
+                log in
+              </a>{' '}
+              to begin using PokÉV Tracker!
             </p>
           </div>
 
@@ -75,6 +83,7 @@ function Welcome() {
                 style={styles.link}
                 href="https://www.serebii.net/games/evs.shtml"
                 target="_blank"
+                rel="noreferrer"
               >
                 Serebii
               </a>

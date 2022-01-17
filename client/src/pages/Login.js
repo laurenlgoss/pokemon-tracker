@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
@@ -45,6 +44,8 @@ const styles = {
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: '', password: '' });
+  const [invalidCreds, setInvalidCreds] = useState(false);
+
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -67,17 +68,18 @@ const Login = () => {
         variables: { ...formState },
       });
 
-      console.log(data);
+      setInvalidCreds(false);
       Auth.login(data.login.token);
+
+      // clear form values
+      setFormState({
+        email: '',
+        password: '',
+      });
     } catch (e) {
       console.error(e);
+      setInvalidCreds(true);
     }
-
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
   };
 
   return (
@@ -124,6 +126,14 @@ const Login = () => {
                   </tr>
                 </tbody>
               </table>
+
+              {/* Invalid Credentials Warning */}
+              {invalidCreds ? (
+                <div className="alert alert-danger" role="alert">
+                  Email or password incorrect
+                </div>
+              ) : null}
+              
               <button
                 style={styles.submitButton}
                 className="btn btn-primary"
