@@ -50,28 +50,44 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Header />
-        <div className="row my-5">
-          <div className="col-11 mx-auto">
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/login">
+          <div className="row mt-5 mb-3"> {/* Had to individually add row/col to each route bc it was affecting Welcome */}
+            <div className="col-11 mx-auto">
               <Login />
-            </Route>
-            <Route exact path="/signUp">
-              <SignUp />
-            </Route>
-            <Route exact path="/addPokemon">
-              <AddPokemon />
-            </Route>
-            <Route exact path="/pokemon/:pokemonId">
-              <Pokemon />
-            </Route>
-            <Route exact path="/editPokemon/:pokemonId">
-              <EditPokemon />
-            </Route>
+            </div>
           </div>
-        </div>
+        </Route>
+        <Route exact path="/signUp">
+          <div className="row mt-5 mb-3">
+            <div className="col-11 mx-auto">
+              <SignUp />
+            </div>
+          </div>
+        </Route>
+        <Route exact path="/addPokemon">
+          <div className="row mt-5 mb-3">
+            <div className="col-11 mx-auto">
+              <AddPokemon />
+            </div>
+          </div>
+        </Route>
+        <Route exact path="/pokemon/:pokemonId">
+          <div className="row mt-5 mb-3">
+            <div className="col-11 mx-auto">
+              <Pokemon />
+            </div>
+          </div>
+        </Route>
+        <Route exact path="/editPokemon/:pokemonId">
+          <div className="row mt-5 mb-3">
+            <div className="col-11 mx-auto">
+              <EditPokemon />
+            </div>
+          </div>
+        </Route>
         <Footer />
       </Router>
     </ApolloProvider>

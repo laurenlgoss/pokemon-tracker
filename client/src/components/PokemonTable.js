@@ -54,77 +54,79 @@ function PokemonTable() {
   }
 
   return (
-    <>
-      {loading ? (
-        <div className="text-center">Loading...</div>
-      ) : (
-        <>
-          <div className="row mb-3">
-            <div style={styles.tableTitle} className="col-6 my-auto">
-              Your Pokémon
+    <div className="row mt-5 mb-3">
+      <div className="col-11 mx-auto">
+        {loading ? (
+          <div className="text-center">Loading...</div>
+        ) : (
+          <>
+            <div className="row mb-3">
+              <div style={styles.tableTitle} className="col-6 my-auto">
+                Your Pokémon
+              </div>
+              <div className="col-6 text-right my-auto">
+                <a
+                  style={styles.button}
+                  type="button"
+                  className="btn btn-success ml-auto"
+                  href="/addPokemon"
+                >
+                  Add New Pokémon +
+                </a>
+              </div>
             </div>
-            <div className="col-6 text-right my-auto">
-              <a
-                style={styles.button}
-                type="button"
-                className="btn btn-success ml-auto"
-                href="/addPokemon"
-              >
-                Add New Pokémon +
-              </a>
-            </div>
-          </div>
-          {pokemonArray.length === 0 ? (
-            <h5 className="text-center mt-5">No Pokémon added yet...</h5>
-          ) : (
-            <div style={styles.table}>
-              <table className="table">
-                <thead style={styles.tableHead} className="thead">
-                  <tr>
-                    <th scope="col" width="25%">
-                      Pokémon
-                    </th>
-                    <th scope="col" width="10%">
-                      HP
-                    </th>
-                    <th scope="col" width="10%">
-                      ATK
-                    </th>
-                    <th scope="col" width="10%">
-                      DEF
-                    </th>
-                    <th scope="col" width="10%">
-                      SPATK
-                    </th>
-                    <th scope="col" width="10%">
-                      SPDEF
-                    </th>
-                    <th scope="col" width="10%">
-                      SPD
-                    </th>
-                    <th scope="col" width="10%">
-                      REMAINING EVs
-                    </th>
-                    <th width="5%"></th>
-                  </tr>
-                </thead>
-                <tbody style={styles.tableBody}>
-                  {pokemonArray.map((pokemon) => {
-                    return (
-                      <PokemonTableRow
-                        pokemon={pokemon}
-                        handleDelete={handleDelete}
-                        key={pokemon._id}
-                      />
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </>
-      )}
-    </>
+            {pokemonArray.length === 0 ? (
+              <h5 className="text-center mt-5">No Pokémon added yet...</h5>
+            ) : (
+              <div style={styles.table}>
+                <table className="table">
+                  <thead style={styles.tableHead} className="thead">
+                    <tr>
+                      <th scope="col" width="25%">
+                        Pokémon
+                      </th>
+                      <th scope="col" width="10%">
+                        HP
+                      </th>
+                      <th scope="col" width="10%">
+                        ATK
+                      </th>
+                      <th scope="col" width="10%">
+                        DEF
+                      </th>
+                      <th scope="col" width="10%">
+                        SPATK
+                      </th>
+                      <th scope="col" width="10%">
+                        SPDEF
+                      </th>
+                      <th scope="col" width="10%">
+                        SPD
+                      </th>
+                      <th scope="col" width="10%">
+                        REMAINING EVs
+                      </th>
+                      <th width="5%"></th>
+                    </tr>
+                  </thead>
+                  <tbody style={styles.tableBody}>
+                    {pokemonArray.map((pokemon) => {
+                      return (
+                        <PokemonTableRow
+                          pokemon={pokemon}
+                          handleDelete={handleDelete}
+                          key={pokemon._id}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

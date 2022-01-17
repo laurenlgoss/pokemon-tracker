@@ -1,26 +1,37 @@
 import React from 'react';
 
+// import pokemonWallpaper from '../images/pokemon-wallpaper.png';
+import pokemonShieldWallpaper from '../images/pokemon-shield-wallpaper.png';
+
 const styles = {
-  ev: {
-    color: 'rgb(90 85 85)',
+  backgroundImg: {
+    height: '90vh',
+    backgroundImage: `url(${pokemonShieldWallpaper})`,
+    position: 'relative',
+  },
+  welcomeDiv: {
+    position: 'absolute',
   },
 };
 
 function Welcome() {
   return (
-    <div className="text-center">
-      <h2 className="mb-5">
-        Welcome to{' '}
-        <strong>
-          Pok<span style={styles.ev}>ÉV</span> Tracker!
-        </strong>
-      </h2>
-      <p>
-        <span className="text-success">Sign Up</span> or{' '}
-        <span className="text-success">Log In</span> to begin using this
-        application.
-      </p>
-    </div>
+    <>
+      {/* Image */}
+      <div style={styles.backgroundImg}></div>
+
+      {/* Welcome Message */}
+      <div style={styles.welcomeDiv}>
+        <h2>
+          Welcome to <strong>PokÉV Tracker!</strong>
+        </h2>
+        {/* <p>
+          <span className="text-success">Sign Up</span> or{' '}
+          <span className="text-success">Log In</span> to begin using this
+          application.
+        </p> */}
+      </div>
+    </>
   );
 }
 

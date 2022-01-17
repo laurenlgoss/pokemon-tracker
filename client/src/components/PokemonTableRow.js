@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,11 @@ const styles = {
   sprite: {
     maxHeight: '35px',
   },
+  trashButton: {
+    color: '#ff004f',
+    backgroundColor: 'transparent',
+    border: 'transparent',
+  }
 };
 
 function PokemonTableRow({ pokemon, handleDelete }) {
@@ -83,7 +88,8 @@ function PokemonTableRow({ pokemon, handleDelete }) {
       </td>
       <td style={styles.td}>
         <button
-          className="btn btn-danger"
+          style={styles.trashButton}
+          className="btn"
           onClick={() => handleDelete(pokemon._id)}
         >
           <FontAwesomeIcon icon={faTrash} />
