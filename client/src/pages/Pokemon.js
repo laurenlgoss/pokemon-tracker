@@ -135,7 +135,13 @@ function Pokemon() {
                       Stat
                     </th>
                     <th style={styles.tableTitle} scope="col">
-                      EVs
+                      Current EVs
+                    </th>
+                    <th style={styles.tableTitle} scope="col">
+                      &nbsp;
+                    </th>
+                    <th style={styles.tableTitle} scope="col">
+                      Goal EVs
                     </th>
                     <th style={styles.tableTitle} width="15%">
                       Best IV?
@@ -151,6 +157,17 @@ function Pokemon() {
                           type="number"
                           name="hp"
                           value={pokemonData.hp.ev}
+                          disabled
+                        />
+                      </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="hp goalEv"
+                          value={pokemonData.hp.goalEv}
                           disabled
                         />
                       </td>
@@ -180,6 +197,17 @@ function Pokemon() {
                           disabled
                         />
                       </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="atk goalEv"
+                          value={pokemonData.atk.goalEv}
+                          disabled
+                        />
+                      </td>
                       <td>
                         {pokemonData.atk.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
@@ -203,6 +231,17 @@ function Pokemon() {
                           type="number"
                           name="def"
                           value={pokemonData.def.ev}
+                          disabled
+                        />
+                      </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="def goalEv"
+                          value={pokemonData.def.goalEv}
                           disabled
                         />
                       </td>
@@ -232,6 +271,17 @@ function Pokemon() {
                           disabled
                         />
                       </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="spatk goalEv"
+                          value={pokemonData.spatk.goalEv}
+                          disabled
+                        />
+                      </td>
                       <td>
                         {pokemonData.spatk.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
@@ -255,6 +305,17 @@ function Pokemon() {
                           type="number"
                           name="spdef"
                           value={pokemonData.spdef.ev}
+                          disabled
+                        />
+                      </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="spdef goalEv"
+                          value={pokemonData.spdef.goalEv}
                           disabled
                         />
                       </td>
@@ -284,6 +345,17 @@ function Pokemon() {
                           disabled
                         />
                       </td>
+                      <td>&nbsp;</td>
+                      {/* Goal EVs */}
+                      <td style={styles.td}>
+                        <input
+                          className="form-control mb-2"
+                          type="number"
+                          name="spd goalEv"
+                          value={pokemonData.spd.goalEv}
+                          disabled
+                        />
+                      </td>
                       <td>
                         {pokemonData.spd.bestIv ? (
                           <FontAwesomeIcon icon={faCheck} />
@@ -305,6 +377,19 @@ function Pokemon() {
                           )}
                         </div>
                       </td>
+                  <td>&nbsp;</td>
+                  <td style={styles.td}>
+                    <div>
+                      {calculateRemainingEVs(
+                        pokemonData.hp.goalEv,
+                        pokemonData.atk.goalEv,
+                        pokemonData.def.goalEv,
+                        pokemonData.spatk.goalEv,
+                        pokemonData.spdef.goalEv,
+                        pokemonData.spd.goalEv
+                      )}
+                    </div>
+                  </td>
                     </tr>
                   </tbody>
                 </table>

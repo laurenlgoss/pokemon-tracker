@@ -18,11 +18,14 @@ const styles = {
   sprite: {
     maxHeight: '35px',
   },
+  goalEv: {
+    color: 'rgb(197 197 197)',
+  },
   trashButton: {
     color: '#ff004f',
     backgroundColor: 'transparent',
     border: 'transparent',
-  }
+  },
 };
 
 function PokemonTableRow({ pokemon, handleDelete }) {
@@ -35,10 +38,11 @@ function PokemonTableRow({ pokemon, handleDelete }) {
     pokemon.spd,
   ];
 
-  function getEVClassColor(ev) {
-    if (ev > 0 && ev < 252) {
+  // Color EV text based on reached goal EV or not
+  function getEVClassColor(ev, goalEv) {
+    if (parseInt(ev) < parseInt(goalEv)) {
       return 'text-warning';
-    } else if (ev >= 252) {
+    } else if (ev === goalEv && goalEv !== '0') {
       return 'text-success';
     }
   }
@@ -68,11 +72,16 @@ function PokemonTableRow({ pokemon, handleDelete }) {
           {pokemon.nickname ? pokemon.nickname : pokemon.species}
         </a>
       </td>
-      {statArray.map(({ ev, nature }) => {
+      {statArray.map(({ ev, nature, goalEv }) => {
         return (
-          <td style={styles.td} className={`${getEVClassColor(ev)}`}>
+          <td style={styles.td} className={`${getEVClassColor(ev, goalEv)}`}>
             {ev}
             {renderNatureIcon(nature)}
+            {goalEv !== '0' ? (
+              <span style={styles.goalEv} class="ml-2">
+                {goalEv}
+              </span>
+            ) : null}
           </td>
         );
       })}
