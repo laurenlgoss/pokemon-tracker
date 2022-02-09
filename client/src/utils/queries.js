@@ -12,31 +12,37 @@ export const QUERY_POKEMON = gql`
       hp {
         ev
         bestIv
+        goalEv
       }
       atk {
         ev
         bestIv
         nature
+        goalEv
       }
       def {
         ev
         bestIv
         nature
+        goalEv
       }
       spatk {
         ev
         bestIv
         nature
+        goalEv
       }
       spdef {
         ev
         bestIv
         nature
+        goalEv
       }
       spd {
         ev
         bestIv
         nature
+        goalEv
       }
     }
   }
@@ -54,31 +60,37 @@ export const QUERY_POKEMONS = gql`
         hp {
           ev
           bestIv
+          goalEv
         }
         atk {
           ev
           bestIv
           nature
+          goalEv
         }
         def {
           ev
           bestIv
           nature
+          goalEv
         }
         spatk {
           ev
           bestIv
           nature
+          goalEv
         }
         spdef {
           ev
           bestIv
           nature
+          goalEv
         }
         spd {
           ev
           bestIv
           nature
+          goalEv
         }
       }
     }

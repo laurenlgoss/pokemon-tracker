@@ -29,12 +29,14 @@ const typeDefs = gql`
   type hpStat {
     ev: String
     bestIv: Boolean
+    goalEv: String
   }
 
   type statWithNature {
     ev: String
     bestIv: Boolean
     nature: Boolean
+    goalEv: String
   }
 
   type Auth {
@@ -75,12 +77,14 @@ const typeDefs = gql`
   input hpStatData {
     ev: String
     bestIv: Boolean
+    goalEv: String
   }
 
   input statWithNatureData {
     ev: String
     bestIv: Boolean
     nature: Boolean
+    goalEv: String
   }
 
   # --- Queries ---

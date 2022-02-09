@@ -9,6 +9,7 @@ import {
   capitalizeFirstLetter,
   calculateRemainingEVs,
   getNatureClassName,
+  translateStatName,
 } from '../utils/utils';
 
 const styles = {
@@ -61,31 +62,37 @@ function AddPokemon() {
     hp: {
       ev: '0',
       bestIv: false,
+      goalEv: '0',
     },
     atk: {
       ev: '0',
       bestIv: false,
       nature: null,
+      goalEv: '0',
     },
     def: {
       ev: '0',
       bestIv: false,
       nature: null,
+      goalEv: '0',
     },
     spatk: {
       ev: '0',
       bestIv: false,
       nature: null,
+      goalEv: '0',
     },
     spdef: {
       ev: '0',
       bestIv: false,
       nature: null,
+      goalEv: '0',
     },
     spd: {
       ev: '0',
       bestIv: false,
       nature: null,
+      goalEv: '0',
     },
   };
 
@@ -119,32 +126,6 @@ function AddPokemon() {
       });
   }, []);
 
-  // Needed because the API stat name is different than my variables
-  function translateStatName(stat) {
-    let newStatName;
-
-    switch (stat) {
-      case 'attack':
-        newStatName = 'atk';
-        break;
-      case 'defense':
-        newStatName = 'def';
-        break;
-      case 'special-attack':
-        newStatName = 'spatk';
-        break;
-      case 'special-defense':
-        newStatName = 'spdef';
-        break;
-      case 'speed':
-        newStatName = 'spd';
-        break;
-      default:
-        newStatName = null;
-    }
-    return newStatName;
-  }
-
   async function handleFormChange(event) {
     let { name, value, checked } = event.target;
 
@@ -161,7 +142,6 @@ function AddPokemon() {
           spdef: { ...formData.spdef, nature: null },
           spd: { ...formData.spd, nature: null },
         });
-        console.log(formData);
       } else {
         const natureData = await fetchData(value);
         console.log(natureData);
@@ -177,7 +157,6 @@ function AddPokemon() {
             spdef: { ...formData.spdef, nature: null },
             spd: { ...formData.spd, nature: null },
           });
-          console.log(formData);
         } else {
           let decreasedStat = translateStatName(natureData.decreased_stat.name);
           let increasedStat = translateStatName(natureData.increased_stat.name);
@@ -193,7 +172,6 @@ function AddPokemon() {
             [decreasedStat]: { ...formData[decreasedStat], nature: false },
             [increasedStat]: { ...formData[increasedStat], nature: true },
           });
-          console.log(formData);
         }
       }
     }
@@ -203,7 +181,6 @@ function AddPokemon() {
       // Empty out species value if user chooses 'Species'
       if (!value) {
         setFormData({ ...formData, [name]: '' });
-        console.log(formData);
       } else {
         const pokemonData = await fetchData(value);
         console.log(pokemonData);
@@ -214,49 +191,58 @@ function AddPokemon() {
           sprite: pokemonData.sprites.front_default,
           [name]: capitalizeFirstLetter(pokemonData.species.name),
         });
-        console.log(formData);
       }
     }
 
-    // EVs
+    // Stats
     else if (
-      name === 'hp' ||
-      name === 'atk' ||
-      name === 'def' ||
-      name === 'spatk' ||
-      name === 'spdef' ||
-      name === 'spd'
+      name.split(' ')[0] === 'hp' ||
+      name.split(' ')[0] === 'atk' ||
+      name.split(' ')[0] === 'def' ||
+      name.split(' ')[0] === 'spatk' ||
+      name.split(' ')[0] === 'spdef' ||
+      name.split(' ')[0] === 'spd'
     ) {
-      if (value > 255) {
-        value = 255;
-      }
-      if (value < 0) {
-        value = 0;
-      }
-      // Ensure no numbers start with a zero
-      if (value.split('')[0] === '0' && value.split('').length > 1) {
-        value = value.split('')[1];
+      let statName = name.split(' ')[0];
+      let inputType = name.split(' ')[1]; // Determine if ev, goalEv, or bestIv
+
+      // EVs
+      if (inputType === 'ev' || inputType === 'goalEv') {
+        if (value > 255) {
+          value = '255';
+        }
+        if (value < 0 || !value) {
+          value = '0';
+        }
+        // Ensure no numbers start with a zero
+        if (value.split('')[0] === '0' && value.split('').length > 1) {
+          value = value.split('')[1];
+        }
+
+        setFormData({
+          ...formData,
+          [statName]: {
+            ...formData[statName],
+            [inputType]: value,
+          },
+        });
       }
 
-      setFormData({ ...formData, [name]: { ...formData[name], ev: value } });
-      console.log(formData);
-    }
-
-    // IVs
-    else if (name.split(' ')[1] === 'bestIv') {
-      name = name.split(' ')[0];
-      setFormData({
-        ...formData,
-        [name]: { ...formData[name], bestIv: checked },
-      });
-      console.log(formData);
+      // IVs
+      else if (inputType === 'bestIv') {
+        setFormData({
+          ...formData,
+          [statName]: { ...formData[statName], bestIv: checked },
+        });
+      }
     }
 
     // Any other inputs
     else {
       setFormData({ ...formData, [name]: value });
-      console.log(formData);
     }
+
+    console.log(formData);
   }
 
   // TODO: Add form input validation
@@ -355,7 +341,13 @@ function AddPokemon() {
                   Stat
                 </th>
                 <th style={styles.tableTitle} scope="col">
-                  EVs
+                  Current EVs
+                </th>
+                <th style={styles.tableTitle} scope="col">
+                  &nbsp;
+                </th>
+                <th style={styles.tableTitle} scope="col">
+                  Goal EVs
                 </th>
                 <th style={styles.tableTitle} width="15%">
                   Best IV?
@@ -365,15 +357,28 @@ function AddPokemon() {
                 {/* HP */}
                 <tr>
                   <td style={styles.td}>HP</td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
-                      className="form-control mb-2"
+                      className="form-control mb-2 mr-2"
                       type="number"
-                      name="hp"
+                      name="hp ev"
                       onChange={handleFormChange}
                       value={formData.hp.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="hp goalEv"
+                      onChange={handleFormChange}
+                      value={formData.hp.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -393,15 +398,28 @@ function AddPokemon() {
                   >
                     ATK
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="atk"
+                      name="atk ev"
                       onChange={handleFormChange}
                       value={formData.atk.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="atk goalEv"
+                      onChange={handleFormChange}
+                      value={formData.atk.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -421,15 +439,28 @@ function AddPokemon() {
                   >
                     DEF
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="def"
+                      name="def ev"
                       onChange={handleFormChange}
                       value={formData.def.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="def goalEv"
+                      onChange={handleFormChange}
+                      value={formData.def.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -449,15 +480,28 @@ function AddPokemon() {
                   >
                     SPATK
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spatk"
+                      name="spatk ev"
                       onChange={handleFormChange}
                       value={formData.spatk.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spatk goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spatk.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -477,15 +521,28 @@ function AddPokemon() {
                   >
                     SPDEF
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spdef"
+                      name="spdef ev"
                       onChange={handleFormChange}
                       value={formData.spdef.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spdef goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spdef.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -505,15 +562,28 @@ function AddPokemon() {
                   >
                     SPD
                   </td>
+                  {/* Current EVs */}
                   <td style={styles.td}>
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spd"
+                      name="spd ev"
                       onChange={handleFormChange}
                       value={formData.spd.ev}
                     />
                   </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spd goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spd.goalEv}
+                    />
+                  </td>
+                  {/* IVs */}
                   <td>
                     <input
                       style={styles.checkbox}
@@ -536,6 +606,19 @@ function AddPokemon() {
                         formData.spatk.ev,
                         formData.spdef.ev,
                         formData.spd.ev
+                      )}
+                    </div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style={styles.td}>
+                    <div>
+                      {calculateRemainingEVs(
+                        formData.hp.goalEv,
+                        formData.atk.goalEv,
+                        formData.def.goalEv,
+                        formData.spatk.goalEv,
+                        formData.spdef.goalEv,
+                        formData.spd.goalEv
                       )}
                     </div>
                   </td>

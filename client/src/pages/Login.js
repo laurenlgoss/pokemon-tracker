@@ -58,7 +58,6 @@ const Login = () => {
     });
   };
 
-  // TODO: Add error messages
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -133,7 +132,7 @@ const Login = () => {
                   Email or password incorrect
                 </div>
               ) : null}
-              
+
               <button
                 style={styles.submitButton}
                 className="btn btn-primary"

@@ -7,6 +7,7 @@ import {
   capitalizeFirstLetter,
   calculateRemainingEVs,
   getNatureClassName,
+  translateStatName
 } from '../utils/utils';
 
 const styles = {
@@ -89,32 +90,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
     const results = await fetch(url);
     const data = results.json();
     return data;
-  }
-
-  // Needed because the API stat name is different than my variables
-  function translateStatName(stat) {
-    let newStatName;
-
-    switch (stat) {
-      case 'attack':
-        newStatName = 'atk';
-        break;
-      case 'defense':
-        newStatName = 'def';
-        break;
-      case 'special-attack':
-        newStatName = 'spatk';
-        break;
-      case 'special-defense':
-        newStatName = 'spdef';
-        break;
-      case 'speed':
-        newStatName = 'spd';
-        break;
-      default:
-        newStatName = null;
-    }
-    return newStatName;
   }
 
   // TODO: Add form input validation

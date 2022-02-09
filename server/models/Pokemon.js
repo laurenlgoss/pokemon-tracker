@@ -29,6 +29,9 @@ const pokemonSchema = new Schema({
     bestIv: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
   atk: {
     ev: {
@@ -40,6 +43,9 @@ const pokemonSchema = new Schema({
     nature: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
   def: {
     ev: {
@@ -51,6 +57,9 @@ const pokemonSchema = new Schema({
     nature: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
   spatk: {
     ev: {
@@ -62,6 +71,9 @@ const pokemonSchema = new Schema({
     nature: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
   spdef: {
     ev: {
@@ -73,6 +85,9 @@ const pokemonSchema = new Schema({
     nature: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
   spd: {
     ev: {
@@ -84,6 +99,9 @@ const pokemonSchema = new Schema({
     nature: {
       type: Boolean,
     },
+    goalEv: {
+      type: String,
+    }
   },
 });
 
