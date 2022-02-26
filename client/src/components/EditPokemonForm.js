@@ -7,7 +7,7 @@ import {
   capitalizeFirstLetter,
   calculateRemainingEVs,
   getNatureClassName,
-  translateStatName
+  translateStatName,
 } from '../utils/utils';
 
 const styles = {
@@ -86,6 +86,15 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
     parseInt(pokemonData.spd.ev) + parseInt(addedEVs.spd.ev)
   );
 
+  let remainingGoalEVs = calculateRemainingEVs(
+    parseInt(pokemonData.hp.goalEv),
+    parseInt(pokemonData.atk.goalEv),
+    parseInt(pokemonData.def.goalEv),
+    parseInt(pokemonData.spatk.goalEv),
+    parseInt(pokemonData.spdef.goalEv),
+    parseInt(pokemonData.spd.goalEv)
+  );
+
   async function fetchData(url) {
     const results = await fetch(url);
     const data = results.json();
@@ -96,7 +105,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
   async function handleFormChange(event) {
     let { name, value, checked } = event.target;
 
-    // Nature
+    // --- Nature ---
     if (name === 'nature') {
       // Empty out nature value if user chooses 'Nature'
       if (!value) {
@@ -109,7 +118,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
           spdef: { ...formData.spdef, nature: null },
           spd: { ...formData.spd, nature: null },
         });
-        console.log(formData);
       } else {
         const natureData = await fetchData(value);
         console.log(natureData);
@@ -125,7 +133,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
             spdef: { ...formData.spdef, nature: null },
             spd: { ...formData.spd, nature: null },
           });
-          console.log(formData);
         } else {
           let decreasedStat = translateStatName(natureData.decreased_stat.name);
           let increasedStat = translateStatName(natureData.increased_stat.name);
@@ -141,17 +148,15 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
             [decreasedStat]: { ...formData[decreasedStat], nature: false },
             [increasedStat]: { ...formData[increasedStat], nature: true },
           });
-          console.log(formData);
         }
       }
     }
 
-    // Species/Sprite
+    // --- Species/Sprite ---
     else if (name === 'species') {
       // Empty out species value if user chooses 'Species'
       if (!value) {
         setFormData({ ...formData, [name]: '' });
-        console.log(formData);
       } else {
         const pokemonData = await fetchData(value);
         console.log(pokemonData);
@@ -162,61 +167,88 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
           sprite: pokemonData.sprites.front_default,
           [name]: capitalizeFirstLetter(pokemonData.species.name),
         });
-        console.log(formData);
       }
     }
 
-    // EVs
+    // --- Stats ---
     else if (
-      name === 'hp' ||
-      name === 'atk' ||
-      name === 'def' ||
-      name === 'spatk' ||
-      name === 'spdef' ||
-      name === 'spd'
+      name.split(' ')[0] === 'hp' ||
+      name.split(' ')[0] === 'atk' ||
+      name.split(' ')[0] === 'def' ||
+      name.split(' ')[0] === 'spatk' ||
+      name.split(' ')[0] === 'spdef' ||
+      name.split(' ')[0] === 'spd'
     ) {
-      if (value > 255) {
-        value = 255;
+      let statName = name.split(' ')[0];
+      let inputType = name.split(' ')[1]; // Determine if ev, goalEv, or bestIv
+
+      // --- EVs ---
+      if (inputType === 'ev' || inputType === 'goalEv') {
+        if (value > 255) {
+          value = '255';
+        } else if (!value) {
+          value = '0';
+        }
+        // Ensure no numbers start with a zero
+        if (value.split('')[0] === '0' && value.split('').length > 1) {
+          value = value.split('')[1];
+        }
+
+        // --- Current EVs ---
+        if (inputType === 'ev') {
+          if (value < -255) {
+            value = '-255';
+          }
+
+          // TODO: Ensure user can't add over 510 EVs
+          const newEV = parseInt(pokemonData[statName].ev) + parseInt(value);
+          if (newEV > 255 || newEV < 0) {
+            return;
+          }
+
+          setAddedEVs({
+            ...addedEVs,
+            [statName]: { ...addedEVs[statName], ev: value },
+          });
+
+          setFormData({
+            ...formData,
+            [statName]: { ...formData[statName], ev: newEV.toString() },
+          });
+        }
+
+        // --- Goal EVs ---
+        if (inputType === 'goalEv') {
+          if (value < 0) {
+            value = '0';
+          }
+
+          // TODO: Ensure user can't add over 510 EVs
+          setFormData({
+            ...formData,
+            [statName]: {
+              ...formData[statName],
+              [inputType]: value,
+            },
+          });
+        }
       }
-      if (value < -255) {
-        value = -255;
+
+      // --- IVs ---
+      else if (inputType === 'bestIv') {
+        setFormData({
+          ...formData,
+          [statName]: { ...formData[statName], bestIv: checked },
+        });
       }
-      // Ensure no numbers start with a zero
-      if (value.split('')[0] === '0' && value.split('').length > 1) {
-        value = value.split('')[1];
-      }
-
-      // TODO: Ensure user can't add over 510 EVs
-      const newEV = parseInt(pokemonData[name].ev) + parseInt(value);
-      if (newEV > 255 || newEV < 0) {
-        return;
-      }
-
-      setAddedEVs({ ...addedEVs, [name]: { ...addedEVs[name], ev: value } });
-
-      setFormData({
-        ...formData,
-        [name]: { ...formData[name], ev: newEV.toString() },
-      });
-
-      console.log(formData);
-    }
-
-    // IVs
-    else if (name.split(' ')[1] === 'bestIv') {
-      name = name.split(' ')[0];
-      setFormData({
-        ...formData,
-        [name]: { ...formData[name], bestIv: checked },
-      });
-      console.log(formData);
     }
 
     // Any other inputs
     else {
       setFormData({ ...formData, [name]: value });
-      console.log(formData);
     }
+
+    console.log(formData);
   }
 
   // TODO: Add form input validation
@@ -351,6 +383,12 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                 <th style={styles.tableTitle} scope="col">
                   New EVs
                 </th>
+                <th style={styles.tableTitle} scope="col">
+                  &nbsp;
+                </th>
+                <th style={styles.tableTitle} scope="col">
+                  Goal EVs
+                </th>
                 <th style={styles.tableTitle} width="15%">
                   Best IV?
                 </th>
@@ -380,7 +418,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="hp"
+                      name="hp ev"
                       onChange={handleFormChange}
                       value={addedEVs.hp.ev}
                     />
@@ -394,6 +432,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="hp"
                       value={formData.hp.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="hp goalEv"
+                      onChange={handleFormChange}
+                      value={formData.hp.goalEv}
                     />
                   </td>
                   <td>
@@ -432,7 +481,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="atk"
+                      name="atk ev"
                       onChange={handleFormChange}
                       value={addedEVs.atk.ev}
                     />
@@ -446,6 +495,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="atk"
                       value={formData.atk.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="atk goalEv"
+                      onChange={handleFormChange}
+                      value={formData.atk.goalEv}
                     />
                   </td>
                   <td>
@@ -484,7 +544,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="def"
+                      name="def ev"
                       onChange={handleFormChange}
                       value={addedEVs.def.ev}
                     />
@@ -498,6 +558,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="def"
                       value={formData.def.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="def goalEv"
+                      onChange={handleFormChange}
+                      value={formData.def.goalEv}
                     />
                   </td>
                   <td>
@@ -536,7 +607,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spatk"
+                      name="spatk ev"
                       onChange={handleFormChange}
                       value={addedEVs.spatk.ev}
                     />
@@ -550,6 +621,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="spatk"
                       value={formData.spatk.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spatk goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spatk.goalEv}
                     />
                   </td>
                   <td>
@@ -588,7 +670,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spdef"
+                      name="spdef ev"
                       onChange={handleFormChange}
                       value={addedEVs.spdef.ev}
                     />
@@ -602,6 +684,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="spdef"
                       value={formData.spdef.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spdef goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spdef.goalEv}
                     />
                   </td>
                   <td>
@@ -640,7 +733,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spd"
+                      name="spd ev"
                       onChange={handleFormChange}
                       value={addedEVs.spd.ev}
                     />
@@ -654,6 +747,17 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                       name="spd"
                       value={formData.spd.ev}
                       disabled
+                    />
+                  </td>
+                  <td>&nbsp;</td>
+                  {/* Goal EVs */}
+                  <td style={styles.td}>
+                    <input
+                      className="form-control mb-2"
+                      type="number"
+                      name="spd goalEv"
+                      onChange={handleFormChange}
+                      value={formData.spd.goalEv}
                     />
                   </td>
                   <td>
@@ -676,6 +780,10 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                   <td></td>
                   <td style={styles.td}>
                     <div>{remainingEVs}</div>
+                  </td>
+                  <td></td>
+                  <td style={styles.td}>
+                    <div>{remainingGoalEVs}</div>
                   </td>
                 </tr>
               </tbody>
