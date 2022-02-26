@@ -77,22 +77,13 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
 
   const [updatePokemon, { loading, data }] = useMutation(UPDATE_POKEMON);
 
-  let remainingEVs = calculateRemainingEVs(
-    parseInt(pokemonData.hp.ev) + parseInt(addedEVs.hp.ev),
-    parseInt(pokemonData.atk.ev) + parseInt(addedEVs.atk.ev),
-    parseInt(pokemonData.def.ev) + parseInt(addedEVs.def.ev),
-    parseInt(pokemonData.spatk.ev) + parseInt(addedEVs.spatk.ev),
-    parseInt(pokemonData.spdef.ev) + parseInt(addedEVs.spdef.ev),
-    parseInt(pokemonData.spd.ev) + parseInt(addedEVs.spd.ev)
-  );
-
   let remainingGoalEVs = calculateRemainingEVs(
-    parseInt(pokemonData.hp.goalEv),
-    parseInt(pokemonData.atk.goalEv),
-    parseInt(pokemonData.def.goalEv),
-    parseInt(pokemonData.spatk.goalEv),
-    parseInt(pokemonData.spdef.goalEv),
-    parseInt(pokemonData.spd.goalEv)
+    formData.hp.goalEv,
+    formData.atk.goalEv,
+    formData.def.goalEv,
+    formData.spatk.goalEv,
+    formData.spdef.goalEv,
+    formData.spd.goalEv
   );
 
   async function fetchData(url) {
@@ -254,7 +245,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
   // TODO: Add form input validation
   async function handleFormSubmit(event) {
     event.preventDefault();
-    console.log(formData);
 
     try {
       const { data } = await updatePokemon({
@@ -407,7 +397,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="hp"
                       value={pokemonData.hp.ev}
                       disabled
                     />
@@ -429,7 +418,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="hp"
                       value={formData.hp.ev}
                       disabled
                     />
@@ -470,7 +458,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="atk"
                       value={pokemonData.atk.ev}
                       disabled
                     />
@@ -492,7 +479,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="atk"
                       value={formData.atk.ev}
                       disabled
                     />
@@ -533,7 +519,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="def"
                       value={pokemonData.def.ev}
                       disabled
                     />
@@ -555,7 +540,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="def"
                       value={formData.def.ev}
                       disabled
                     />
@@ -596,7 +580,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spatk"
                       value={pokemonData.spatk.ev}
                       disabled
                     />
@@ -618,7 +601,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spatk"
                       value={formData.spatk.ev}
                       disabled
                     />
@@ -659,7 +641,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spdef"
                       value={pokemonData.spdef.ev}
                       disabled
                     />
@@ -681,7 +662,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spdef"
                       value={formData.spdef.ev}
                       disabled
                     />
@@ -722,7 +702,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spd"
                       value={pokemonData.spd.ev}
                       disabled
                     />
@@ -744,7 +723,6 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                     <input
                       className="form-control mb-2"
                       type="number"
-                      name="spd"
                       value={formData.spd.ev}
                       disabled
                     />
@@ -779,7 +757,16 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                   <td></td>
                   <td></td>
                   <td style={styles.td}>
-                    <div>{remainingEVs}</div>
+                    <div>
+                      {calculateRemainingEVs(
+                        formData.hp.ev,
+                        formData.atk.ev,
+                        formData.def.ev,
+                        formData.spatk.ev,
+                        formData.spdef.ev,
+                        formData.spd.ev
+                      )}
+                    </div>
                   </td>
                   <td></td>
                   <td style={styles.td}>

@@ -7,32 +7,38 @@
     "associatedUser": "lgoss",
     "hp": {
       "ev": "0",
-      "bestIv": true
+      "bestIv": true,
+      "goalEv": "0"
     },
     "atk": {
       "ev": "0",
       "bestIv": false,
-      "nature": false
+      "nature": false,
+      "goalEv": "0"
     },
     "def": {
       "ev": "4",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "4"
     },
     "spatk": {
       "ev": "252",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "252"
     },
     "spdef": {
       "ev": "0",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "0"
     },
     "spd": {
       "ev": "252",
       "bestIv": true,
-      "nature": true
+      "nature": true,
+      "goalEv": "252"
     }
   },
   {
@@ -43,32 +49,38 @@
     "associatedUser": "lgoss",
     "hp": {
       "ev": "4",
-      "bestIv": true
+      "bestIv": true,
+      "goalEv": "4"
     },
     "atk": {
       "ev": "252",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "252"
     },
     "def": {
       "ev": "0",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "0"
     },
     "spatk": {
       "ev": "0",
       "bestIv": false,
-      "nature": false
+      "nature": false,
+      "goalEv": "0"
     },
     "spdef": {
       "ev": "0",
       "bestIv": true,
-      "nature": null
+      "nature": null,
+      "goalEv": "0"
     },
     "spd": {
       "ev": "252",
       "bestIv": true,
-      "nature": true
+      "nature": true,
+      "goalEv": "252"
     }
   }
 ]
