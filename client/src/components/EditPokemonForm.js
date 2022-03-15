@@ -260,7 +260,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="row">
-        <div className="col-4 ml-auto">
+        <div className="col-lg-5 col-xl-4 ml-auto">
           <div className="row text-right">
             <div className="col-12">
               <div style={styles.pageTitle} className="mt-2">
@@ -342,7 +342,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
         </div>
 
         {/* Sprite */}
-        <div className="col-4 mr-auto">
+        <div className="col-lg-5 col-xl-4 mr-auto">
           {formData.sprite ? (
             <a href={`/pokemon/${pokemonData._id}`}>
               <img
@@ -355,7 +355,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
         </div>
       </div>
       <div className="row mt-3">
-        <div className="col-8 mx-auto">
+        <div className="col-lg-10 col-xl-8 mx-auto">
           <div style={styles.card} className="card p-3">
             <table className="table">
               <thead className="thead">

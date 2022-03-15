@@ -268,7 +268,7 @@ function AddPokemon() {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="row">
-        <div className="col-3 ml-auto">
+        <div className="col-md-5 col-lg-4 col-xl-3 ml-auto">
           <div className="row text-right">
             <div className="col-12">
               <div style={styles.pageTitle} className="mt-2">
@@ -326,7 +326,7 @@ function AddPokemon() {
         </div>
 
         {/* Sprite */}
-        <div className="col-3 mr-auto">
+        <div className="col-md-5 col-lg-4 col-xl-3 mr-auto">
           {formData.sprite ? (
             <img
               style={styles.sprite}
@@ -337,7 +337,7 @@ function AddPokemon() {
         </div>
       </div>
       <div className="row mt-3">
-        <div className="col-6 mx-auto">
+        <div className="col-md-10 col-lg-8 col-xl-6 mx-auto">
           <div style={styles.card} className="card p-3">
             <table className="table">
               <thead className="thead">
