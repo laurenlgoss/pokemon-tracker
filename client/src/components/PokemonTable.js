@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Auth from '../utils/auth';
 
@@ -33,11 +33,16 @@ const styles = {
 };
 
 function PokemonTable() {
+  const [pokemonArray, setPokemonArray] = useState([]);
+
   // Get current user's Pokémon
   const { loading, data } = useQuery(QUERY_POKEMONS, {
     variables: { username: Auth.getProfile().data.username },
   });
-  const pokemonArray = data?.pokemons.pokemon || [];
+
+  useEffect(() => {
+    setPokemonArray(data?.pokemons.pokemon || []);
+  }, [data]);
 
   const [deletePokemon] = useMutation(DELETE_POKEMON);
 
@@ -50,6 +55,30 @@ function PokemonTable() {
       window.location.reload();
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  // Check if EV goals are all met for specific Pokémon
+  function goalEVsMet({ hp, atk, def, spatk, spdef, spd }) {
+    let goalEVsMet = true;
+    const statArray = [hp, atk, def, spatk, spdef, spd];
+
+    statArray.forEach((stat) => {
+      if (stat.ev !== stat.goalEv && stat.goalEv !== null) {
+        goalEVsMet = false;
+      }
+    });
+
+    return goalEVsMet;
+  }
+
+  function handleGoalEVFilter(event) {
+    let { checked } = event.target;
+
+    if (checked) {
+      setPokemonArray(pokemonArray.filter((pokemon) => !goalEVsMet(pokemon)));
+    } else {
+      setPokemonArray(data.pokemons.pokemon);
     }
   }
 
@@ -73,6 +102,14 @@ function PokemonTable() {
                 >
                   Add New Pokémon +
                 </a>
+              </div>
+              <div className="col-12">
+                EV training in progress?
+                <input
+                  className="ml-2"
+                  type="checkbox"
+                  onChange={handleGoalEVFilter}
+                />
               </div>
             </div>
             {pokemonArray.length === 0 ? (
