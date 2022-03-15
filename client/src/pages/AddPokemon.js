@@ -113,7 +113,11 @@ function AddPokemon() {
       .then((pokemonData) => {
         const pokemon = pokemonData.results;
         console.log(pokemon);
-        setPokemonArray(pokemon);
+        // Capitalize Pokémon names before setting PokemonArray
+        const pokemonUppercaseNames = pokemon.map((pokemon) => {
+          return { ...pokemon, name: capitalizeFirstLetter(pokemon.name) };
+        });
+        setPokemonArray(pokemonUppercaseNames);
       });
 
     // Fetch nature data
@@ -189,7 +193,7 @@ function AddPokemon() {
         setFormData({
           ...formData,
           sprite: pokemonData.sprites.front_default,
-          [name]: capitalizeFirstLetter(pokemonData.species.name),
+          [name]: capitalizeFirstLetter(pokemonData.name),
         });
       }
     }
@@ -281,10 +285,10 @@ function AddPokemon() {
                 <option value="" selected>
                   Species
                 </option>
-                {pokemonArray.map((pokemonData) => {
+                {pokemonArray.map(({ url, name }) => {
                   return (
-                    <option key={pokemonData.name} value={pokemonData.url}>
-                      {capitalizeFirstLetter(pokemonData.name)}
+                    <option key={name} value={url}>
+                      {name}
                     </option>
                   );
                 })}

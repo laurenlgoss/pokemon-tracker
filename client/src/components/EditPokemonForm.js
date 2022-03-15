@@ -50,7 +50,7 @@ const styles = {
 function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
   // Get different forms of selected Pokémon species (Gigantamax, Mega, etc.)
   const differentPokemonForms = pokemonArray.filter((pokemon) => {
-    return pokemonData.species.toLowerCase() === pokemon.name.split('-')[0];
+    return pokemonData.species.split('-')[0].toLowerCase() === pokemon.name.split('-')[0];
   });
 
   const [formData, setFormData] = useState(pokemonData);
@@ -156,7 +156,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
         setFormData({
           ...formData,
           sprite: pokemonData.sprites.front_default,
-          [name]: capitalizeFirstLetter(pokemonData.species.name),
+          [name]: capitalizeFirstLetter(pokemonData.name),
         });
       }
     }

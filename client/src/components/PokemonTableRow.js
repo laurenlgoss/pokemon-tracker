@@ -77,7 +77,7 @@ function PokemonTableRow({ pokemon, handleDelete }) {
           <td style={styles.td} className={`${getEVClassColor(ev, goalEv)}`}>
             {ev}
             {renderNatureIcon(nature)}
-            {goalEv !== '0' ? (
+            {goalEv !== '0' && goalEv !== ev ? (
               <span style={styles.goalEv} class="ml-2">
                 {goalEv}
               </span>
