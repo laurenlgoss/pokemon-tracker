@@ -4,6 +4,9 @@ import Auth from '../utils/auth';
 
 import PokemonTableRow from '../components/PokemonTableRow';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_POKEMONS } from '../utils/queries';
 import { DELETE_POKEMON } from '../utils/mutations';
@@ -29,6 +32,9 @@ const styles = {
   },
   tableBody: {
     fontFamily: 'Staatliches',
+  },
+  filter: {
+    color: 'rgb(197 197 197)',
   },
 };
 
@@ -64,7 +70,7 @@ function PokemonTable() {
     const statArray = [hp, atk, def, spatk, spdef, spd];
 
     statArray.forEach((stat) => {
-      if (stat.ev !== stat.goalEv && stat.goalEv !== null) {
+      if (stat.ev !== stat.goalEv && stat.goalEv !== '0') {
         goalEVsMet = false;
       }
     });
@@ -104,6 +110,11 @@ function PokemonTable() {
                 </a>
               </div>
               <div className="col-12">
+                <FontAwesomeIcon
+                  style={styles.filter}
+                  icon={faFilter}
+                  className="mr-1"
+                />
                 EV training in progress?
                 <input
                   className="ml-2"

@@ -42,7 +42,7 @@ function PokemonTableRow({ pokemon, handleDelete }) {
   function getEVClassColor(ev, goalEv) {
     if (parseInt(ev) < parseInt(goalEv)) {
       return 'text-warning';
-    } else if (ev === goalEv && goalEv !== '0') {
+    } else if (ev >= goalEv && goalEv !== '0') {
       return 'text-success';
     }
   }
@@ -78,7 +78,7 @@ function PokemonTableRow({ pokemon, handleDelete }) {
             {ev}
             {renderNatureIcon(nature)}
             {goalEv !== '0' && goalEv !== ev ? (
-              <span style={styles.goalEv} class="ml-2">
+              <span style={styles.goalEv} className="ml-2">
                 {goalEv}
               </span>
             ) : null}

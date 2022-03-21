@@ -4,7 +4,7 @@ import pokemonShieldWallpaper from '../images/pokemon-shield-wallpaper.png';
 
 const styles = {
   backgroundImg: {
-    minHeight: 'calc(100vh - 100px)', // Calculate 100% of viewport minus header size
+    minHeight: 'calc(100vh - 85px)', // Calculate 100% of viewport minus navbar size
     backgroundImage: `url(${pokemonShieldWallpaper})`,
     position: 'relative',
   },

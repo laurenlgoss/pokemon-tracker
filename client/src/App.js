@@ -8,6 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Home from './pages/Home';
 import AddPokemon from './pages/AddPokemon';
@@ -50,6 +51,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Header />
+        {/* <Navbar /> */}
         <Route exact path="/">
           <Home />
         </Route>
