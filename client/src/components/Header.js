@@ -6,7 +6,7 @@ import pokeball from '../images/pokeball.png';
 
 const styles = {
   header: {
-    height: '100px',
+    height: '85px',
     backgroundColor: '#ff004f',
     position: 'relative',
   },

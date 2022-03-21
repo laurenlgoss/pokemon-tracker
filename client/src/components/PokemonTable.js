@@ -70,7 +70,7 @@ function PokemonTable() {
     const statArray = [hp, atk, def, spatk, spdef, spd];
 
     statArray.forEach((stat) => {
-      if (stat.ev !== stat.goalEv && stat.goalEv !== '0') {
+      if (stat.ev !== stat.goalEv && stat.goalEv !== '0' && stat.goalEv) {
         goalEVsMet = false;
       }
     });
