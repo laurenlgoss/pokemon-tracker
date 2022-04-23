@@ -1,5 +1,11 @@
+:root {
+  --accent: #ff004f;
+  --background: #eeeeee;
+  --secondary: rgb(197, 197, 197);
+}
+
 body {
-  background-color: #eeeeee;
+  background-color: var(--background);
   overflow-x: hidden;
   font-family: 'Staatliches';
 }

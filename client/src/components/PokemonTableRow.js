@@ -10,7 +10,7 @@ const styles = {
     backgroundColor: 'white',
   },
   td: {
-    borderTop: '0.5em #eeeeee solid',
+    borderTop: '0.5em var(--background) solid',
   },
   link: {
     color: 'black',
@@ -19,10 +19,10 @@ const styles = {
     maxHeight: '35px',
   },
   goalEv: {
-    color: 'rgb(197 197 197)',
+    color: 'var(--secondary)',
   },
   trashButton: {
-    color: '#ff004f',
+    color: 'var(--accent)',
     backgroundColor: 'transparent',
     border: 'transparent',
   },
@@ -40,10 +40,13 @@ function PokemonTableRow({ pokemon, handleDelete }) {
 
   // Color EV text based on reached goal EV or not
   function getEVClassColor(ev, goalEv) {
-    if (parseInt(ev) < parseInt(goalEv)) {
-      return 'text-warning';
-    } else if (ev >= goalEv && goalEv !== '0' && goalEv) {
+    // If goal is reached OR EVs are maxed out w/o goal
+    if ((ev === goalEv && goalEv !== '0') || (ev === '252' && (!goalEv || goalEv === '0'))) {
       return 'text-success';
+    } 
+    // If EVs and goals do not match (over or under)
+    else if (parseInt(ev) !== parseInt(goalEv) && goalEv && goalEv !== '0') {
+      return 'text-warning';
     }
   }
 

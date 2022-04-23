@@ -17,7 +17,7 @@ const styles = {
     position: 'sticky',
     top: '0',
     zIndex: '1',
-    backgroundColor: '#eeeeee',
+    backgroundColor: 'var(--background)',
   },
   button: {
     fontFamily: 'Staatliches',
