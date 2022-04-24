@@ -14,6 +14,9 @@ const pokemonSchema = new Schema({
   sprite: {
     type: String,
   },
+  shiny: {
+    type: Boolean,
+  },
   associatedUser: {
     type: String,
   },
@@ -31,7 +34,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
   atk: {
     ev: {
@@ -45,7 +48,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
   def: {
     ev: {
@@ -59,7 +62,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
   spatk: {
     ev: {
@@ -73,7 +76,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
   spdef: {
     ev: {
@@ -87,7 +90,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
   spd: {
     ev: {
@@ -101,7 +104,7 @@ const pokemonSchema = new Schema({
     },
     goalEv: {
       type: String,
-    }
+    },
   },
 });
 

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import Auth from '../utils/auth';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
+
 import { useMutation } from '@apollo/client';
 import { ADD_POKEMON } from '../utils/mutations';
 
@@ -47,6 +50,18 @@ const styles = {
     // webkitTransform: 'scale(2)',
     margin: '0',
   },
+  topCheckbox: {
+    marginLeft: '.5em',
+  },
+  shinyIcon: {
+    color: 'var(--secondary)',
+  },
+  femaleIcon: {
+    color: 'pink',
+  },
+  maleIcon: {
+    color: 'lightblue',
+  },
 };
 
 function AddPokemon() {
@@ -58,6 +73,7 @@ function AddPokemon() {
     nature: '',
     nickname: '',
     sprite: '',
+    shiny: false,
     associatedUser: Auth.getProfile().data.username,
     hp: {
       ev: '0',
@@ -192,9 +208,31 @@ function AddPokemon() {
         // Update sprite/species formData state
         setFormData({
           ...formData,
-          sprite: pokemonData.sprites.front_default,
+          sprite: !formData.shiny
+            ? pokemonData.sprites.front_default
+            : pokemonData.sprites.front_shiny,
           [name]: capitalizeFirstLetter(pokemonData.name),
         });
+      }
+    }
+
+    // Shiny
+    else if (name === 'shiny') {
+      if (formData.species !== '') {
+        const pokemonData = await fetchData(
+          `https://pokeapi.co/api/v2/pokemon/${formData.species.toLowerCase()}`
+        );
+        console.log(pokemonData);
+
+        setFormData({
+          ...formData,
+          sprite: checked
+            ? pokemonData.sprites.front_shiny
+            : pokemonData.sprites.front_default,
+          shiny: checked,
+        });
+      } else {
+        setFormData({ ...formData, shiny: checked });
       }
     }
 
@@ -321,6 +359,60 @@ function AddPokemon() {
                 name="nickname"
                 onChange={handleFormChange}
               />
+
+              {/* Gender */}
+              {/* <div className="mt-2 text-left">
+                <FontAwesomeIcon
+                  style={styles.femaleIcon}
+                  icon={faVenus}
+                  className="mr-1"
+                />
+                <label className="form-radio-label" for="gender">
+                  Female
+                </label>
+                <input
+                  style={styles.topCheckbox}
+                  className="form-radio-input"
+                  type="radio"
+                  name="gender"
+                  onChange={handleFormChange}
+                />
+
+                <FontAwesomeIcon
+                  style={styles.maleIcon}
+                  icon={faMars}
+                  className="ml-3 mr-1"
+                />
+                <label className="form-radio-label" for="gender">
+                  Male
+                </label>
+                <input
+                  style={styles.topCheckbox}
+                  className="form-radio-input"
+                  type="radio"
+                  name="gender"
+                  onChange={handleFormChange}
+                />
+              </div> */}
+
+              {/* Shiny */}
+              <div className="text-left">
+                <FontAwesomeIcon
+                  style={styles.shinyIcon}
+                  icon={faStar}
+                  className="mr-1"
+                />
+                <label className="form-check-label" for="shiny">
+                  Shiny?
+                </label>
+                <input
+                  style={styles.topCheckbox}
+                  className="form-check-input"
+                  type="checkbox"
+                  name="shiny"
+                  onChange={handleFormChange}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_POKEMON } from '../utils/queries';
@@ -48,6 +48,9 @@ const styles = {
     // webkitTransform: 'scale(2)',
     margin: '0',
   },
+  shinyIcon: {
+    color: 'var(--secondary)',
+  },
 };
 
 function Pokemon() {
@@ -71,6 +74,13 @@ function Pokemon() {
               <div className="row text-right">
                 <div className="col-12">
                   <div style={styles.pageTitle} className="mt-2">
+                    {pokemonData.shiny ? (
+                      <FontAwesomeIcon
+                        style={styles.shinyIcon}
+                        icon={faStar}
+                        className="mr-1"
+                      />
+                    ) : null}
                     <strong>
                       {pokemonData.nickname
                         ? pokemonData.nickname
@@ -377,19 +387,19 @@ function Pokemon() {
                           )}
                         </div>
                       </td>
-                  <td>&nbsp;</td>
-                  <td style={styles.td}>
-                    <div>
-                      {calculateRemainingEVs(
-                        pokemonData.hp.goalEv,
-                        pokemonData.atk.goalEv,
-                        pokemonData.def.goalEv,
-                        pokemonData.spatk.goalEv,
-                        pokemonData.spdef.goalEv,
-                        pokemonData.spd.goalEv
-                      )}
-                    </div>
-                  </td>
+                      <td>&nbsp;</td>
+                      <td style={styles.td}>
+                        <div>
+                          {calculateRemainingEVs(
+                            pokemonData.hp.goalEv,
+                            pokemonData.atk.goalEv,
+                            pokemonData.def.goalEv,
+                            pokemonData.spatk.goalEv,
+                            pokemonData.spdef.goalEv,
+                            pokemonData.spd.goalEv
+                          )}
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

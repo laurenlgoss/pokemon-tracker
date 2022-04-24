@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
+
 import { useMutation } from '@apollo/client';
 import { UPDATE_POKEMON } from '../utils/mutations';
 
@@ -45,12 +48,21 @@ const styles = {
     // webkitTransform: 'scale(2)',
     margin: '0',
   },
+  topCheckbox: {
+    marginLeft: '.5em',
+  },
+  shinyIcon: {
+    color: 'var(--secondary)',
+  },
 };
 
 function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
   // Get different forms of selected Pokémon species (Gigantamax, Mega, etc.)
   const differentPokemonForms = pokemonArray.filter((pokemon) => {
-    return pokemonData.species.split('-')[0].toLowerCase() === pokemon.name.split('-')[0];
+    return (
+      pokemonData.species.split('-')[0].toLowerCase() ===
+      pokemon.name.split('-')[0]
+    );
   });
 
   const [formData, setFormData] = useState(pokemonData);
@@ -155,9 +167,31 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
         // Update sprite/species formData state
         setFormData({
           ...formData,
-          sprite: pokemonData.sprites.front_default,
+          sprite: !formData.shiny
+            ? pokemonData.sprites.front_default
+            : pokemonData.sprites.front_shiny,
           [name]: capitalizeFirstLetter(pokemonData.name),
         });
+      }
+    }
+
+    // Shiny
+    else if (name === 'shiny') {
+      if (formData.species !== '') {
+        const pokemonData = await fetchData(
+          `https://pokeapi.co/api/v2/pokemon/${formData.species.toLowerCase()}`
+        );
+        console.log(pokemonData);
+
+        setFormData({
+          ...formData,
+          sprite: checked
+            ? pokemonData.sprites.front_shiny
+            : pokemonData.sprites.front_default,
+          shiny: checked,
+        });
+      } else {
+        setFormData({ ...formData, shiny: checked });
       }
     }
 
@@ -337,6 +371,26 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                 value={formData.nickname}
                 onChange={handleFormChange}
               />
+
+              {/* Shiny */}
+              <div className="text-left">
+                <FontAwesomeIcon
+                  style={styles.shinyIcon}
+                  icon={faStar}
+                  className="mr-1"
+                />
+                <label className="form-check-label" for="shiny">
+                  Shiny?
+                </label>
+                <input
+                  style={styles.topCheckbox}
+                  className="form-check-input"
+                  type="checkbox"
+                  name="shiny"
+                  checked={formData.shiny}
+                  onChange={handleFormChange}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ const typeDefs = gql`
     nature: String
     nickname: String
     sprite: String
+    shiny: Boolean
     associatedUser: String
     createdAt: String
     hp: hpStat
@@ -50,6 +51,7 @@ const typeDefs = gql`
     nature: String
     nickname: String
     sprite: String
+    shiny: Boolean
     associatedUser: String
     hp: hpStatData
     atk: statWithNatureData
@@ -65,6 +67,7 @@ const typeDefs = gql`
     nature: String
     nickname: String
     sprite: String
+    shiny: Boolean
     associatedUser: String
     hp: hpStatData
     atk: statWithNatureData
