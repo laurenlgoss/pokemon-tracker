@@ -24,7 +24,7 @@ const styles = {
   },
   table: {
     maxHeight: '65vh',
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   tableTitle: {
     fontSize: '30px',

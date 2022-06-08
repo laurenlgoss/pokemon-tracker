@@ -6,7 +6,8 @@ const styles = {
   backgroundImg: {
     minHeight: 'calc(100vh - 85px)', // Calculate 100% of viewport minus navbar size
     backgroundImage: `url(${pokemonShieldWallpaper})`,
-    position: 'relative',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
   },
   welcomeDiv: {
     position: 'absolute',
