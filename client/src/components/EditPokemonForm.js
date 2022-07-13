@@ -8,7 +8,7 @@ import { UPDATE_POKEMON } from '../utils/mutations';
 
 import {
   capitalizeFirstLetter,
-  calculateRemainingEVs,
+  calculateTotalRemainingEVs,
   getNatureClassName,
   translateStatName,
 } from '../utils/utils';
@@ -89,7 +89,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
 
   const [updatePokemon, { loading, data }] = useMutation(UPDATE_POKEMON);
 
-  let remainingGoalEVs = calculateRemainingEVs(
+  let remainingGoalEVs = calculateTotalRemainingEVs(
     formData.hp.goalEv,
     formData.atk.goalEv,
     formData.def.goalEv,
@@ -812,7 +812,7 @@ function EditPokemonForm({ pokemonData, natureArray, pokemonArray }) {
                   <td></td>
                   <td style={styles.td}>
                     <div>
-                      {calculateRemainingEVs(
+                      {calculateTotalRemainingEVs(
                         formData.hp.ev,
                         formData.atk.ev,
                         formData.def.ev,

@@ -10,7 +10,8 @@ function capitalizeFirstLetter(string) {
   return stringArray.join(' ');
 }
 
-function calculateRemainingEVs(hp, atk, def, spatk, spdef, spd) {
+// Calculate remaining total EVs from 510
+function calculateTotalRemainingEVs(hp, atk, def, spatk, spdef, spd) {
   if (!hp) {
     hp = 0;
   }
@@ -39,6 +40,14 @@ function calculateRemainingEVs(hp, atk, def, spatk, spdef, spd) {
     parseInt(spd);
 
   return 510 - usedEVs;
+}
+
+function calculateEVsUntilGoal(currentEv, goalEv) {
+  let remainingEVs = parseInt(goalEv) - parseInt(currentEv);
+  if (remainingEVs > 0) {
+    remainingEVs = `+${remainingEVs}`;
+  }
+  return remainingEVs;
 }
 
 function getNatureClassName(nature) {
@@ -77,4 +86,10 @@ function translateStatName(stat) {
   return newStatName;
 }
 
-export { capitalizeFirstLetter, calculateRemainingEVs, getNatureClassName, translateStatName };
+export {
+  capitalizeFirstLetter,
+  calculateTotalRemainingEVs,
+  calculateEVsUntilGoal,
+  getNatureClassName,
+  translateStatName,
+};

@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { calculateRemainingEVs } from '../utils/utils';
+import { calculateTotalRemainingEVs } from '../utils/utils';
 
 const styles = {
   tableRow: {
@@ -41,9 +41,12 @@ function PokemonTableRow({ pokemon, handleDelete }) {
   // Color EV text based on reached goal EV or not
   function getEVClassColor(ev, goalEv) {
     // If goal is reached OR EVs are maxed out w/o goal
-    if ((ev === goalEv && goalEv !== '0') || (ev === '252' && (!goalEv || goalEv === '0'))) {
+    if (
+      (ev === goalEv && goalEv !== '0') ||
+      (ev === '252' && (!goalEv || goalEv === '0'))
+    ) {
       return 'text-success';
-    } 
+    }
     // If EVs and goals do not match (over or under)
     else if (parseInt(ev) !== parseInt(goalEv) && goalEv && goalEv !== '0') {
       return 'text-warning';
@@ -89,7 +92,7 @@ function PokemonTableRow({ pokemon, handleDelete }) {
         );
       })}
       <td style={styles.td}>
-        {calculateRemainingEVs(
+        {calculateTotalRemainingEVs(
           pokemon.hp.ev,
           pokemon.atk.ev,
           pokemon.def.ev,

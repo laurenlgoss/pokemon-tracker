@@ -9,7 +9,8 @@ import { QUERY_POKEMON } from '../utils/queries';
 
 import {
   capitalizeFirstLetter,
-  calculateRemainingEVs,
+  calculateTotalRemainingEVs,
+  calculateEVsUntilGoal,
   getNatureClassName,
 } from '../utils/utils';
 
@@ -170,7 +171,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.hp.goalEv !== '0' &&
+                        pokemonData.hp.goalEv &&
+                        pokemonData.hp.goalEv !== pokemonData.hp.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.hp.ev,
+                              pokemonData.hp.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -207,7 +217,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.atk.goalEv !== '0' &&
+                        pokemonData.atk.goalEv &&
+                        pokemonData.atk.goalEv !== pokemonData.atk.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.atk.ev,
+                              pokemonData.atk.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -244,7 +263,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.def.goalEv !== '0' &&
+                        pokemonData.def.goalEv &&
+                        pokemonData.def.goalEv !== pokemonData.def.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.def.ev,
+                              pokemonData.def.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -281,7 +309,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.spatk.goalEv !== '0' &&
+                        pokemonData.spatk.goalEv &&
+                        pokemonData.spatk.goalEv !== pokemonData.spatk.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.spatk.ev,
+                              pokemonData.spatk.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -318,7 +355,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.spdef.goalEv !== '0' &&
+                        pokemonData.spdef.goalEv &&
+                        pokemonData.spdef.goalEv !== pokemonData.spdef.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.spdef.ev,
+                              pokemonData.spdef.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -355,7 +401,16 @@ function Pokemon() {
                           disabled
                         />
                       </td>
-                      <td>&nbsp;</td>
+                      <td>
+                        {pokemonData.spd.goalEv !== '0' &&
+                        pokemonData.spd.goalEv &&
+                        pokemonData.spd.goalEv !== pokemonData.spd.ev
+                          ? calculateEVsUntilGoal(
+                              pokemonData.spd.ev,
+                              pokemonData.spd.goalEv
+                            )
+                          : null}
+                      </td>
                       {/* Goal EVs */}
                       <td style={styles.td}>
                         <input
@@ -377,7 +432,7 @@ function Pokemon() {
                       <td style={styles.td}>Remaining EVs</td>
                       <td style={styles.td}>
                         <div>
-                          {calculateRemainingEVs(
+                          {calculateTotalRemainingEVs(
                             pokemonData.hp.ev,
                             pokemonData.atk.ev,
                             pokemonData.def.ev,
@@ -390,7 +445,7 @@ function Pokemon() {
                       <td>&nbsp;</td>
                       <td style={styles.td}>
                         <div>
-                          {calculateRemainingEVs(
+                          {calculateTotalRemainingEVs(
                             pokemonData.hp.goalEv,
                             pokemonData.atk.goalEv,
                             pokemonData.def.goalEv,

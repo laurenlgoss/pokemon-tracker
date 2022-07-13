@@ -10,7 +10,7 @@ import { ADD_POKEMON } from '../utils/mutations';
 
 import {
   capitalizeFirstLetter,
-  calculateRemainingEVs,
+  calculateTotalRemainingEVs,
   getNatureClassName,
   translateStatName,
 } from '../utils/utils';
@@ -695,7 +695,7 @@ function AddPokemon() {
                   <td style={styles.td}>Remaining EVs</td>
                   <td style={styles.td}>
                     <div>
-                      {calculateRemainingEVs(
+                      {calculateTotalRemainingEVs(
                         formData.hp.ev,
                         formData.atk.ev,
                         formData.def.ev,
@@ -708,7 +708,7 @@ function AddPokemon() {
                   <td>&nbsp;</td>
                   <td style={styles.td}>
                     <div>
-                      {calculateRemainingEVs(
+                      {calculateTotalRemainingEVs(
                         formData.hp.goalEv,
                         formData.atk.goalEv,
                         formData.def.goalEv,
