@@ -19,6 +19,11 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
   pokemon: [
     {
       type: Schema.Types.ObjectId,
