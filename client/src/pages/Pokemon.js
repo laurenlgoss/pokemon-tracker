@@ -67,7 +67,19 @@ function Pokemon() {
   });
   const pokemonData = data?.pokemon || {};
 
-  const statArray = ['hp', 'atk', 'def', 'spatk', 'spdef', 'spd'];
+  const statArray = ['hp', 'atk', 'def', 'spatk', 'spdef', 'spd']; // <-- TODO: Make this dynamic...
+
+  function calculateBarWidth(ev, goalEv) {
+    let width = 0;
+
+    if (ev === '0' && parseInt(goalEv) > 0) {
+      width = 1;
+    } else if (parseInt(ev) > 1) {
+      width = (parseInt(ev) / 255) * 100;
+    }
+
+    return width + '%';
+  }
 
   return (
     <>
@@ -191,7 +203,10 @@ function Pokemon() {
                               )}`}
                               style={{
                                 height: '20px',
-                                width: (pokemonData[stat].ev / 255) * 100 + '%',
+                                width: calculateBarWidth(
+                                  pokemonData[stat].ev,
+                                  pokemonData[stat].goalEv
+                                ),
                                 borderTopRightRadius: '3px',
                                 borderBottomRightRadius: '3px',
                               }}
