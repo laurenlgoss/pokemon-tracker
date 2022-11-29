@@ -43,11 +43,16 @@ function calculateTotalRemainingEVs(hp, atk, def, spatk, spdef, spd) {
 }
 
 function calculateEVsUntilGoal(currentEv, goalEv) {
-  let remainingEVs = parseInt(goalEv) - parseInt(currentEv);
-  if (remainingEVs > 0) {
-    remainingEVs = `+${remainingEVs}`;
+  if (goalEv === null) {
+    goalEv = '0';
   }
-  return remainingEVs;
+
+  let remainingEVs = parseInt(goalEv) - parseInt(currentEv);
+
+  if (isNaN(remainingEVs) || remainingEVs === 0) {
+    return;
+  }
+  return `${remainingEVs > 0 ? '+' : ''}${remainingEVs}`;
 }
 
 function getNatureClassName(nature) {
@@ -86,10 +91,48 @@ function translateStatName(stat) {
   return newStatName;
 }
 
+// Color EV text based on reached goal EV or not
+function getEVClassColor(ev, goalEv) {
+  if (goalEv === null) {
+    goalEv = '0';
+  }
+
+  if (goalEv === '0' && ev === '0') {
+    return;
+  }
+
+  if (parseInt(ev) > parseInt(goalEv)) {
+    return 'danger';
+  } else if (parseInt(ev) < parseInt(goalEv)) {
+    return 'warning';
+  } else if (ev === goalEv || parseInt(ev) >= 252) {
+    return 'success';
+  }
+
+  // If goal is reached OR EVs are maxed out w/o goal
+  // if (
+  //   (ev === goalEv && goalEv !== '0') ||
+  //   (ev === '252' && (!goalEv || goalEv === '0'))
+  // ) {
+  //   return 'success';
+  // } else if (goalEv && goalEv !== '0') {
+  //   if (parseInt(ev) < parseInt(goalEv)) {
+  //     return 'warning';
+  //   } else if (parseInt(ev) > parseInt(goalEv)) {
+  //     return 'danger';
+  //   }
+  // }
+  // If EVs and goals do not match (over or under)
+  // else if (parseInt(ev) !== parseInt(goalEv) && goalEv && goalEv !== '0') {
+  //   return 'warning';
+  // }
+}
+
 export {
   capitalizeFirstLetter,
   calculateTotalRemainingEVs,
   calculateEVsUntilGoal,
   getNatureClassName,
   translateStatName,
+  getEVClassColor,
 };

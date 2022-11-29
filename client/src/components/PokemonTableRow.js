@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { calculateTotalRemainingEVs } from '../utils/utils';
+import { calculateTotalRemainingEVs, getEVClassColor } from '../utils/utils';
 
 const styles = {
   tableRow: {
@@ -38,21 +38,6 @@ function PokemonTableRow({ pokemon, handleDelete }) {
     pokemon.spd,
   ];
 
-  // Color EV text based on reached goal EV or not
-  function getEVClassColor(ev, goalEv) {
-    // If goal is reached OR EVs are maxed out w/o goal
-    if (
-      (ev === goalEv && goalEv !== '0') ||
-      (ev === '252' && (!goalEv || goalEv === '0'))
-    ) {
-      return 'text-success';
-    }
-    // If EVs and goals do not match (over or under)
-    else if (parseInt(ev) !== parseInt(goalEv) && goalEv && goalEv !== '0') {
-      return 'text-warning';
-    }
-  }
-
   function renderNatureIcon(nature) {
     if (nature) {
       return '+';
@@ -80,10 +65,13 @@ function PokemonTableRow({ pokemon, handleDelete }) {
       </td>
       {statArray.map(({ ev, nature, goalEv }) => {
         return (
-          <td style={styles.td} className={`${getEVClassColor(ev, goalEv)}`}>
+          <td
+            style={styles.td}
+            className={`text-${getEVClassColor(ev, goalEv)}`}
+          >
             {ev}
             {renderNatureIcon(nature)}
-            {goalEv !== '0' && goalEv !== ev ? (
+            {goalEv !== ev ? (
               <span style={styles.goalEv} className="ml-2">
                 {goalEv}
               </span>

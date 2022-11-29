@@ -12,6 +12,7 @@ import {
   calculateTotalRemainingEVs,
   calculateEVsUntilGoal,
   getNatureClassName,
+  getEVClassColor,
 } from '../utils/utils';
 
 const styles = {
@@ -37,7 +38,7 @@ const styles = {
     fontFamily: 'Staatliches',
   },
   td: {
-    padding: '0',
+    padding: '0.75em 0',
     fontFamily: 'Staatliches',
   },
   tableTitle: {
@@ -52,6 +53,9 @@ const styles = {
   shinyIcon: {
     color: 'var(--secondary)',
   },
+  remainingEVTr: {
+    borderTop: '1px solid var(--background)',
+  },
 };
 
 function Pokemon() {
@@ -62,7 +66,8 @@ function Pokemon() {
     variables: { pokemonId: userParam },
   });
   const pokemonData = data?.pokemon || {};
-  console.log(pokemonData);
+
+  const statArray = ['hp', 'atk', 'def', 'spatk', 'spdef', 'spd'];
 
   return (
     <>
@@ -145,291 +150,78 @@ function Pokemon() {
                     <th style={styles.tableTitle} scope="col" width="20%">
                       Stat
                     </th>
-                    <th style={styles.tableTitle} scope="col">
+                    <th style={styles.tableTitle} scope="col" colSpan={2}>
                       Current EVs
                     </th>
-                    <th style={styles.tableTitle} scope="col">
+                    <th style={styles.tableTitle} scope="col" width="6%">
                       &nbsp;
                     </th>
-                    <th style={styles.tableTitle} scope="col">
+                    <th style={styles.tableTitle} scope="col" width="15%">
                       Goal EVs
                     </th>
-                    <th style={styles.tableTitle} width="15%">
+                    <th style={styles.tableTitle} scope="col" width="15%">
                       Best IV?
                     </th>
                   </thead>
                   <tbody>
-                    {/* HP */}
-                    <tr>
-                      <td style={styles.td}>HP</td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="hp"
-                          value={pokemonData.hp.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.hp.goalEv !== '0' &&
-                        pokemonData.hp.goalEv &&
-                        pokemonData.hp.goalEv !== pokemonData.hp.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.hp.ev,
-                              pokemonData.hp.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="hp goalEv"
-                          value={pokemonData.hp.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.hp.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
+                    {statArray.map((stat) => {
+                      return (
+                        <tr>
+                          {/* Stat */}
+                          <td
+                            style={styles.td}
+                            className={`${
+                              stat !== 'hp'
+                                ? getNatureClassName(pokemonData[stat].nature)
+                                : ''
+                            }`}
+                          >
+                            {stat}
+                          </td>
 
-                    {/* ATK */}
-                    <tr>
-                      <td
-                        style={styles.td}
-                        className={`${getNatureClassName(
-                          pokemonData.atk.nature
-                        )}`}
-                      >
-                        ATK
-                      </td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="atk"
-                          value={pokemonData.atk.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.atk.goalEv !== '0' &&
-                        pokemonData.atk.goalEv &&
-                        pokemonData.atk.goalEv !== pokemonData.atk.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.atk.ev,
-                              pokemonData.atk.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="atk goalEv"
-                          value={pokemonData.atk.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.atk.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
+                          {/* Current EVs */}
+                          <td style={{ padding: '0.75em 0', width: '5%' }}>
+                            {pokemonData[stat].ev}
+                          </td>
+                          <td style={styles.td}>
+                            <div
+                              className={`bg-${getEVClassColor(
+                                pokemonData[stat].ev,
+                                pokemonData[stat].goalEv
+                              )}`}
+                              style={{
+                                height: '20px',
+                                width: (pokemonData[stat].ev / 255) * 100 + '%',
+                                borderTopRightRadius: '3px',
+                                borderBottomRightRadius: '3px',
+                              }}
+                            ></div>
+                          </td>
 
-                    {/* DEF */}
-                    <tr>
-                      <td
-                        style={styles.td}
-                        className={`${getNatureClassName(
-                          pokemonData.def.nature
-                        )}`}
-                      >
-                        DEF
-                      </td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="def"
-                          value={pokemonData.def.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.def.goalEv !== '0' &&
-                        pokemonData.def.goalEv &&
-                        pokemonData.def.goalEv !== pokemonData.def.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.def.ev,
-                              pokemonData.def.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="def goalEv"
-                          value={pokemonData.def.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.def.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
+                          {/* EVs Until Goal */}
+                          <td style={styles.td}>
+                            {calculateEVsUntilGoal(
+                              pokemonData[stat].ev,
+                              pokemonData[stat].goalEv
+                            )}
+                          </td>
 
-                    {/* SPATK */}
-                    <tr>
-                      <td
-                        style={styles.td}
-                        className={`${getNatureClassName(
-                          pokemonData.spatk.nature
-                        )}`}
-                      >
-                        SPATK
-                      </td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spatk"
-                          value={pokemonData.spatk.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spatk.goalEv !== '0' &&
-                        pokemonData.spatk.goalEv &&
-                        pokemonData.spatk.goalEv !== pokemonData.spatk.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.spatk.ev,
-                              pokemonData.spatk.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spatk goalEv"
-                          value={pokemonData.spatk.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spatk.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
+                          {/* Goal EVs */}
+                          <td style={styles.td}>{pokemonData[stat].goalEv}</td>
 
-                    {/* SPDEF */}
-                    <tr>
-                      <td
-                        style={styles.td}
-                        className={`${getNatureClassName(
-                          pokemonData.spdef.nature
-                        )}`}
-                      >
-                        SPDEF
-                      </td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spdef"
-                          value={pokemonData.spdef.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spdef.goalEv !== '0' &&
-                        pokemonData.spdef.goalEv &&
-                        pokemonData.spdef.goalEv !== pokemonData.spdef.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.spdef.ev,
-                              pokemonData.spdef.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spdef goalEv"
-                          value={pokemonData.spdef.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spdef.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
+                          {/* Best IV */}
+                          <td style={styles.td}>
+                            {pokemonData[stat].bestIv ? (
+                              <FontAwesomeIcon icon={faCheck} />
+                            ) : null}
+                          </td>
+                        </tr>
+                      );
+                    })}
 
-                    {/* SPD */}
-                    <tr>
-                      <td
-                        style={styles.td}
-                        className={`${getNatureClassName(
-                          pokemonData.spd.nature
-                        )}`}
-                      >
-                        SPD
-                      </td>
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spd"
-                          value={pokemonData.spd.ev}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spd.goalEv !== '0' &&
-                        pokemonData.spd.goalEv &&
-                        pokemonData.spd.goalEv !== pokemonData.spd.ev
-                          ? calculateEVsUntilGoal(
-                              pokemonData.spd.ev,
-                              pokemonData.spd.goalEv
-                            )
-                          : null}
-                      </td>
-                      {/* Goal EVs */}
-                      <td style={styles.td}>
-                        <input
-                          className="form-control mb-2"
-                          type="number"
-                          name="spd goalEv"
-                          value={pokemonData.spd.goalEv}
-                          disabled
-                        />
-                      </td>
-                      <td>
-                        {pokemonData.spd.bestIv ? (
-                          <FontAwesomeIcon icon={faCheck} />
-                        ) : null}
-                      </td>
-                    </tr>
-
-                    <tr>
+                    <tr style={styles.remainingEVTr}>
                       <td style={styles.td}>Remaining EVs</td>
+                      {/* Remaining Current EVs */}
                       <td style={styles.td}>
                         <div>
                           {calculateTotalRemainingEVs(
@@ -442,7 +234,9 @@ function Pokemon() {
                           )}
                         </div>
                       </td>
-                      <td>&nbsp;</td>
+                      <td style={styles.td}></td>
+                      <td style={styles.td}></td>
+                      {/* Remaining Goal EVs */}
                       <td style={styles.td}>
                         <div>
                           {calculateTotalRemainingEVs(
